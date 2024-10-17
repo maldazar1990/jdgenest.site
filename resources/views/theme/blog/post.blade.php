@@ -84,7 +84,7 @@
                         <input name="email" type="email" value="" class="emailfield">
                         @if(config("app.env")=="production")
                         <button  type="submit"
-                            class="btn btn-primary ">
+                            class="btn btn-primary.">
                             Envoyer
                         </button>
                         @else

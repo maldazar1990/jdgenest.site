@@ -6,7 +6,8 @@
  * Website: http://themes.3rdwavemedia.com/
  * Twitter: @3rdwave_themes
 */
-@import 'scss/bootstrap/scss/bootstrap.scss';
+@import "theme/bootstrap/scss/bootstrap.scss";
+@import "~select2/dist/css/select2.min.css";
 @import "mixins";
 @import "base";
 @import "blog";

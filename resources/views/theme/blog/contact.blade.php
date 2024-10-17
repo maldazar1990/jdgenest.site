@@ -2,11 +2,7 @@
 
 @section("content")
     <div class="col-12">
-        <script>
-            function onSubmit(token) {
-                document.querySelector("form").submit();
-        }
-        </script>
+
         <div class="mb-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">

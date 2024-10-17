@@ -1,6 +1,10 @@
 {
-    "/admin/js/app.js": "/admin/js/app.js",
-    "/front/js/app.js": "/front/js/app.js",
-    "/front/css/app.css": "/front/css/app.css",
-    "/admin/css/app.css": "/admin/css/app.css"
+    "/front/css/app.css": "/front/css/app.css?id=b31de327cf3b7586d73aa7d27c6a15fb",
+    "/admin/css/app.css": "/admin/css/app.css?id=96db70bd140dae3b925c1dc85827b721",
+    "/admin/js/app.js": "/admin/js/app.js?id=d58bb8be74f73629afe459848f27ae7b",
+    "/front/js/app.js": "/front/js/app.js?id=35736c18c2cffbf0c1ed8d1174e4e236",
+    "/admin/css/app.min.css": "/admin/css/app.min.css?id=96db70bd140dae3b925c1dc85827b721",
+    "/front/css/app.min.css": "/front/css/app.min.css?id=b31de327cf3b7586d73aa7d27c6a15fb",
+    "/admin/js/app.min.js": "/admin/js/app.min.js?id=d58bb8be74f73629afe459848f27ae7b",
+    "/front/js/app.min.js": "/front/js/app.min.js?id=35736c18c2cffbf0c1ed8d1174e4e236"
 }

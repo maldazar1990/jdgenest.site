@@ -1,38 +1,19 @@
 import $ from 'jquery';
 import 'select2';
 import FullEditor from 'ckeditor5-build-full';
-// Complete SortableJS (with all plugins)
-import bootstrap from 'bootstrapfront';
-let select2 = $(".select2");
+import bootstrap from './bootstrap/bootstrap.bundle.min.js';
+
+
+
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
-console.log(select2);
-if(select2.length > 0) {
-    console.log(1111);
-    select2.select2({
-        placeholder: "Choississez un tags",
-        multiple: true,
-        tags:true,
-
-        ajax: {
-            delay: 250,
-            url: window.appurl + "/admin/tags/ajax",
-            data: function (params) {
-                var query = {
-                    term: params.term,
-                }
-                return query;
-            },
-            dataType: 'json',
-        },
-    }).val($("#preselectedtags").val().split(",")).trigger("change");
-}
 
 $(function () {
     let menu = document.getElementById("menu");
     let sidebar = $(".sidebar span.icon");
     let type = $("#type");
+    let select2 = $(".select2");
     let selectImage = $(".selectimage");
     let status = $("#status");
 
@@ -62,7 +43,7 @@ $(function () {
         sidebar.find('em:first').addClass("fa-plus");
     }
     if ($("#menu-toggle").length>0) {
-        $("#menu-toggle").click(function (e) {
+        $("#menu-toggle").on('click',function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
@@ -199,7 +180,7 @@ $(function () {
     }
 
     if (type.length>0) {
-        type.on("change",function () {
+        type.on('change',function () {
             var type = $(this).val();
             var duree = $("#duree"),
                 datestart = $("#datestart"),
@@ -233,7 +214,25 @@ $(function () {
             }
         });
     }
-   
+    if(select2.length > 0) {
+        select2.select2({
+            placeholder: "Choississez un tags",
+            multiple: true,
+            tags:true,
+
+            ajax: {
+                delay: 250,
+                url: window.appurl + "/admin/tags/ajax",
+                data: function (params) {
+                    var query = {
+                        term: params.term,
+                    }
+                    return query;
+                },
+                dataType: 'json',
+            },
+        }).val($("#preselectedtags").val().split(",")).trigger("change");
+    }
     if (selectImage.length > 0) {
         selectImage.select2({
             placeholder: "Choississez une image",
