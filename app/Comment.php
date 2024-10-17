@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Builder;
 use App\post as post;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Watson\Rememberable\Rememberable;
 
 class Comment extends Model
 {
+    use Rememberable;
+
     use HasFactory;
 
     protected $table = 'post';

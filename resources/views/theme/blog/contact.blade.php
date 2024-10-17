@@ -7,7 +7,6 @@
                 document.querySelector("form").submit();
         }
         </script>
-        <script src="https://www.google.com/recaptcha/api.js" defer></script>
         <div class="mb-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">
@@ -41,10 +40,7 @@
                         </button>
                     @else
                     <button  type="submit"
-                             class="btn btn-primary g-recaptcha"
-                             data-sitekey="{{config("app.recaptcha")}}"
-                             data-callback='onSubmit'
-                             data-action='submit'>
+                             class="btn btn-primary">
                         Envoyer
                     </button>
                     @endif

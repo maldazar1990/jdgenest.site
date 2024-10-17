@@ -6,23 +6,18 @@ use App\Comment;
 use App\Contact;
 use App\FirewallIp;
 use App\Http\Forms\ContactForm;
-use App\Http\Forms\OptionForm;
 use App\Jobs\SendEmailBasicJob;
-use App\Mail\SendEmailBasic;
 use App\options_table;
 use App\post;
 use App\Tags;
 use App\Users;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Litespeed\LSCache\LSCache;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Illuminate\Support\Facades\App;
+use Watson\Rememberable\Rememberable;
 
 class PageController extends Controller
 {
@@ -96,12 +91,9 @@ class PageController extends Controller
         } else {
             $posts = Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
         }
-        $tags = Tags::query()
-            ->select("tags.id","tags.title")
-
-            ->distinct()
-            ->join('post_tags', 'tags.id', '=', 'post_tags.tags_id')
-            ->whereIn("post_tags.post_id",$posts->pluck('id')->toArray())->get();
+        $tags = Tags::whereIn("post_tags.post_id",$posts->pluck('id')->toArray())
+            ->join("post_tags","post_tags.tags_id","=","tags.id")
+            ->get();
         return view('theme.blog.home',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
@@ -123,7 +115,8 @@ class PageController extends Controller
     function post(Request $request,$slug){
 
         if ( is_numeric($slug) )
-            $post = post::where("id",$slug)->first();
+            $post = Post::where("id",$slug)->first();
+            
         else
             $post = Post::where("slug",$slug)->first();
 

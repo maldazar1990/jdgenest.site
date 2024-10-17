@@ -18,3 +18,7 @@ mix.setPublicPath('public_html/')
 mix.setPublicPath('public_html/')
     .js('resources/js/app.js', 'front/js/app.js')
     .sass('resources/sass/app.scss', 'front/css/app.css');
+
+if (mix.inProduction()) {
+    mix.version();
+}

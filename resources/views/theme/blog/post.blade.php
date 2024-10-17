@@ -6,7 +6,6 @@
             document.querySelector("form").submit();
         }
     </script>
-    <script src="https://www.google.com/recaptcha/api.js" defer></script>
     <div class="d-none d-sm-block">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -85,10 +84,7 @@
                         <input name="email" type="email" value="" class="emailfield">
                         @if(config("app.env")=="production")
                         <button  type="submit"
-                            class="btn btn-primary g-recaptcha"
-                            data-sitekey="{{config("app.recaptcha")}}"
-                            data-callback='onSubmit'
-                            data-action='submit'>
+                            class="btn btn-primary ">
                             Envoyer
                         </button>
                         @else

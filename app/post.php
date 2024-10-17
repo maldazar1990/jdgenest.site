@@ -8,9 +8,11 @@ use App\Comment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Watson\Rememberable\Rememberable;
 
 class post extends Model
 {
+    use Rememberable;
     protected $table = "post";
 
     protected static function booted()

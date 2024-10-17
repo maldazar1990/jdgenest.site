@@ -27,7 +27,6 @@ return [
 
     'env' => env('APP_ENV'),
     "mailperso"=>env("MAIL_PERSO_EMAIL"),
-    "recaptcha"=>env("RECAPTCHA_SITE_KEY"),
 
     /*
     |--------------------------------------------------------------------------

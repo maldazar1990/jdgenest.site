@@ -21,7 +21,6 @@
     @if(isset($SEOData))
         {!! seo($SEOData) !!}
     @endif
-    <link id="theme-style" rel="stylesheet" href="{{mix("front/css/app.css")}}?v={{microtime()}}">
-    <link rel="preload"  load href="{{mix("front/js/app.js")}}" as="script"/>
-    <script src="{{mix("front/js/app.js")}}" defer></script>
+    <link id="theme-style" rel="stylesheet" href="{{asset("front/css/app.css")}}?v={{microtime()}}">
+    <script src="{{asset("front/js/app.js")}}" defer></script>
 </head>

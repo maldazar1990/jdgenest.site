@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Watson\Rememberable\Rememberable;
 
 class Tags extends Model
 {
+    USE Rememberable;
     protected $fillable = [
         "title"
     ];
