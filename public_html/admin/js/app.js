@@ -3031,14 +3031,34 @@ __webpack_require__.r(__webpack_exports__);
 
 // Complete SortableJS (with all plugins)
 
+var select2 = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".select2");
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("click", "ul.nav li.parent > a ", function () {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').toggleClass("fa-minus");
 });
-jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
+console.log(select2);
+if (select2.length > 0) {
+  console.log(1111);
+  select2.select2({
+    placeholder: "Choississez un tags",
+    multiple: true,
+    tags: true,
+    ajax: {
+      delay: 250,
+      url: window.appurl + "/admin/tags/ajax",
+      data: function data(params) {
+        var query = {
+          term: params.term
+        };
+        return query;
+      },
+      dataType: 'json'
+    }
+  }).val(jquery__WEBPACK_IMPORTED_MODULE_0___default()("#preselectedtags").val().split(",")).trigger("change");
+}
+jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
   var menu = document.getElementById("menu");
   var sidebar = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".sidebar span.icon");
   var type = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#type");
-  var select2 = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".select2");
   var selectImage = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".selectimage");
   var status = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#status");
   if (menu != null) {
@@ -3185,7 +3205,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
     });
   }
   if (type.length > 0) {
-    type.change(function () {
+    type.on("change", function () {
       var type = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val();
       var duree = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#duree"),
         datestart = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#datestart"),
@@ -3213,24 +3233,6 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()("label[for='" + duree.attr('id') + "']").hide();
       }
     });
-  }
-  if (select2.length > 0) {
-    select2.select2({
-      placeholder: "Choississez un tags",
-      multiple: true,
-      tags: true,
-      ajax: {
-        delay: 250,
-        url: window.appurl + "/admin/tags/ajax",
-        data: function data(params) {
-          var query = {
-            term: params.term
-          };
-          return query;
-        },
-        dataType: 'json'
-      }
-    }).val(jquery__WEBPACK_IMPORTED_MODULE_0___default()("#preselectedtags").val().split(",")).trigger("change");
   }
   if (selectImage.length > 0) {
     selectImage.select2({
@@ -24820,8 +24822,8 @@ S2.define('jquery.select2',[
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/admin/js/app": 0,
-/******/ 			"front/css/app": 0,
-/******/ 			"admin/css/app": 0
+/******/ 			"admin/css/app": 0,
+/******/ 			"front/css/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -24871,9 +24873,9 @@ S2.define('jquery.select2',[
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["front/css/app","admin/css/app"], () => (__webpack_require__("./resources/js/admin/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["front/css/app","admin/css/app"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["front/css/app","admin/css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["admin/css/app","front/css/app"], () => (__webpack_require__("./resources/js/admin/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["admin/css/app","front/css/app"], () => (__webpack_require__("./resources/sass/admin/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["admin/css/app","front/css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
