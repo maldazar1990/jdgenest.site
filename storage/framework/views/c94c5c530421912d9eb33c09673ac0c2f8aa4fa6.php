@@ -1,0 +1,1 @@
+<<?php echo e($tag); ?><?php foreach($attributes as $name => $value) : ?> <?php echo e($name); ?>="<?php echo e($value); ?>"<?php endforeach ?>><?php if ($inner) : ?><?php echo e($inner); ?></<?php echo e($tag); ?>><?php endif ?><?php /**PATH C:\dev\jdgenest\vendor\ralphjsmit\laravel-seo\src\/../resources/views/tags/tag.blade.php ENDPATH**/ ?>
