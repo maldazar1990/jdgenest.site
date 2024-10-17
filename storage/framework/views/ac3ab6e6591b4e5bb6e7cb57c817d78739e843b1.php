@@ -1,1 +1,0 @@
-<input type="checkbox" <?php echo e($attributes->merge(['class' => 'w-4 h-4 rounded'])); ?>><?php /**PATH C:\dev\jdgenest\resources\views/vendor/laravel-views/components/form/checkbox.blade.php ENDPATH**/ ?>
