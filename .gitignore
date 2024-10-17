@@ -57,7 +57,7 @@ public/hot
 public_html/storage
 public_html/hot
 
-storage/
+/storage/
 .env
 Homestead.yaml
 Homestead.json
