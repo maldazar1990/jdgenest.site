@@ -2,8 +2,7 @@ import $ from 'jquery';
 import 'select2';
 import FullEditor from 'ckeditor5-build-full';
 // Complete SortableJS (with all plugins)
-import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
-
+import bootstrap from 'bootstrapfront';
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });

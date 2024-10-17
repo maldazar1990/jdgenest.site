@@ -53,7 +53,7 @@ a.text-link {
 
 .btn:focus, .btn.focus {
 	box-shadow: none !important;
-	transition: all 0.4s ease-in-out;
+	@include transition(all 0.4s ease-in-out);
 	outline: none;
 }
 
@@ -129,13 +129,13 @@ a.text-link {
     .navbar-dark {
 	    
 	    .navbar-toggler {
-		    border-radius:2px;
-		    opacity:0.8;
+		    @include border-radius(2px);
+		    @include opacity(0.8);
 		    border: 1px solid rgba(256, 256, 256, 0.8);
 		    padding: .25rem .6rem;
 		    
 		    &:hover {
-			     opacity:1;
+			    @include opacity(1);
 			    
 		    }
 	    }
@@ -199,8 +199,8 @@ a.text-link {
 		padding-top: 5px;
 		display: inline-block;
 		text-align: center;
-		border-radius: 50%;
-		transition:all 0.4s ease-in-out;
+		@include border-radius(50%);
+		@include transition(all 0.4s ease-in-out);
 		background-color: #fff;
 		&:hover {
 			color: darken($theme-color-primary, 10%);

@@ -12,7 +12,7 @@
 		}
 		.post-thumb {
 			
-			 border-radius:2px;
+			@include border-radius(2px);
 		}
 		
 		
@@ -41,7 +41,7 @@
 			display: inline-block;
 			width: 3px;
 			height: 3px;
-			border-radius:50%;
+			@include border-radius(50%);
 			background: $theme-text-color-light;
 			margin-left: 0.5rem;
 			margin-right: 0.5rem;

@@ -11,7 +11,7 @@ composer.lock
 .phpunit.result.cache
 .idea
 phpunit.xml
-
+/database/homestead.sqlite
 # Files used to upload zips for early access folks
 upload-bin.sh
 main.zip
