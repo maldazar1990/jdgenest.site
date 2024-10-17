@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => env('SESSION_DRIVER', 'apc'),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => env("SESSION_DOMAIN","jdgenest.site"),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,8 +166,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE',false),
-
+    'secure' => env("SESSION_SECURE_COOKIE",false),
     /*
     |--------------------------------------------------------------------------
     | HTTP Access Only
