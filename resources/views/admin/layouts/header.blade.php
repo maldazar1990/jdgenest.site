@@ -8,6 +8,6 @@
     <script src="{{asset('admin/js/app.js') }}" defer></script>
     <link href="{{asset('admin/css/app.css')}}" rel="stylesheet">
     
-    @laravelViewsStyles(laravel-views,tailwindcss,livewire)
+    @laravelViewsStyles(laravel-views,tailwindcss)
 
 </head>
