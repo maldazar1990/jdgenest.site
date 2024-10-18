@@ -7548,7 +7548,6 @@ var __webpack_exports__ = {};
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-var speed = 50; /* The speed/duration of the effect in milliseconds */
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 function cleanByTag(e) {
   var classOrder = this.dataset["class"];

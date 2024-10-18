@@ -1,5 +1,4 @@
 
-const speed = 50; /* The speed/duration of the effect in milliseconds */
 require('bootstrap');
 function cleanByTag (e) {
     let classOrder = this.dataset.class;
