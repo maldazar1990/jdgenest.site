@@ -11,6 +11,8 @@ COMMIT_MSG.aim.txt
 .idea
 phpunit.xml
 /database/homestead.sqlite
+identifier.sqlite
+package-lock.json
 # Files used to upload zips for early access folks
 upload-bin.sh
 main.zip
@@ -22,7 +24,8 @@ main.zip
 .Trashes
 ehthumbs.db
 Thumbs.db
-
+.phpstorm.meta.php
+_ide_helper.php
 # Obsidian files for documentation editin
 docs/.obsidian/workspace.json
 .env
@@ -56,13 +59,10 @@ public/hot
 public_html/storage
 public_html/hot
 
-/storage/
+/storage
 .env
 Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
-/.npm/
-storage/framework/views/00dc7281bf555e813a1308b751006d722a8dfe26.php
-storage/framework/views/dae95f8d90f16d70b19adb07a7d16ba8f47e3397.php
-storage/framework/views/f2e3acbd1aa45285bf5d1aedfa018860976c0bfb.php
+/.npm
