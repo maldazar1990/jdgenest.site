@@ -11,7 +11,7 @@ class PostTableView extends TableView
      * Sets a model class to get the initial data
      */
     protected $paginate = 10;
-    public $sortOrder = 'asc';
+    public $sortOrder = 'desc';
     protected $model = post::class;
     public $sortBy = 'created_at';
     public $searchBy = ['title', 'post'];
