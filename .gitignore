@@ -7,6 +7,7 @@ SCRATCH.md
 COMMIT_MSG.aim.txt
 .phpunit.cache/
 .phpunit.result.cache
+/public_html/images/
 .idea
 phpunit.xml
 /database/homestead.sqlite
