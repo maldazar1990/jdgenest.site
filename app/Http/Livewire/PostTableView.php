@@ -26,6 +26,7 @@ class PostTableView extends TableView
         return [
             Header::title("Titre")->sortBy("title"),
             Header::title("Date de création")->sortBy("created_at"),
+            "Article",
             "Status",
         ];
     }
@@ -51,8 +52,9 @@ class PostTableView extends TableView
     public function row($model): array
     {
         return [
-            $model->title,
+            "<a href='".route('admin_posts_edit', $model->id)."'>".$model->title."</a>",
             $model->created_at->format("d/m/Y"),
+            "<a href='".route('post', $model->slug)."' target='_blank' rel='noopener noreferrer'>".$model->title."</a>",
             config("app.status")[$model->status],
         ];
     }
