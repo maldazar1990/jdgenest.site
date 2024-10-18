@@ -112,7 +112,7 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
-        return redirect()->back()->with('message','Enregistré avec succès');
+        return back()->with('message','Enregistré avec succès');
     }
 
     /**
@@ -196,7 +196,7 @@ class PostController extends Controller
             }
         }
 
-        return redirect()->back()->with('message','Sauvegardé avec succès');
+        return back()->with('message','Sauvegardé avec succès');
 
     }
 
@@ -211,7 +211,7 @@ class PostController extends Controller
         $posts = post::where( 'id', $id )->first();
         $posts->status = 2;
         $posts->save();
-	return redirect()->back()->with('message','Supprimé avec succès');
+	return back()->with('message','Supprimé avec succès');
 
     }
 }
