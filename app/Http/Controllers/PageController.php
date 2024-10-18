@@ -46,7 +46,7 @@ class PageController extends Controller
             'SEOData' => new SEOData(
                 title: "Vous voulez me contacter ?",
                 description: "J'aime ma job mais si je peux vous répondre à des questions ou vous aider, je le ferai avec plaisir.",
-                image: asset("images/".$this->userInfo->image),
+                image: asset("images/".$this->userInfo->image."jpeg"),
                 author: $this->userInfo->name,
                 type: "article",
             ),

@@ -27,11 +27,13 @@
         "bootstrap": "^5.3.3",
         "bootstrapfront": "npm:bootstrap@^5.2.2",
         "ckeditor5-build-full": "^25.0.0",
+        "font-awesome": "^4.7.0",
         "jquery": "^3.7.1",
         "mini-css-extract-plugin": "^2.9.1",
         "mix": "^0.0.1",
         "npm": "^9.1.2",
         "popper.js": "^1.16.1",
+        "require": "^2.4.20",
         "select2": "^4.1.0-rc.0"
     }
 }
