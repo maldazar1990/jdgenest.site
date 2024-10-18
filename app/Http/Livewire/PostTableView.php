@@ -5,25 +5,21 @@ namespace App\Http\Livewire;
 use App\post;
 use LaravelViews\Facades\Header;
 use LaravelViews\Views\TableView;
-use Illuminate\Support\Facades\Request as  Request;
 class PostTableView extends TableView
 {
     /**
      * Sets a model class to get the initial data
      */
     protected $paginate = 10;
-
+    public $sortOrder = 'asc';
+    protected $model = post::class;
+    public $sortBy = 'created_at';
     public $searchBy = ['title', 'post'];
     /**
      * Sets the headers of the table as you want to be displayed
      *
      * @return array<string> Array of headers
      */
-
-    public function repository(){
-        return Post::query();
-
-    }
 
     public function headers(): array
     {

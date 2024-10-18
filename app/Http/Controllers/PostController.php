@@ -22,7 +22,7 @@ class PostController extends Controller
         return view('admin.index', [
 
             "title" => "Articles",
-            "liveWireTable" => "post-table-view"
+            "liveWireTable" => "post-table-view",
         ]);
     }
 

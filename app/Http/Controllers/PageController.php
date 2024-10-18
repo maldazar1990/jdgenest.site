@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\FormBuilder;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Watson\Rememberable\Rememberable;
+use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {

@@ -32,7 +32,7 @@
                 default:
             }
             @endphp
-            @if(!isset($liveWireTable))
+            @if(!isset($liveWireTable)and!isset($testtable))
             <div class="card-block grid_view">
                 <h3 class="card-title">{{$title}}</h3>
                 {!! @grid_view($gridviews) !!}
@@ -43,8 +43,10 @@
                 </form>
                 @endif
             </div>
-            @else
+            @elseif(!isset($testtable))
             @livewire($liveWireTable)
+            @else
+            @livewire("PostTable");
             @endif
 
         </div>

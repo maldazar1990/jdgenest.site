@@ -62,6 +62,7 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Auth::routes();
     Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');
     Route::get('/adminhome', 'HomeController@index')->name('admin');
+    Route::get('/testemail', 'PageController@testemail');
 
 
 });
@@ -166,6 +167,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ["auth", "role:admin,user","s
             Route::post('/deleteall', 'IpBanController@deleteAll')->name('admin_ipban_delete_all');
 
         });
+
+
 });
 
 
