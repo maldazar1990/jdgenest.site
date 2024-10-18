@@ -64,3 +64,4 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 /.npm
+/ressources/images/

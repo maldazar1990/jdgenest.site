@@ -1,4 +1,10 @@
 /*!
+  * Bootstrap v4.1.1 (https://getbootstrap.com/)
+  * Copyright 2011-2018 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  */
+
+/*!
  * Select2 4.1.0-rc.0
  * https://select2.github.io
  *
@@ -15,11 +21,4 @@
  * https://jquery.org/license
  *
  * Date: 2023-08-28T13:37Z
- */
-
-/**!
- * Sortable 1.15.3
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
  */
