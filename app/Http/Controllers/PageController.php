@@ -92,6 +92,8 @@ class PageController extends Controller
             $posts = Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
         }
         $tags = Tags::whereIn("post_tags.post_id",$posts->pluck('id')->toArray())
+            ->select("tags.id","tags.title")
+            ->distinct()
             ->join("post_tags","post_tags.tags_id","=","tags.id")
             ->get();
         return view('theme.blog.home',[
