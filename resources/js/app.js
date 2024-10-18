@@ -3,7 +3,6 @@ const speed = 50; /* The speed/duration of the effect in milliseconds */
 require('bootstrap');
 
 
-
 function typeWriter(i,txt,el) {
     if (i < txt.length) {
         document.getElementById(el).innerHTML += txt.charAt(i);
