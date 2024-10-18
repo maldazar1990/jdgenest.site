@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var speed = 50; /* The speed/duration of the effect in milliseconds */
 
 function typeWriter(i, txt, el) {

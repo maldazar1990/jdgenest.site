@@ -2,6 +2,13 @@ import $ from 'jquery';
 import 'select2';
 import FullEditor from 'ckeditor5-build-full';
 import bootstrap from './bootstrap/bootstrap.bundle.min.js';
+import { library, icon } from '@fortawesome/fontawesome-svg-core';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+library.add(faCamera);
+var camera = icon({
+  prefix: 'fas',
+  iconName: 'camera'
+});
 $(document).on("click", "ul.nav li.parent > a ", function () {
   $(this).find('i').toggleClass("fa-minus");
 });

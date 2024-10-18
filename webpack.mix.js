@@ -12,11 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.setPublicPath('public_html/')
-    .babel('resources/js/admin/app.js', 'admin/js/app.js')
+    .js('resources/js/admin/app.js', 'admin/js/app.js')
     .sass('resources/sass/admin/app.scss', 'admin/css/app.css');
 
 mix.setPublicPath('public_html/')
-    .babel('resources/js/app.js', 'front/js/app.js')
+    .js('resources/js/app.js', 'front/js/app.js')
     .sass('resources/sass/app.scss', 'front/css/app.css');
 
 if (mix.inProduction()) {
