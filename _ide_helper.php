@@ -24392,49 +24392,6 @@ namespace RalphJSmit\Laravel\SEO\Facades {
             }
     }
 
-namespace Spatie\Glide {
-            /**
-     * 
-     *
-     */        class GlideImageFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function create($sourceFile)
-        {
-                        return \Spatie\Glide\GlideImage::create($sourceFile);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function setSourceFile($sourceFile)
-        {
-                        /** @var \Spatie\Glide\GlideImage $instance */
-                        return $instance->setSourceFile($sourceFile);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function modify($modificationParameters)
-        {
-                        /** @var \Spatie\Glide\GlideImage $instance */
-                        return $instance->modify($modificationParameters);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */        public static function save($outputFile)
-        {
-                        /** @var \Spatie\Glide\GlideImage $instance */
-                        return $instance->save($outputFile);
-        }
-            }
-    }
-
 namespace Spatie\LaravelIgnition\Facades {
             /**
      * 
@@ -28687,7 +28644,6 @@ namespace  {
             class UI extends \LaravelViews\Facades\UI {}
             class Livewire extends \Livewire\Livewire {}
             class SEOManager extends \RalphJSmit\Laravel\SEO\Facades\SEOManager {}
-            class GlideImage extends \Spatie\Glide\GlideImageFacade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
     }
 

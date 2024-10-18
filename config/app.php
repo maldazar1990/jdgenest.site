@@ -164,7 +164,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Spatie\Glide\GlideServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -183,7 +182,6 @@ return [
 
         shweshi\OpenGraph\Providers\OpenGraphProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        'GlideImage' => Spatie\Glide\GlideImageFacade::class,
 
 
 
