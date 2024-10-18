@@ -240,6 +240,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'FormBuilder' => Collective\Html\FormBuilderFacade::class,
+	'Input' => Illuminate\Support\Facades\Request::class,
 
 
     ],
