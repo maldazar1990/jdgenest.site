@@ -35,7 +35,6 @@ class DeletePostsAction extends Action
             'status' => '2'
         ]);
 
-        \LSCache::purgeAll();
         $this->success("Supprimés avec succès");
     }
 }

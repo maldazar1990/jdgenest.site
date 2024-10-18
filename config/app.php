@@ -199,7 +199,6 @@ return [
     */
 
     'aliases' => [
-        'LSCache'   => Litespeed\LSCache\LSCache::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,

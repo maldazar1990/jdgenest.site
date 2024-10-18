@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Str;
-use Litespeed\LSCache\LSCache;
 
 class PostController extends Controller
 {
@@ -113,9 +112,7 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
-        LSCache::purgeAll();
-        $request->session()->flash('message', 'Enregistré avec succès');
-        return redirect()->route('admin_posts');
+        return redirect()->back()->with('message','Enregistré avec succès');
     }
 
     /**
@@ -199,9 +196,8 @@ class PostController extends Controller
             }
         }
 
-        LSCache::purgeAll();
-        $request->session()->flash('message', 'Enregistré avec succès');
-        return redirect()->route('admin_posts');
+        return redirect()->back()->with('message','Sauvegardé avec succès');
+
     }
 
     /**
@@ -215,8 +211,7 @@ class PostController extends Controller
         $posts = post::where( 'id', $id )->first();
         $posts->status = 2;
         $posts->save();
-        $request->session()->flash('message', 'Supprimé avec succès');
-        LSCache::purgeAll();
-        return redirect()->route('admin_posts');
+	return redirect()->back()->with('message','Supprimé avec succès');
+
     }
 }

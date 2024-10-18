@@ -32,7 +32,6 @@ class DeletePostAction extends Action
     {
         $model->status = 2;
         $model->save();
-        \LSCache::purgeAll();
         $this->success("Supprimé avec succès");
     }
 }
