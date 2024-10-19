@@ -78,21 +78,20 @@
                             }
                         </style>
                         <h4><label for="patate" style="control-label">Ton commentaire:</label></h4>
-                        <textarea id="patate" name="patate" class="form-control input-lg mb-2" placeholder="Commentaire" minlength="10" maxlength="255" required autocomplete="off">
 
-                        </textarea>
-                        <input name="email" type="email" value="" class="emailfield">
-                        @if(config("app.env")=="production")
-                        <button  type="submit"
-                            class="btn btn-primary.">
-                            Envoyer
-                        </button>
-                        @else
+
+
+                        <div class="input-group " style="height:100px">
+                            <textarea class="form-control custom-control h-100" rows="3"  id="patate" name="patate"  style="resize:none" placeholder="Commentaire" minlength="10" maxlength="255" required autocomplete="off"></textarea>     
                             <button  type="submit"
-                                     class="btn btn-primary">
+                                class="input-group-addon btn btn-primary h-100">
                                 Envoyer
                             </button>
-                        @endif
+                        </div>
+
+                        <input name="email" type="email" value="" class="emailfield">
+                        
+
                     </form>
                 </div>
                 <div id="fb-root"></div>

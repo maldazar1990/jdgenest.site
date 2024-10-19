@@ -237,7 +237,6 @@ class PageController extends Controller
 
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''))->delay(60);
 
-        $request->session()->flash('message', 'Ton commentaire a été envoyé avec succès');
-        return redirect()->back();
+        return back()->with('message', 'Ton commentaire a été envoyé avec succès');
     }
 }
