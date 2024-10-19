@@ -39,8 +39,7 @@ class HelperGeneral
     {
         $path = "images/";
         $quality = 80;
-        dump(\base_path()."/public_html/images/".$image);
-        dump(file_exists(\base_path()."/public_html/images/".$image));
+
         if(file_exists(\base_path()."/public_html/images/".$image)) {
             $filename = explode(".", $image)[0];
             $imageWithPath = $path . $image;
@@ -54,7 +53,6 @@ class HelperGeneral
                 imagewebp($img, $path.$filename.".webp");
 
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-                dump(1);
             }
 
             if ( $format == IMAGETYPE_PNG ) {
@@ -65,7 +63,6 @@ class HelperGeneral
                 imagewebp($img, $path.$filename.".webp");
                 imagejpeg( $img,$path . $filename.".jpeg");
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-                dump(2);
             }
 
             if ( $format == IMAGETYPE_WEBP ) {
@@ -74,13 +71,11 @@ class HelperGeneral
                 $img = imagecreatefromwebp($path.$image);
                 imagejpeg( $img,$path . $filename.".jpeg");
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-                dump(3);
             }
 
             if (function_exists('imageavif')) {
                 imageavif($img, $path . $filename . ".avif",$quality);
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality, "avif");
-                dump(4);
             }
 
         }
