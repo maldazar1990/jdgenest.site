@@ -1,13 +1,12 @@
 import $ from 'jquery';
-import FullEditor from 'ckeditor5-build-full';
+import ckeditor from 'ckeditor5-build-full';
+
 import bootstrap from './bootstrap/bootstrap.bundle.min.js';
 import select2 from 'select2';
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
 let select = $(".select2");
-
-console.log(select);
 if(select.length > 0) {
     select.select2({
         placeholder: "Choississez un tags",
@@ -33,8 +32,6 @@ $(function () {
     let sidebar = $(".sidebar span.icon");
     let type = $("#type");
     let selectImage = $(".selectimage");
-    let status = $("#status");
-
     if ( menu != null ) {
 
        //
@@ -67,7 +64,9 @@ $(function () {
         });
     }
     if (document.querySelector( '#editor' )) {
-        FullEditor.create( document.querySelector( '#editor' ), { toolbar: {
+        ckeditor.create(document.getElementById("editor"), {
+            // https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/toolbar/toolbar.html#extended-toolbar-configuration-format
+            toolbar: {
                 items: [
                     'exportPDF','exportWord', '|',
                     'findAndReplace', 'selectAll', '|',
@@ -79,7 +78,7 @@ $(function () {
                     '-',
                     'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
                     'alignment', '|',
-                    'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                    'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
                     'specialCharacters', 'horizontalLine', 'pageBreak', '|',
                     'textPartLanguage', '|',
                     'sourceEditing'
@@ -108,7 +107,7 @@ $(function () {
                 ]
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-            placeholder: 'Entrer ce que vous voulez!',
+            placeholder: 'Welcome to CKEditor 5!',
             // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
             fontFamily: {
                 options: [
@@ -144,7 +143,7 @@ $(function () {
             // Be careful with enabling previews
             // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
             htmlEmbed: {
-                showPreviews: true
+                showPreviews: false
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
             link: {
@@ -161,12 +160,14 @@ $(function () {
                 }
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-            // The "super-build" contains more premium features that require additional configuration, disable them below.
+           
+            // The "superbuild" contains more premium features that require additional configuration, disable them below.
             // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
             removePlugins: [
                 // These two are commercial, but you can try them out without registering to a trial.
                 // 'ExportPdf',
                 // 'ExportWord',
+                'AIAssistant',
                 'CKBox',
                 'CKFinder',
                 'EasyImage',
@@ -176,6 +177,7 @@ $(function () {
                 // Replace it on production website with other solutions:
                 // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
                 // 'Base64UploadAdapter',
+                'MultiLevelList',
                 'RealTimeCollaborativeComments',
                 'RealTimeCollaborativeTrackChanges',
                 'RealTimeCollaborativeRevisionHistory',
@@ -187,16 +189,19 @@ $(function () {
                 'Pagination',
                 'WProofreader',
                 // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-                // from a local file system (file://) - load this site via HTTP server if you enable MathType
-                'MathType'
+                // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+                'MathType',
+                // The following features are part of the Productivity Pack and require additional license.
+                'SlashCommand',
+                'Template',
+                'DocumentOutline',
+                'FormatPainter',
+                'TableOfContents',
+                'PasteFromOfficeEnhanced',
+                'CaseChange'
             ]
-        })
-            .catch( error => {
-
-                console.error( error );
-            } );
+        });
     }
-
     if (type.length>0) {
         type.on('change',function () {
             var type = $(this).val();

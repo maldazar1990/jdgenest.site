@@ -6,19 +6,20 @@
  }
 @endphp
 <form action="{{$action}}" method="get" class="mb-2 row">
-    <div class="input-group">
-        <input type="text" class="form-control" required minlength="3" maxlength="20" placeholder="Rechercher" name="search"
-        @if(Request::has("search"))
-            value="{{Request::get("search")}}"
-        @endif
-        >
+   
 
-        <div class="input-group-append">
-            <button class="btn btn-secondary" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
+    <div class="input-group">
+        <input class="form-control" name="search" type="search" placeholder="Rechercher" aria-label="Search"
+            @if(Request::has("search"))
+                value="{{Request::get("search")}}"
+            @endif
+        >
+        <button class="btn btn-outline-secondary5 border border-dark-subtle" type="submit">
+            <i class="fa fa-search "></i>
+        </button>
     </div>
+
+
 </form>
 <div class="mb-5 w-100 d-flex flex-wrap overflow-hidden">
     @php

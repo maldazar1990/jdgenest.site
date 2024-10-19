@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["auth", "role:admin,user","s
         Route::group(["prefix" => "posts"], function () {
             Route::get('/', 'PostController@index')->name('admin_posts');
             Route::get('/create', 'PostController@create')->name('admin_posts_create');
+            Route::get('/ajax/{title}', 'PostController@ajax')->name('admin_posts_ajax')->where("title", "[0-9A-Za-z\-]+");
             Route::post('/insert', 'PostController@store')->name('admin_posts_insert');
             Route::get('/{id}', 'PostController@edit')->name('admin_posts_edit');
             Route::post('/update/{id}', 'PostController@update')->name('admin_posts_update')->where("id", "[0-9A-Za-z\-]+");

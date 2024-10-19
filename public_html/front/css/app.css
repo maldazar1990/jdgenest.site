@@ -13182,7 +13182,11 @@ a.text-link:hover {
     width: 100%;
     position: absolute;
     left: 0;
-    top: 1.2rem;
+  }
+  .header .blog-name a {
+    display: block;
+    width: 200px;
+    margin: auto;
   }
   .header .btn-primary {
     width: 100%;

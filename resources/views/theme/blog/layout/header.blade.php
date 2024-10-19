@@ -1,4 +1,4 @@
-<header class="header text-center">
+<header class="header text-center  d-flex flex-column justify-content-md-start justify-content-center">
     @php
 
     if(!isset($options)){
@@ -9,7 +9,7 @@
         $userInfo = \App\Users::find(1);
     }
     @endphp
-    <h1 class="blog-name pt-lg-4 mb-0"><a class="no-text-decoration header-text" style="z-index:1" href="{{route("default")}}">{{$options['nom']}}</a></h1>
+    <h1 id="titlewebsite" class="blog-name pt-lg-4 mb-0"><a class="no-text-decoration header-text" style="z-index:1" href="{{route("default")}}">{{$options['nom']}}</a></h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark" >
 
@@ -18,7 +18,18 @@
             <span class="icon-bar middle-bar"></span>
             <span class="icon-bar bottom-bar"></span>
         </button>
+        <script>
+            let head = document.querySelector(".header");
+            document.querySelector(".navbar-toggler").addEventListener("click",function(){
+                if ( !this.classList.contains("collapsed") ) {
+                    head.classList.remove("justify-content-center");
 
+                } else {
+
+                    head.classList.add("justify-content-center");
+                }
+            });
+        </script>
         <div id="navigation" class="collapse navbar-collapse flex-column" >
             <div class="profile-section pt-3 pt-lg-0">
                 @include("theme.blog.layout.image", ['image' => $userInfo->image,"class" => "profile-image mb-3 rounded-circle mx-auto img-cover","size"=>"small"])

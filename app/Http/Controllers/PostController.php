@@ -200,6 +200,29 @@ class PostController extends Controller
 
     }
 
+    public function ajax(Request $request,$title) {
+
+        if ($request->ajax()) {
+
+            $posts = post::distinct()
+                ->select("post.id as userId","post.title as name","post.slug")
+                ->where("title","LIKE","%".HelperGeneral::clean($title)."%")
+                ->where("status","!=",2)
+                ->offset(0)->limit(10)
+                ->get()->toArray();
+
+            foreach  ( $posts as &$post ) {
+                $post["link"] = route("post", $post['slug']);	
+                $post["id"] = "@".$post['slug'];
+                
+            }
+
+            return response()->json($posts);
+        } else {
+            abort(404);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

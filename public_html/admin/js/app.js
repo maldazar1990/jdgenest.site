@@ -25,7 +25,6 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("click", "ul.nav li.p
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').toggleClass("fa-minus");
 });
 var select = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".select2");
-console.log(select);
 if (select.length > 0) {
   select.select2({
     placeholder: "Choississez un tags",
@@ -49,7 +48,6 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
   var sidebar = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".sidebar span.icon");
   var type = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#type");
   var selectImage = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".selectimage");
-  var status = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#status");
   if (menu != null) {
     //
 
@@ -78,9 +76,10 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
     });
   }
   if (document.querySelector('#editor')) {
-    ckeditor5_build_full__WEBPACK_IMPORTED_MODULE_1___default().create(document.querySelector('#editor'), {
+    ckeditor5_build_full__WEBPACK_IMPORTED_MODULE_1___default().create(document.getElementById("editor"), {
+      // https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/toolbar/toolbar.html#extended-toolbar-configuration-format
       toolbar: {
-        items: ['exportPDF', 'exportWord', '|', 'findAndReplace', 'selectAll', '|', 'heading', '|', 'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'outdent', 'indent', '|', 'undo', 'redo', '-', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|', 'alignment', '|', 'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|', 'specialCharacters', 'horizontalLine', 'pageBreak', '|', 'textPartLanguage', '|', 'sourceEditing'],
+        items: ['exportPDF', 'exportWord', '|', 'findAndReplace', 'selectAll', '|', 'heading', '|', 'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'outdent', 'indent', '|', 'undo', 'redo', '-', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|', 'alignment', '|', 'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|', 'specialCharacters', 'horizontalLine', 'pageBreak', '|', 'textPartLanguage', '|', 'sourceEditing'],
         shouldNotGroupWhenFull: true
       },
       // Changing the language of the interface requires loading the language file using the <script> tag.
@@ -131,7 +130,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
         }]
       },
       // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-      placeholder: 'Entrer ce que vous voulez!',
+      placeholder: 'Welcome to CKEditor 5!',
       // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
       fontFamily: {
         options: ['default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace', 'Georgia, serif', 'Lucida Sans Unicode, Lucida Grande, sans-serif', 'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif', 'Trebuchet MS, Helvetica, sans-serif', 'Verdana, Geneva, sans-serif'],
@@ -155,7 +154,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
       // Be careful with enabling previews
       // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
       htmlEmbed: {
-        showPreviews: true
+        showPreviews: false
       },
       // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
       link: {
@@ -172,25 +171,26 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
         }
       },
       // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-      // The "super-build" contains more premium features that require additional configuration, disable them below.
+
+      // The "superbuild" contains more premium features that require additional configuration, disable them below.
       // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
       removePlugins: [
       // These two are commercial, but you can try them out without registering to a trial.
       // 'ExportPdf',
       // 'ExportWord',
-      'CKBox', 'CKFinder', 'EasyImage',
+      'AIAssistant', 'CKBox', 'CKFinder', 'EasyImage',
       // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
       // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
       // Storing images as Base64 is usually a very bad idea.
       // Replace it on production website with other solutions:
       // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
       // 'Base64UploadAdapter',
-      'RealTimeCollaborativeComments', 'RealTimeCollaborativeTrackChanges', 'RealTimeCollaborativeRevisionHistory', 'PresenceList', 'Comments', 'TrackChanges', 'TrackChangesData', 'RevisionHistory', 'Pagination', 'WProofreader',
+      'MultiLevelList', 'RealTimeCollaborativeComments', 'RealTimeCollaborativeTrackChanges', 'RealTimeCollaborativeRevisionHistory', 'PresenceList', 'Comments', 'TrackChanges', 'TrackChangesData', 'RevisionHistory', 'Pagination', 'WProofreader',
       // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-      // from a local file system (file://) - load this site via HTTP server if you enable MathType
-      'MathType']
-    })["catch"](function (error) {
-      console.error(error);
+      // from a local file system (file://) - load this site via HTTP server if you enable MathType.
+      'MathType',
+      // The following features are part of the Productivity Pack and require additional license.
+      'SlashCommand', 'Template', 'DocumentOutline', 'FormatPainter', 'TableOfContents', 'PasteFromOfficeEnhanced', 'CaseChange']
     });
   }
   if (type.length > 0) {

@@ -56,7 +56,6 @@ class PageController extends Controller
     }
 
     function index(Request $request,$tagId = null){
-
         if ($tagId != null) {
             $posts = post::whereHas('tags', function ($query) use ($tagId) {
                 $query->where('tags.id', $tagId);
@@ -69,7 +68,6 @@ class PageController extends Controller
                 ->orderBy('post.created_at', 'desc')->paginate(config("app.maxblog"));
 
         } else if ( $request->has('search') or $request->has('tags') ) {
-
             $validator = Validator::make($request->all(), [
                 "search"=>"min:3 | max:20",
                 "tags"=>"in:tags,id",

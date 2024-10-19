@@ -1,4 +1,4 @@
-<div class="main-wrapper min-vh-100 d-flex flex-column justify-content-between">
+<div class="main-wrapper min-vh-100 d-flex flex-column ">
 
     @if(Route::currentRouteName() != "post")
         <section class="cta-section theme-bg-light py-5">
@@ -17,7 +17,7 @@
         </section>
     @endif
 
-    <section class="blog-list d-flex flex-column justify-content-between">
+    <section class="blog-list d-flex flex-column">
         <div class="container single-col-max-width pt-3 pb-3">
             @yield('content')
         </div>

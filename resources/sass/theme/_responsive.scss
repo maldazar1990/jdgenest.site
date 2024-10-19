@@ -48,7 +48,12 @@
 			width: 100%;
 			position: absolute;
 			left: 0;
-			top: 1.2rem;
+
+			a {
+				display: block;
+				width: 200px;
+				margin: auto;
+			}
 			
 		}
 		.btn-primary {

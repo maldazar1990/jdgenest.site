@@ -20,12 +20,14 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-decoupled-document": "^43.2.0",
         "@fortawesome/fontawesome-free": "^6.6.0",
         "@fortawesome/fontawesome-svg-core": "^6.6.0",
         "@fortawesome/free-solid-svg-icons": "^6.6.0",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "bootstrap": "^5.3.3",
         "bootstrapfront": "npm:bootstrap@^5.2.2",
+        "ckeditor5": "^43.2.0",
         "ckeditor5-build-full": "^25.0.0",
         "font-awesome": "^4.7.0",
         "jquery": "^3.7.1",

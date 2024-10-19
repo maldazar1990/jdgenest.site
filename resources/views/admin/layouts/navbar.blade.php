@@ -228,8 +228,6 @@ if(Auth::user()->hasAnyRole(['admin'])){
                 </div>
             </li>
         @endforeach
-        <li>
-            <a href="{{route("get-logout")}}" class="logout-button"><em class="fa fa-power-off"></em>&nbsp;Déconnection</a>
-        </li>
+        
     </ul>
 </nav>
