@@ -5,7 +5,11 @@
     <meta name="robots" content="noindex">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <script src="{{asset('admin/js/app.js') }}" defer></script>
+    @if(config("app.env") == 'production')
+        <script src="{{asset('admin/js/app.js') }}" defer></script>
+    @else
+        <script src="{{asset('admin/js/app.js?v='.microtime()) }}" defer></script>
+    @endif
     <link href="{{asset('admin/css/app.css')}}" rel="stylesheet">
     @laravelViewsStyles(laravel-views,tailwindcss,livewire)
     
