@@ -2,7 +2,7 @@
 
 @section("content")
     <div class="col-12">
-
+        
         <div class="mb-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">

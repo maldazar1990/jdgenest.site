@@ -161,11 +161,9 @@ class PostController extends Controller
             HelperGeneral::deleteImage($post->image);
             $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName()).".".$file->getClientOriginalExtension();
-            dump($file->move(\base_path()."/public_html/images", $name));
             HelperGeneral::createNewImage($name);
             $post->image = $name;
-            dump($post->image);
-            dump(public_path("images"));
+       
         } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
             HelperGeneral::deleteImage($post->image);
             $post->image = $request->imageUrl;
@@ -180,7 +178,6 @@ class PostController extends Controller
         $post->status = $request->input("status");
         $post->slug = Str::slug($post->title,"-");
         $post->save();
-        dd($post);
         $tagsIds = $request->input("tags");
         $post->tags()->detach();
         if( $tagsIds ) {
