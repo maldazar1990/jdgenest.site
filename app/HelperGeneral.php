@@ -40,7 +40,7 @@ class HelperGeneral
         $path = "images/";
         $quality = 80;
 
-        if(file_exists(\base_path()."/public_html/images/".$image)) {
+        if(file_exists(public_path("images/").$image)) {
             $filename = explode(".", $image)[0];
             $imageWithPath = $path . $image;
             $format = exif_imagetype($imageWithPath);
@@ -86,7 +86,7 @@ class HelperGeneral
     {
         $images = [];
         $path = "images/";
-        $files = File::files(\base_path()."/public_html/".$path);
+        $files = File::files(\public_path().$path);
         foreach ($files as $file) {
             if (Str::contains($file, self::clean($name))) {
                 $images[] = $file;
@@ -138,7 +138,7 @@ class HelperGeneral
         $path = "/images/";
         $exts = ["*.jpeg","*.jpg","*.webp"];
         foreach( $exts as $ext) {
-            foreach (glob(\base_path()."/public_html".$path.$ext) as $filename) {
+            foreach (glob(\public_path("images/").$path.$ext) as $filename) {
                 if ( Str::contains($filename,["_small","_medium","default"]) )
                     continue;
                 $file = explode("/", $filename);

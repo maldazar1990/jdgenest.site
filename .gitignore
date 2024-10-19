@@ -7,7 +7,9 @@ SCRATCH.md
 COMMIT_MSG.aim.txt
 .phpunit.cache/
 .phpunit.result.cache
+/public/images/
 /public_html/images/
+
 .idea
 phpunit.xml
 /database/homestead.sqlite
@@ -59,8 +61,8 @@ public/storage
 public/hot
 
 # Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
+public/storage
+public/hot
 .env
 Homestead.yaml
 Homestead.json

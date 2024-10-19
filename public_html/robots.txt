@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /adminhome/
-Disallow: /login
-Sitemap: https://www.jdgenest.site/sitemap.xml
-
-
