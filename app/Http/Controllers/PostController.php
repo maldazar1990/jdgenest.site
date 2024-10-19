@@ -161,9 +161,10 @@ class PostController extends Controller
             HelperGeneral::deleteImage($post->image);
             $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName()).".".$file->getClientOriginalExtension();
+            $file->move(\base_path()."/public_html/images", $name);
             HelperGeneral::createNewImage($name);
             $post->image = $name;
-       
+ 
         } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
             HelperGeneral::deleteImage($post->image);
             $post->image = $request->imageUrl;

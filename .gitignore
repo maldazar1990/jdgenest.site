@@ -35,6 +35,9 @@ docs/.obsidian/workspace.json
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+*.avif
+*.webp
+*.webm
 
 # Local History for Visual Studio Code
 .history/
