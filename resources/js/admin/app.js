@@ -1,8 +1,7 @@
 import $ from 'jquery';
 import ckeditor from 'ckeditor5-build-full';
-
-import bootstrap from './bootstrap/bootstrap.bundle.min.js';
-import select2 from 'select2';
+import './bootstrap/bootstrap.bundle.min.js';
+import  'select2';
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
@@ -26,6 +25,16 @@ if(select.length > 0) {
         },
     }).val($("#preselectedtags").val().split(",")).trigger("change");
 }
+
+$("#nav-image-upload").click(function (e) {
+    $("#hiddenTypeImage").val("upload");
+});
+$("#nav-image-select").click(function (e) {
+    $("#hiddenTypeImage").val("select");
+});
+$("#nav-image-url").click(function (e) {
+    $("#hiddenTypeImage").val("url");
+});
 
 $(function () {
     let menu = document.getElementById("menu");
@@ -248,4 +257,6 @@ $(function () {
             }
         });
     }
+
+
 });

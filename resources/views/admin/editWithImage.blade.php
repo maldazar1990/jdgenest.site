@@ -30,33 +30,44 @@
 
                     echo form_until($form, $fieldName);
                     $typeImage = 2;
-
                     if( isset($model) ) {
-                        if (Str::contains($model->image, 'http')) {
-                            $image = $model->image;
-                            $typeImage = 0;
-                        } else {
-                            $filename = explode('.', $model->image);
-                            $image = asset("images/" .$filename[0]."_small.webp");
+                        if ($model->image) {
+                            $image = "";
+                            if (Str::contains($model->image, 'http')) {
 
-                            if($form instanceof App\Http\Forms\PostForm) {
-                                $lstImage = App\HelperGeneral::getImages();
+                                if (App\HelperGeneral::urlValide($model->image)) {
+                                    $image = $model->image;
+                                } else {
+                                    dd(1);
+                                }
 
-                                if ( in_array($model->image, $lstImage) ) {
-                                    $typeImage = 1;
+                                    
+                                
+                                $typeImage = 0;
+                            } else {
+                                $filename = explode('.', $model->image);
+                                $image = asset("images/" .$filename[0]."_small.webp");
+
+                                if($form instanceof App\Http\Forms\PostForm) {
+                                    $lstImage = App\HelperGeneral::getImages();
+
+                                    if ( in_array($model->image, $lstImage) ) {
+                                        $typeImage = 1;
+                                    } else {
+                                        $typeImage = 2;
+                                    }
                                 } else {
                                     $typeImage = 2;
                                 }
-                            } else {
-                                $typeImage = 2;
+
                             }
-
+                            if ($image) {
+                                echo "
+                                    <h5>image actuel</h5>
+                                    <img src='".$image."' alt='image actuel' width='200px' class='img-fluid mb-3'>
+                                ";
+                            }
                         }
-
-                        echo "
-                            <h5>image actuel</h5>
-                            <img src='".$image."' alt='image actuel' width='200px' class='img-fluid mb-3'>
-                        ";
 
                     }
                 @endphp

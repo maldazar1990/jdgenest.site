@@ -28,7 +28,7 @@
                 }
 
             @endphp
-            {{--@include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])--}}
+            @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])
             @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'webp',"size"=>$size])
             <img
                 class="{{$class}}"

@@ -29,11 +29,19 @@ class HelperGeneral
         call_user_func($function,self::resizeImage($width/3,$height/3,$img,$width,$height), $newfile . "_small.".$format,$quality-20);
     }
 
+    public static function urlValide($url){
+        $headers = @get_headers($url);
+        if(strpos($headers[0],'200')===false)return false;
+        return true;
+    }
+
     public static function createNewImage($image)
     {
         $path = "images/";
         $quality = 80;
-        if(file_exists(public_path("images/".$image))) {
+        dump(\base_path()."/public_html/images/".$image);
+        dump(file_exists(\base_path()."/public_html/images/".$image));
+        if(file_exists(\base_path()."/public_html/images/".$image)) {
             $filename = explode(".", $image)[0];
             $imageWithPath = $path . $image;
             $format = exif_imagetype($imageWithPath);
@@ -46,7 +54,7 @@ class HelperGeneral
                 imagewebp($img, $path.$filename.".webp");
 
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-
+                dump(1);
             }
 
             if ( $format == IMAGETYPE_PNG ) {
@@ -57,7 +65,7 @@ class HelperGeneral
                 imagewebp($img, $path.$filename.".webp");
                 imagejpeg( $img,$path . $filename.".jpeg");
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-
+                dump(2);
             }
 
             if ( $format == IMAGETYPE_WEBP ) {
@@ -66,13 +74,14 @@ class HelperGeneral
                 $img = imagecreatefromwebp($path.$image);
                 imagejpeg( $img,$path . $filename.".jpeg");
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
-
+                dump(3);
             }
 
-            /*if (function_exists('imageavif')) {
+            if (function_exists('imageavif')) {
                 imageavif($img, $path . $filename . ".avif",$quality);
                 self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality, "avif");
-            }*/
+                dump(4);
+            }
 
         }
 
@@ -82,7 +91,7 @@ class HelperGeneral
     {
         $images = [];
         $path = "images/";
-        $files = File::files(public_path($path));
+        $files = File::files(\base_path()."/public_html/".$path);
         foreach ($files as $file) {
             if (Str::contains($file, self::clean($name))) {
                 $images[] = $file;
@@ -134,7 +143,7 @@ class HelperGeneral
         $path = "/images/";
         $exts = ["*.jpeg","*.jpg","*.webp"];
         foreach( $exts as $ext) {
-            foreach (glob(public_path($path).$ext) as $filename) {
+            foreach (glob(\base_path()."/public_html".$path.$ext) as $filename) {
                 if ( Str::contains($filename,["_small","_medium","default"]) )
                     continue;
                 $file = explode("/", $filename);

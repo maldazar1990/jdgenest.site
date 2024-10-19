@@ -128,7 +128,7 @@ class PageController extends Controller
         $imagejpeg = explode('.',$image);
         $imagejpeg = $imagejpeg[0].".jpeg";
 
-        if ( !file_exists(public_path('images/').$imagejpeg) )
+        if ( !file_exists(\base_path()."/public_html/images/".$imagejpeg) )
             $imagejpeg = $image;
         return view('theme.blog.post',[
             'options' => $this->options,

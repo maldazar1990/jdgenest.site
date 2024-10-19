@@ -11,6 +11,8 @@ define('LARAVEL_START', microtime(true));
 if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
     require __DIR__.'/../storage/framework/maintenance.php';
 }
+Define('ROOT_DIR',__DIR__);
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -38,7 +40,9 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
-
+$app->bind('path.public', function() {
+    return __DIR__;
+});
 $whoops = new Whoops\Run();
 $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
 

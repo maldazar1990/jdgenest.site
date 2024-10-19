@@ -79,7 +79,7 @@ class PostController extends Controller
         if ( $request->file("image") ) {
             $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName());
-            $file->move(public_path("images"), $name);
+            $file->move(\base_path()."/public_html/images", $name);
             HelperGeneral::createNewImage($name);
             $post->image = $name;
         } else  if ( $request->imageUrl ) {
@@ -151,31 +151,36 @@ class PostController extends Controller
 
         $post = post::where( 'id', $id )->first();
         $validator = Validator::make($request->all(), $this->rules());
-
+        
         if ($validator->fails()) {
             return redirect()->route('admin_posts_edit', $id)
                 ->withErrors($validator)
                 ->withInput();
         }
-        if ( $request->hiddenTypeImage == "upload" ) {
+        if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
             HelperGeneral::deleteImage($post->image);
             $file = $request->file("image");
-            $name = Str::slug(time() . $file->getClientOriginalName());
-            $file->move(public_path("images"), $name);
+            $name = Str::slug(time() . $file->getClientOriginalName()).".".$file->getClientOriginalExtension();
+            dump($file->move(\base_path()."/public_html/images", $name));
             HelperGeneral::createNewImage($name);
             $post->image = $name;
-        } else if ( $request->hiddenTypeImage == "url"  ) {
+            dump($post->image);
+            dump(public_path("images"));
+        } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
             HelperGeneral::deleteImage($post->image);
             $post->image = $request->imageUrl;
-        } else if ( $request->hiddenTypeImage == "select"  ) {
+        } else if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
             $post->image = $request->selectImage.".webp";
         }
+
+
+
         $post->title = $request->input("title");
         $post->post = $request->input("post");
         $post->status = $request->input("status");
         $post->slug = Str::slug($post->title,"-");
         $post->save();
-
+        dd($post);
         $tagsIds = $request->input("tags");
         $post->tags()->detach();
         if( $tagsIds ) {
