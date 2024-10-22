@@ -21,6 +21,7 @@ class ConvertImage implements ShouldQueue
     public function __construct( $image,$idPost)
     {
         $this->image = $image;
+        $this->idPost = $idPost;
     }
 
     /**

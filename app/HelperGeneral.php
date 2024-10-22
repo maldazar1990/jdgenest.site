@@ -5,8 +5,10 @@ namespace App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class HelperGeneral
-{
+define('PATHIMAGE',$path = \public_path("images/"));
+
+class HelperGeneral {
+     
     static function clean($string) {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
@@ -37,45 +39,45 @@ class HelperGeneral
 
     public static function createNewImage($image)
     {
-        $path = "images/";
+
         $quality = 80;
 
-        if(file_exists(public_path("images/").$image)) {
+        if(file_exists(PATHIMAGE.$image)) {
             $filename = explode(".", $image)[0];
-            $imageWithPath = $path . $image;
+            $imageWithPath = PATHIMAGE . $image;
             $format = exif_imagetype($imageWithPath);
             $data = getimagesize($imageWithPath);
             $width = $data[0];
             $height = $data[1];
             if ( $format == IMAGETYPE_JPEG or $format == IMAGETYPE_JPEG2000 ) {
 
-                $img = imagecreatefromjpeg( $path . $image);
-                imagewebp($img, $path.$filename.".webp");
+                $img = imagecreatefromjpeg( PATHIMAGE . $image);
+                imagewebp($img, PATHIMAGE.$filename.".webp");
 
-                self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
+                self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality);
             }
 
             if ( $format == IMAGETYPE_PNG ) {
-                $img = imagecreatefrompng( $path . $image);
+                $img = imagecreatefrompng( PATHIMAGE . $image);
                 imagepalettetotruecolor($img);
                 imagealphablending($img, true);
                 imagesavealpha($img, true);
-                imagewebp($img, $path.$filename.".webp");
-                imagejpeg( $img,$path . $filename.".jpeg");
-                self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
+                imagewebp($img, PATHIMAGE.$filename.".webp");
+                imagejpeg( $img,PATHIMAGE . $filename.".jpeg");
+                self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality);
             }
 
             if ( $format == IMAGETYPE_WEBP ) {
 
 
-                $img = imagecreatefromwebp($path.$image);
-                imagejpeg( $img,$path . $filename.".jpeg");
-                self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality);
+                $img = imagecreatefromwebp(PATHIMAGE.$image);
+                imagejpeg( $img,PATHIMAGE . $filename.".jpeg");
+                self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality);
             }
 
             if (function_exists('imageavif')) {
-                imageavif($img, $path . $filename . ".avif",$quality);
-                self::resizeImagesForThumb($width, $height, $img, $path . $filename, $quality, "avif");
+                imageavif($img, PATHIMAGE . $filename . ".avif",$quality);
+                self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality, "avif");
             }
 
         }
@@ -85,7 +87,7 @@ class HelperGeneral
     public static function searchImages($name)
     {
         $images = [];
-        $path = "images/";
+        $path = \public_path("images/");
         $files = File::files(\public_path().$path);
         foreach ($files as $file) {
             if (Str::contains($file, self::clean($name))) {
@@ -135,10 +137,10 @@ class HelperGeneral
 
     public static function getImages() {
         $images = [];
-        $path = "/images/";
+        
         $exts = ["*.jpeg","*.jpg","*.webp"];
         foreach( $exts as $ext) {
-            foreach (glob(\public_path("images/").$path.$ext) as $filename) {
+            foreach (glob(\public_path("images/").$ext) as $filename) {
                 if ( Str::contains($filename,["_small","_medium","default"]) )
                     continue;
                 $file = explode("/", $filename);
