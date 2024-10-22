@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\HelperGeneral;
 use App\Http\Forms\PostForm;
+use App\Jobs\ConvertImage;
 use App\post;
 use App\Tags;
 use Illuminate\Http\Request;
@@ -80,7 +81,7 @@ class PostController extends Controller
             $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName());
             $file->move(public_path("images/"), $name);
-            HelperGeneral::createNewImage($name);
+            \dispatch(new ConvertImage($name,$post->id));
             $post->image = $name;
         } else  if ( $request->imageUrl ) {
             HelperGeneral::deleteImage($post->image);
@@ -162,7 +163,7 @@ class PostController extends Controller
             $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName()).".".$file->getClientOriginalExtension();
             $file->move(\public_path("images/"), $name);
-            HelperGeneral::createNewImage($name);
+            \dispatch(new ConvertImage($name,$post->id));
             $post->image = $name;
  
         } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {

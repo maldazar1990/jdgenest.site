@@ -148,6 +148,7 @@ $(function () {
     
     if (selectImage.length > 0) {
         selectImage.select2({
+            width: 'resolve',
             placeholder: "Choississez une image",
             templateResult: function (data) {
                 var baseurl = "/images/";

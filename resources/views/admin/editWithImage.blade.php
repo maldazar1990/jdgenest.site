@@ -24,7 +24,7 @@
                 $typeImage = 0;
             } else {
                 $filename = explode('.', $model->image);
-                $image = asset("images/" .$filename[0]."_small.webp");
+                $image = asset("images/" .$model->image);
 
                 if($form instanceof App\Http\Forms\PostForm) {
                     $lstImage = App\HelperGeneral::getImages();
@@ -38,11 +38,6 @@
                     $typeImage = 2;
                 }
 
-            }
-            if ($image) {
-                echo "
-                    
-                ";
             }
         }
 
@@ -73,7 +68,7 @@
                     <div class="row">
                         
                         <div class="col-md-12 col-sm-12 col-lg-9">
-                            @if ( $image )
+                            @if ( isset($image) )
                                 <h5>image actuel</h5><br>
                                 <img src='{{$image}}' alt='image actuel' width='200px' class='img-fluid mb-3'>
                             @endif

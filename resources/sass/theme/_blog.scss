@@ -129,12 +129,8 @@
 		}
 	}
 	.blockquote {
-		font-family: Georgia,"Times New Roman",Times,serif;
 		border-left: 2px solid $theme-text-color-primary;
-		font-size: 1.5rem;
-		p {
-			font-size: 1.5rem;
-		}
+		padding-left: 2rem;
 		
 	}
 }

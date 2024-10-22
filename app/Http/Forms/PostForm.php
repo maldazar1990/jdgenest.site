@@ -59,8 +59,9 @@ class PostForm extends Form
                 "value" => $this->getData('image'),
                 "attr"=>[
                     "placeholder"=>"Image",
-                    "class"=>"form-control selectimage",
+                    "class"=>"form-control selectimage  mw-25",
                 ],
+                "style"=>"max-width: 30%;",
                 "choices" => HelperGeneral::getImages(),
                 'selected' => function ($data) use ($imageName,$modelImage ) {
                     // Returns the array of short names from model relationship data
@@ -76,6 +77,7 @@ class PostForm extends Form
             ])
             ->add('status', 'select',[
                 "label" => "Statut",
+                "class" => "form-control  mw-25",
                 "choices"=>array_filter(config("app.status"),function($val){
                     return $val != 2;
                 },ARRAY_FILTER_USE_KEY),
@@ -89,13 +91,13 @@ class PostForm extends Form
             }
         }
 
-        $this->add('tags', 'select', [
+        $this->add('tags[]', 'select', [
             "multiple"=>"multiple",
-            "name"=>"tags[]",
+            "style"=>"max-width: 30%;",
             "choices" => $tags,
             //"selected" => $selectedTags,
             "attr" => [
-                "class" => "select2 form-control",
+                "class" => "select2 form-control mw-25",
             ],
             'label' => 'Tags',
         ]);

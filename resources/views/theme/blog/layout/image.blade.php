@@ -23,9 +23,7 @@
             @php
                 $image = 'images/' . $image;
                 $filename = explode('.', $image);
-                if ( !str_contains($image,".webp") ) {
-                    $image = $image.".webp";
-                }
+  
 
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])
