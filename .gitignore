@@ -72,3 +72,4 @@ Homestead.json
 .phpunit.result.cache
 /.npm
 /ressources/images/
+/storage/
