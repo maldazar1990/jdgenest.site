@@ -1,18 +1,9 @@
-import Quill from 'quill';
+import hljs from 'highlight.js';
+
+import "../../../node_modules/highlight.js/styles/vs2015.css";
+Quill.register("modules/resize", window.QuillResizeImage);
 // Or if you only need the core build
 // import Quill from 'quill/core';
-
-const container = document.getElementById('editor');
-const quill = new Quill(container);
-const options = {
-    debug: 'info',
-    modules: {
-      toolbar: true,
-    },
-    placeholder: 'Compose an epic...',
-    theme: 'snow'
-  };
-console.log(quill, options);
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
@@ -47,6 +38,39 @@ $("#nav-image-url").click(function (e) {
 });
 
 $(function () {
+
+
+    var editor = new Quill('#quill-editor', { 
+        theme: 'snow',
+        modules: { 
+            resize: {
+                locale: {
+                  center: "center",
+                },
+              },
+            toolbar: [ [{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['link', 'image', 'video'], ['clean'] ],
+            syntax: { hljs },
+        }
+    }); 
+
+    let quillValue = document.getElementById('quill-value');
+    editor.on('text-change', function() {
+        editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
+            blockquote.classList.add("blockquote");
+        });
+
+        quillValue.value = editor.root.innerHTML;
+    });
+
+    editor.setHTML = (html) => { 
+        editor.root.innerHTML = html; 
+    }
+    editor.getHTML = () => {
+        return editor.root.innerHTML;
+    };
+    editor.setHTML(valpost);
+
+
     let menu = document.getElementById("menu");
     let sidebar = $(".sidebar span.icon");
     let type = $("#type");

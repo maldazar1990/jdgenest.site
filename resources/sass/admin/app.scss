@@ -26,6 +26,12 @@ $headline-font: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     filter: hue-rotate(0deg) saturate(100%);
 }
 
+
+.ql-ui {
+    font-family: $main-font;
+    background-color: black;
+}
+
 /*Theme Switcher*/
 
 .theme-switcher {

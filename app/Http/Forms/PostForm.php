@@ -9,6 +9,12 @@ use Kris\LaravelFormBuilder\Form;
 
 class PostForm extends Form
 {
+    
+    protected $formOptions = [
+        'method' => 'post',
+        'id' => 'postForm',
+    ];
+
     public function buildForm()
     {
         $modelImage = $this->model->image ?? "";

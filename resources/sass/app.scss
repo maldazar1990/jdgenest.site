@@ -46,6 +46,18 @@ $secondary: $theme-text-color-secondary;
 $font-family-base: "Alegreya Sans", "Open Sans";
 $headings-font-family: "Literata", "Open Sans";
 
+.ql-code-block-container {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-family: monospace;
+    position: relative;
+}
+
 nav{
     svg{
         max-width: 2em;

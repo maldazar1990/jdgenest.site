@@ -71,7 +71,17 @@
 
                     }
                 @endphp
-                <div id="editor"></div>
+                <div class="relative mt-4" wire:ignore>
+                    <script>
+                        const valpost = "{!! isset($model)?addslashes($model->post):'' !!}";
+                    </script>
+                    <label for="default-search" class="class="control-label">Post</label>
+                    <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 300px;">
+                    <textarea rows="3" class="mb-3 d-none"  id="quill-editor-area"></textarea>
+                    
+
+                </div>
+                <input type="hidden" name="post" id="quill-value" value="">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link {{$typeImage==2?"active":""}}" id="nav-image-upload" data-toggle="tab" data-target="#nav-upload" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Uploader l'image</button>
@@ -99,6 +109,7 @@
                     echo form_rest($form);
                     echo form_end($form);
                 @endphp
+
             </div>
         </div>
     </div>
