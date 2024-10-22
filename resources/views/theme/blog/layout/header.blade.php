@@ -20,13 +20,16 @@
         </button>
         <script>
             let head = document.querySelector(".header");
+            let title = document.querySelector("#titlewebsite");
+
             document.querySelector(".navbar-toggler").addEventListener("click",function(){
                 if ( !this.classList.contains("collapsed") ) {
                     head.classList.remove("justify-content-center");
-
+                    title.style.top = '10px';
                 } else {
 
                     head.classList.add("justify-content-center");
+                    title.style.top = "";
                 }
             });
         </script>
