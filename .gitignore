@@ -46,7 +46,6 @@ docs/.obsidian/workspace.json
 
 # Built Visual Studio Code Extensions
 *.vsix
-/public/build
 /bootstrap/ssr
 
 /vendor/
@@ -81,4 +80,4 @@ _ide_helper_models.*
 .phpstorm.meta.*
 .vscode
 identifier.sqlite
-
+.cache.json
