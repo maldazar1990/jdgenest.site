@@ -89,8 +89,9 @@ class PostForm extends Form
             }
         }
 
-        $this->add('tags[]', 'select', [
+        $this->add('tags', 'select', [
             "multiple"=>"multiple",
+            "name"=>"tags[]",
             "choices" => $tags,
             //"selected" => $selectedTags,
             "attr" => [
