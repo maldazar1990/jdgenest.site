@@ -24,11 +24,11 @@
                 @php
                     echo form_start($form);
 
-                    $fieldName = "post";
+                    /*$fieldName = "post";
                     if ($form instanceof App\Http\Forms\infosForm)
                         $fieldName = "description";
 
-                    echo form_until($form, $fieldName);
+                    echo form_until($form, $fieldName);*/
                     $typeImage = 2;
                     if( isset($model) ) {
                         if ($model->image) {
@@ -71,6 +71,7 @@
 
                     }
                 @endphp
+                <div id="editor"></div>
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link {{$typeImage==2?"active":""}}" id="nav-image-upload" data-toggle="tab" data-target="#nav-upload" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Uploader l'image</button>

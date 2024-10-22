@@ -1,5 +1,5 @@
+import '../../node_modules/bootstrap-5/';
 
-require('bootstrap');
 function cleanByTag (e) {
     let classOrder = this.dataset.class;
     e.target.classList.remove("bg-primary");

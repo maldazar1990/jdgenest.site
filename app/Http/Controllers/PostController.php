@@ -171,7 +171,7 @@ class PostController extends Controller
         } else if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
             $post->image = $request->selectImage.".webp";
         }
-
+        
         $post->title = $request->input("title");
         $post->post = $request->input("post");
         $post->status = $request->input("status");

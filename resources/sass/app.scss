@@ -15,7 +15,15 @@ $theme-bg-dark: #223142;
 $theme-border-color:  lighten($theme-text-color-primary, 60%);
 $smoky-white: #fafafa;
 
-
+.blockquote {
+    border-left: var(--bs-blockquote-border-width) solid var(--bs-body-color);  
+    font-style: italic;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: hidden;
+    padding-left: var(--bs-blockquote-padding);
+    padding-right: var(--bs-blockquote-padding);
+  }
 
 /*************************** Variables Section. *****************************/
 // Create variables to override the default value for variables used in the Bootstrap SCSS files.

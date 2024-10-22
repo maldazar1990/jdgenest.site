@@ -15,6 +15,7 @@
         "crivion/options": "dev-master",
         "fakerphp/faker": "^1.23",
         "filp/whoops": "2.16",
+        "inertiajs/inertia-laravel": "^1.3",
         "itstructure/laravel-grid-view": "dev-master",
         "kris/laravel-form-builder": "^1.51",
         "laravel-validation-rules/phone": "^1.4",
@@ -82,7 +83,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
+            "@php artisan ide-helper:models",
+            "@php artisan ide-helper:eloquent",
+            "@php artisan debugbar:clear"
+
         ]
     }
 }

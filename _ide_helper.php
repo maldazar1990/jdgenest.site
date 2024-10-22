@@ -11753,6 +11753,15 @@ namespace Illuminate\Support\Facades {
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
         }
+                    /**
+         * 
+         *
+         * @see \Inertia\ServiceProvider::registerRequestMacro()
+         * @static 
+         */        public static function inertia()
+        {
+                        return \Illuminate\Http\Request::inertia();
+        }
             }
             /**
      * 
@@ -12917,6 +12926,18 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Routing\Router $instance */
                         return $instance->macroCall($method, $parameters);
+        }
+                    /**
+         * 
+         *
+         * @see \Inertia\ServiceProvider::registerRouterMacro()
+         * @param mixed $uri
+         * @param mixed $component
+         * @param mixed $props
+         * @static 
+         */        public static function inertia($uri, $component, $props = [])
+        {
+                        return \Illuminate\Routing\Router::inertia($uri, $component, $props);
         }
                     /**
          * 
@@ -18545,6 +18566,15 @@ namespace Illuminate\Support\Facades {
          */        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+                    /**
+         * 
+         *
+         * @see \Inertia\ServiceProvider::registerRequestMacro()
+         * @static 
+         */        public static function inertia()
+        {
+                        return \Illuminate\Http\Request::inertia();
         }
             }
     }
@@ -24873,6 +24903,73 @@ namespace Illuminate\Http {
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
         }
+                    /**
+         * 
+         *
+         * @see \Inertia\ServiceProvider::registerRequestMacro()
+         * @static 
+         */        public static function inertia()
+        {
+                        return \Illuminate\Http\Request::inertia();
+        }
+            }
+    }
+
+namespace Illuminate\Routing {
+            /**
+     * 
+     *
+     * @mixin \Illuminate\Routing\RouteRegistrar
+     */        class Router {
+                    /**
+         * 
+         *
+         * @see \Inertia\ServiceProvider::registerRouterMacro()
+         * @param mixed $uri
+         * @param mixed $component
+         * @param mixed $props
+         * @static 
+         */        public static function inertia($uri, $component, $props = [])
+        {
+                        return \Illuminate\Routing\Router::inertia($uri, $component, $props);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::auth()
+         * @param mixed $options
+         * @static 
+         */        public static function auth($options = [])
+        {
+                        return \Illuminate\Routing\Router::auth($options);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
+         * @static 
+         */        public static function resetPassword()
+        {
+                        return \Illuminate\Routing\Router::resetPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
+         * @static 
+         */        public static function confirmPassword()
+        {
+                        return \Illuminate\Routing\Router::confirmPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
+         * @static 
+         */        public static function emailVerification()
+        {
+                        return \Illuminate\Routing\Router::emailVerification();
+        }
             }
     }
 
@@ -24882,6 +24979,25 @@ namespace Illuminate\Testing {
      *
      * @mixin \Illuminate\Http\Response
      */        class TestResponse {
+                    /**
+         * 
+         *
+         * @see \Inertia\Testing\TestResponseMacros::assertInertia()
+         * @param \Closure|null $callback
+         * @static 
+         */        public static function assertInertia($callback = null)
+        {
+                        return \Illuminate\Testing\TestResponse::assertInertia($callback);
+        }
+                    /**
+         * 
+         *
+         * @see \Inertia\Testing\TestResponseMacros::inertiaPage()
+         * @static 
+         */        public static function inertiaPage()
+        {
+                        return \Illuminate\Testing\TestResponse::inertiaPage();
+        }
                     /**
          * 
          *
@@ -24944,52 +25060,6 @@ namespace Illuminate\Http\Client {
          */        public static function collect()
         {
                         return \Illuminate\Http\Client\Request::collect();
-        }
-            }
-    }
-
-namespace Illuminate\Routing {
-            /**
-     * 
-     *
-     * @mixin \Illuminate\Routing\RouteRegistrar
-     */        class Router {
-                    /**
-         * 
-         *
-         * @see \Laravel\Ui\AuthRouteMethods::auth()
-         * @param mixed $options
-         * @static 
-         */        public static function auth($options = [])
-        {
-                        return \Illuminate\Routing\Router::auth($options);
-        }
-                    /**
-         * 
-         *
-         * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
-         * @static 
-         */        public static function resetPassword()
-        {
-                        return \Illuminate\Routing\Router::resetPassword();
-        }
-                    /**
-         * 
-         *
-         * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
-         * @static 
-         */        public static function confirmPassword()
-        {
-                        return \Illuminate\Routing\Router::confirmPassword();
-        }
-                    /**
-         * 
-         *
-         * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
-         * @static 
-         */        public static function emailVerification()
-        {
-                        return \Illuminate\Routing\Router::emailVerification();
         }
             }
     }

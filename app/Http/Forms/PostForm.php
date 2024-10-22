@@ -26,15 +26,15 @@ class PostForm extends Form
             ->add('title', 'text',[
                 "label" => "Titre",
                 "rules" => "required|string|max:255",
-            ])
-            ->add('post', 'textarea',[
+            ]);
+            /*->add('post', 'textarea',[
                 "label" => "Contenu",
                 "rules" => "string",
                 "attr" => [
                     "class" => "form-control ckeditor",
                     "id" => "editor",
                 ]
-            ]);
+            ]);*/
 
             $this->add('image', 'file',[
                 "attr" => [

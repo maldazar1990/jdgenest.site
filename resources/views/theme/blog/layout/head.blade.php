@@ -4,6 +4,7 @@
 
     if (isset($title)) {
         $titleWebsite = $titleWebsite." - ".$title;
+        
     }
     @endphp
 
@@ -17,8 +18,7 @@
     @if(isset($SEOData))
         {!! seo($SEOData) !!}
     @endif
-    <link id="theme-style" rel="stylesheet" href="{{asset('front/css/app.css')}}?v={{microtime()}}">
-    <script src="{{asset('front/js/app.js')}}?v={{microtime()}}" defer></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js" integrity="sha512-LW9+kKj/cBGHqnI4ok24dUWNR/e8sUD8RLzak1mNw5Ja2JYCmTXJTF5VpgFSw+VoBfpMvPScCo2DnKTIUjrzYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>

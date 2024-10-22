@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afc7fbef556e24fbde37341b64b463db",
+    "content-hash": "897116da215a68d71b72783f403ced12",
     "packages": [
         {
             "name": "akaunting/laravel-firewall",
@@ -75,16 +75,16 @@
         },
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.14.3",
+            "version": "v3.14.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd"
+                "reference": "14e4517bd49130d6119228107eb21ae47ae120ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd",
-                "reference": "c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/14e4517bd49130d6119228107eb21ae47ae120ab",
+                "reference": "14e4517bd49130d6119228107eb21ae47ae120ab",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.14.3"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.14.6"
             },
             "funding": [
                 {
@@ -155,7 +155,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-02T09:17:49+00:00"
+            "time": "2024-10-18T13:15:12+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -2028,6 +2028,82 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "inertiajs/inertia-laravel",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inertiajs/inertia-laravel.git",
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/36730d13b1dab9017069004fd458b3e67449a326",
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
+                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+                "symfony/console": "^5.3|^6.0|^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench": "^6.4|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.0|^9.5.8|^10.4",
+                "roave/security-advisories": "dev-master"
+            },
+            "suggest": {
+                "ext-pcntl": "Recommended when running the Inertia SSR server via the `inertia:start-ssr` artisan command."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Inertia\\ServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "./helpers.php"
+                ],
+                "psr-4": {
+                    "Inertia\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "homepage": "https://reinink.ca"
+                }
+            ],
+            "description": "The Laravel adapter for Inertia.js.",
+            "keywords": [
+                "inertia",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/inertiajs/inertia-laravel/issues",
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/reinink",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-13T01:25:09+00:00"
         },
         {
             "name": "intervention/image",
@@ -5408,36 +5484,36 @@
         },
         {
             "name": "rdx/laravelcollective-html",
-            "version": "v6.4.1",
+            "version": "6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rudiedirkx/laravelcollective-html.git",
-                "reference": "64ddfdcaeeb8d332bd98bef442bef81e39c3910b"
+                "reference": "3cc4bd1cb86e6296e4f8a824854d11c4dcec6fa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/laravelcollective-html/zipball/64ddfdcaeeb8d332bd98bef442bef81e39c3910b",
-                "reference": "64ddfdcaeeb8d332bd98bef442bef81e39c3910b",
+                "url": "https://api.github.com/repos/rudiedirkx/laravelcollective-html/zipball/3cc4bd1cb86e6296e4f8a824854d11c4dcec6fa6",
+                "reference": "3cc4bd1cb86e6296e4f8a824854d11c4dcec6fa6",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/session": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/view": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "php": ">=7.2.5"
+                "illuminate/http": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/routing": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/session": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/view": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "php": "^7.2 || ^8.0"
+            },
+            "replace": {
+                "laravelcollective/html": "self.version"
             },
             "require-dev": {
-                "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/database": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
                 "mockery/mockery": "~1.0",
-                "phpunit/phpunit": "~8.5|^9.5.10"
+                "phpunit/phpunit": "~8.5 || ^9.5.10"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "6.x-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Collective\\Html\\HtmlServiceProvider"
@@ -5460,23 +5536,12 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Adam Engebretson",
-                    "email": "adam@laravelcollective.com"
-                },
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
             "description": "HTML and Form Builders for the Laravel Framework",
-            "homepage": "https://laravelcollective.com",
             "support": {
-                "issues": "https://github.com/LaravelCollective/html/issues",
-                "source": "https://github.com/LaravelCollective/html"
+                "issues": "https://github.com/rudiedirkx/laravelcollective-html/issues",
+                "source": "https://github.com/rudiedirkx/laravelcollective-html"
             },
-            "time": "2023-04-25T02:46:11+00:00"
+            "time": "2024-03-20T15:08:15+00:00"
         },
         {
             "name": "shweshi/opengraph",
@@ -5791,16 +5856,16 @@
         },
         {
             "name": "spatie/laravel-html",
-            "version": "3.11.0",
+            "version": "3.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-html.git",
-                "reference": "94f5900cedc75454800877ace9780e27d6149287"
+                "reference": "167e5b8243103072155b562e5cc396c90a3c1055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-html/zipball/94f5900cedc75454800877ace9780e27d6149287",
-                "reference": "94f5900cedc75454800877ace9780e27d6149287",
+                "url": "https://api.github.com/repos/spatie/laravel-html/zipball/167e5b8243103072155b562e5cc396c90a3c1055",
+                "reference": "167e5b8243103072155b562e5cc396c90a3c1055",
                 "shasum": ""
             },
             "require": {
@@ -5857,7 +5922,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-html/tree/3.11.0"
+                "source": "https://github.com/spatie/laravel-html/tree/3.11.1"
             },
             "funding": [
                 {
@@ -5865,7 +5930,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-07-16T07:58:45+00:00"
+            "time": "2024-10-18T14:37:21+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

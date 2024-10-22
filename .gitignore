@@ -46,6 +46,8 @@ docs/.obsidian/workspace.json
 
 # Built Visual Studio Code Extensions
 *.vsix
+/public/build
+/bootstrap/ssr
 
 /vendor/
 node_modules/
