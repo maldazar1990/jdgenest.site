@@ -73,3 +73,12 @@ Homestead.json
 /.npm
 /ressources/images/
 /storage/
+
+*.save
+*.save.*
+_ide_helper.*
+_ide_helper_models.*
+.phpstorm.meta.*
+.vscode
+identifier.sqlite
+
