@@ -18,21 +18,7 @@
             <span class="icon-bar middle-bar"></span>
             <span class="icon-bar bottom-bar"></span>
         </button>
-        <script>
-            let head = document.querySelector(".header");
-            let title = document.querySelector("#titlewebsite");
-
-            document.querySelector(".navbar-toggler").addEventListener("click",function(){
-                if ( !this.classList.contains("collapsed") ) {
-                    head.classList.remove("justify-content-center");
-                    title.style.top = '10px';
-                } else {
-
-                    head.classList.add("justify-content-center");
-                    title.style.top = "";
-                }
-            });
-        </script>
+        
         <div id="navigation" class="collapse navbar-collapse flex-column" >
             <div class="profile-section pt-3 pt-lg-0">
                 @include("theme.blog.layout.image", ['image' => $userInfo->image,"class" => "profile-image mb-3 rounded-circle mx-auto img-cover","size"=>"small"])
@@ -48,4 +34,20 @@
             @include("theme.blog.layout.nav")
         </div>
     </nav>
+    <script>
+        let head = document.querySelector(".header");
+        let title = document.querySelector("#titlewebsite");
+        let collnav = document.getElementById("navigation");
+        console.log(collnav);
+        collnav.addEventListener("hidden.bs.collapse",function(){
+            head.classList.add("justify-content-center");
+                title.style.top = "";
+        });
+         collnav.addEventListener("show.bs.collapse",function(){
+            
+
+                head.classList.remove("justify-content-center");
+            title.style.top = '10px';
+        });
+    </script>
 </header>
