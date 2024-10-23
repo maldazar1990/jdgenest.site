@@ -251,6 +251,29 @@ $(function () {
         });
         let previewImage = $("#previewImage");
         let selectedImageId = $("#selectedImageId");
+        let imageUrl = $("#imageUrl");
+        let imageUpload = document.getElementById('imageUpload');
+        if (imageUpload) {
+            imageUpload.addEventListener('change', function (e) {
+                    let output = document.getElementById('previewImage');
+                    console.log(e.target.files[0]);
+                    output.src = URL.createObjectURL(e.target.files[0]);
+                    output.onload = function() {
+                        URL.revokeObjectURL(output.src) // free memory
+                    }
+                
+            });
+        }
+
+        if (imageUrl.length > 0) {
+            imageUrl.on('change', function () {
+                if( !$(this).is(':invalid') ){
+                    let srcImage = imageUrl.val();
+                    previewImage.attr('src',srcImage);
+                }
+            });
+        }
+
         selectImage.on('select2:select', function (e) {
             var data = e.params.data;
             console.log(selectedImageId);

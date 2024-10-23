@@ -184,7 +184,7 @@ class PostController extends Controller
             $name = Str::slug(time() . $nameWithoutExtension).".".$file->getClientOriginalExtension();
             $file->move(\public_path("images/"), $name);
 
-            $imageDb = Image::where("name",'like',"%".$nameWithoutExtension.'%')->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
+            $imageDb = Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
             if ( $imageDb ){
                 $post->image = $name;
                 $post->image_id = $imageDb->id;

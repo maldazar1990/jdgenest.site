@@ -43,13 +43,15 @@ class PostForm extends Form
             ]);*/
 
             $this->add('image', 'file',[
+                
                 "attr" => [
-                    "placeholder"=>"Image",
+                    "id"=>"imageUpload",
                 ],
                 "rules" => config("app.rule_image"),
             ])->add('imageUrl', 'url',[
+                
                 "attr" => [
-                    "placeholder"=>"Url de l'image",
+                    "id"=>"imageUrl",
                 ],
                 "rules" => "url",
                 "value" => (Str::contains($modelImage, 'http')) ? $modelImage : null,
