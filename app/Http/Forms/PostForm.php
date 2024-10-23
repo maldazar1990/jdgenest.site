@@ -91,12 +91,13 @@ class PostForm extends Form
             }
         }
 
-        $this->add('tags', 'select', [
+        $this->add('tags[]', 'select', [
             "multiple"=>"multiple",
+            "name"=>"tags[]",
+            "choices" => $tags,
             //"selected" => $selectedTags,
             "attr" => [
-                "class" => "select2 form-control",
-                "multiple" => "multiple",
+                "class" => "select2 form-control mw-25",
             ],
             'label' => 'Tags',
         ]);
