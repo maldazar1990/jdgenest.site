@@ -40,7 +40,7 @@ docs/.obsidian/workspace.json
 *.avif
 *.webp
 *.webm
-
+npm-debug.log.*
 # Local History for Visual Studio Code
 .history/
 
