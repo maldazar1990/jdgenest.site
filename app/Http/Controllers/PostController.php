@@ -205,9 +205,7 @@ class PostController extends Controller
                 $post->image_id = null;
             } else {
                 if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
-                    $selectedImage = Image::where("id",$request->selectedImageId)->first();
-                    dd($selectedImage);
-        
+                    $selectedImage = Image::where("id",$request->selectedImageId)->first();        
                     if (isset($selectedImage->file)) {
                         $post->image = $selectedImage->file;
                         $post->image_id = $selectedImage->id;
