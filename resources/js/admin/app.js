@@ -1,31 +1,40 @@
+import Quill from 'quill';
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
 import hljs from 'highlight.js';
-
+import {Mention, MentionBlot} from "quill-mention";
+import QuillResizeImage from 'quill-resize-image';
+import "../../../node_modules/quill-mention/src/quill.mention.css";
+import 'select2';
+import "../../../node_modules/select2/dist/js/select2.full";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-Quill.register("modules/resize", window.QuillResizeImage);
-// Or if you only need the core build
-// import Quill from 'quill/core';
+import '../../../node_modules/select2/dist/css/select2.css';
+
+Quill.register("modules/resize", QuillResizeImage);
+Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
+
+class linkmentionBlot extends MentionBlot {
+    static render(data) {
+        console.log(data);
+        var element = document.createElement('span');
+        element.classList.add('mention');
+        var aelem =  document.createElement('a');
+        aelem.setAttribute('href', data.link);
+        aelem.setAttribute('target', '_blank');
+        aelem.innerHTML = data.value;
+        element.appendChild(aelem);
+        console.log(element);
+        return element;
+    }
+}
+linkmentionBlot.blotName = "link-mention";
+
+Quill.register(linkmentionBlot);
+
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
-if($(".select2").length > 0) {
-    $(".select2").select2({
-        placeholder: "Choississez un tags",
-        multiple: true,
-        tags:true,
 
-        ajax: {
-            delay: 250,
-            url: window.appurl + "/admin/tags/ajax",
-            data: function (params) {
-                var query = {
-                    term: params.term,
-                }
-                return query;
-            },
-            dataType: 'json',
-        },
-    }).val($("#preselectedtags").val().split(",")).trigger("change");
-}
 
 $("#nav-image-upload").click(function (e) {
     $("#hiddenTypeImage").val("upload");
@@ -37,10 +46,50 @@ $("#nav-image-url").click(function (e) {
     $("#hiddenTypeImage").val("url");
 });
 
+async function suggestArticle(searchTerm) {
+    if (searchTerm.length > 1) {
+        const response = await fetch(window.appurl + "/admin/posts/ajax/" + searchTerm,
+            {
+                headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }})
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+        return response.slice(0,10);
+    } else{
+        return [];
+    }
+  }
+
 $(function () {
 
 
-    var editor = new Quill('#quill-editor', { 
+    if($(".select2").length > 0) {
+        $(".select2").select2({
+            placeholder: "Choississez un tags",
+            multiple: true,
+            tags:true,
+    
+            ajax: {
+                delay: 250,
+                url: window.appurl + "/admin/tags/ajax",
+                data: function (params) {
+                    var query = {
+                        term: params.term,
+                    }
+                    return query;
+                },
+                dataType: 'json',
+            },
+        }).val($("#preselectedtags").val().split(",")).trigger("change");
+    }
+
+
+    
+
+    let editor = new Quill('#quill-editor', { 
         theme: 'snow',
         modules: { 
             resize: {
@@ -50,11 +99,33 @@ $(function () {
               },
             toolbar: [ [{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['link', 'image', 'video'], ['clean'] ],
             syntax: { hljs },
+            mention: {
+                minChars:1,
+                maxChars:8,
+                blotName: 'link-mention',
+                allowedChars: /^[A-Za-z]*$/,
+                dataAttributes: ['id', 'value', 'denotationChar', 'link'],
+                mentionDenotationChars: ["@"],
+                source: async function (searchTerm, renderList) {
+                    let values = await suggestArticle(searchTerm);
+                    renderList(values, searchTerm);
+                },
+                onSelect: function (item, insertItem) {
+                    insertItem(item,false,"link-mention");
+                }
+                ,
+              },
         }
     }); 
 
+
+
+    window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+    window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
+
     let quillValue = document.getElementById('quill-value');
     editor.on('text-change', function() {
+
         editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
             blockquote.classList.add("blockquote");
         });

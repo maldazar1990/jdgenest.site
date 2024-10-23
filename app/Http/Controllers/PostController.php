@@ -207,15 +207,17 @@ class PostController extends Controller
         if ($request->ajax()) {
 
             $posts = post::distinct()
-                ->select("post.id as userId","post.title as name","post.slug")
+                ->select("post.id as id","post.slug","post.title")
                 ->where("title","LIKE","%".HelperGeneral::clean($title)."%")
                 ->where("status","!=",2)
-                ->offset(0)->limit(10)
+                ->offset(0)->limit(5)
                 ->get()->toArray();
 
             foreach  ( $posts as &$post ) {
-                $post["link"] = route("post", $post['slug']);	
-                $post["id"] = "@".$post['slug'];
+                $post["link"] =route("post", $post['slug']);
+                $post["value"] = $post["title"];
+                unset($post["slug"]);
+                unset($post["title"]);
                 
             }
 
