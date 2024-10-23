@@ -220,14 +220,48 @@ $(function () {
     }
     
     if (selectImage.length > 0) {
+
         selectImage.select2({
             width: 'resolve',
-            placeholder: "Choississez une image",
-            templateResult: function (data) {
-                var baseurl = "/images/";
 
-                return $('<span><img src="' + baseurl  + data.text.split(".")[0]+"_small.webp" + '" class="" style="max-width:50px; object-fit: contain; height: auto;" /> ' + data.text + '</span>');
+            placeholder: "Choississez une image",    
+            ajax: {
+                url: window.appurl + "/admin/files/ajax",
+                data: function (params) {
+                    var query = {
+                        term: params.term,
+                    }
+                    return query;
+                },
+                
+            },
+            templateResult: function (data) {   
+                let rowImage = data.text;
+                if (rowImage != undefined) {
+                    console.log(rowImage);
+                    if ( rowImage.includes("images/") == false ) {
+                        rowImage = window.location.origin+"/images/"+rowImage;
+                    } else {
+                        rowImage = window.location.origin+rowImage;
+                    }
+                    console.log(rowImage);
+                    return $('<span><img src="'+rowImage+'" class="" style="max-width:50px; object-fit: contain; height: auto;" /> ' + data.name + '</span>');
+                }
+            },
+        });
+        let previewImage = $("#previewImage");
+        let selectedImageId = $("#selectedImageId");
+        selectImage.on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(selectedImageId);
+            console.log(data);
+            selectedImageId.val(data.id);
+            if ( data.text.includes("images/") == false ) {
+                data.text = window.location.origin+"/images/"+data.text;
             }
+            let srcImage = previewImage.attr("src");
+            previewImage.attr("alt",srcImage);
+            previewImage.attr('src',data.text);
         });
     }
    

@@ -6,6 +6,7 @@ use App\Comment;
 use App\Contact;
 use App\FirewallIp;
 use App\Http\Forms\ContactForm;
+use App\Image;
 use App\Jobs\SendEmailBasicJob;
 use App\options_table;
 use App\post;
@@ -94,6 +95,9 @@ class PageController extends Controller
             ->distinct()
             ->join("post_tags","post_tags.tags_id","=","tags.id")
             ->get();
+        
+
+
         return view('theme.blog.home',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
@@ -124,21 +128,27 @@ class PageController extends Controller
             return redirect()->route('default');
         }
 
-        $image = $post->image;
-        $imagejpeg = explode('.',$image);
-        $imagejpeg = $imagejpeg[0].".jpeg";
+        if ($post->image_id != null) {
+            $image = Image::find($post->image_id)->first()->file;
+        } else {
+            $image = $post->image;
+            if ( !\str_contains($image,'.') ) {
+                $image = $image.".jpg";
+                
+            }
+            $image = asset("images/".$image);
+        }
 
-        if ( !file_exists(\public_path("images/").$imagejpeg) )
-            $imagejpeg = $image;
         return view('theme.blog.post',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
             'post' => $post,
+            'image' => $image,
             "comments" => $post->comments()->get(),
             'SEOData' => new SEOData(
                 title: $post->title,
                 description: Str::limit(strip_tags($post->post), 50),
-                image: asset("images/".$imagejpeg),
+                image: $image,
                 author: $post->user->name,
                 type: "article",
             ),

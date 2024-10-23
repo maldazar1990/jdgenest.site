@@ -30,9 +30,12 @@ class ImageGridView extends GridView
     public function card($model)
     {
         $imageFile = $model->file;
-        if ( \str_contains($imageFile,".webp") and \str_contains($imageFile,".avif") and \str_contains($imageFile,".jpeg") ) {
-            $imageFile = $imageFile."webp";
+        if ( !\str_contains($imageFile,".webp") and !\str_contains($imageFile,".avif") and !\str_contains($imageFile,".jpeg") and !\str_contains($imageFile,".jpg") ) {
+            $imageFile = $imageFile.".webp";
         }
+
+        if ( !\str_contains($imageFile,'images/') )
+            $imageFile = "images/".$imageFile;
 
         return [
             "image" => "/images/".$imageFile,

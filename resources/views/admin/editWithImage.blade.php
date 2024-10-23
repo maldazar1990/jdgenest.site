@@ -70,7 +70,7 @@
                         <div class="col-md-12 col-sm-12 col-lg-9">
                             @if ( isset($image) )
                                 <h5>image actuel</h5><br>
-                                <img src='{{$image}}' alt='image actuel' width='200px' class='img-fluid mb-3'>
+                                <img src='{{$image}}' id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
                             @endif
 
                             
@@ -84,8 +84,8 @@
                                     const valpost = "{!! isset($model)?addslashes($model->post):'' !!}";
                                 </script>
                                 <label for="default-search" class="class="control-label">Post</label>
-                                <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 300px;"></div>
-                                <textarea rows="3" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
+                                <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
+                                <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
                             </div>
                             <input type="hidden" name="post" id="quill-value" value="">
 
@@ -108,6 +108,7 @@
                                 @if($form instanceof App\Http\Forms\PostForm)
                                 <div class="tab-pane fade p-1 {{$typeImage==1?"active show":""}}" id="nav-select" role="tabpanel" aria-labelledby="nav-image-select">
                                     {!! form_widget($form->selectImage) !!}
+                                    <input type="hidden" name="selectedImageId" id="selectedImageId" value="{{ isset($model)?$model->image_id:"" }}">
                                 </div>
                                 @endif
                                 <div class="tab-pane fade p-1 {{$typeImage==0?"active show":""}}" id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Illuminate\Support\Facades\Validator;
 
 class FileController extends Controller
 {
@@ -38,6 +39,28 @@ class FileController extends Controller
             "title" => "Ajouter une image",
             "form"  => $form,
         ]);
+    }
+
+    public function ajax(Request $request) {
+
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'term' => 'max:10',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()->all()]);
+            } else {
+                $tags["results"] = Image::distinct()
+                    ->select("id as id","file as text", "name")
+                    ->where("title","LIKE","%".HelperGeneral::clean($request->term)."%")
+                    ->orWhere("file","LIKE","%".HelperGeneral::clean($request->term)."%")
+                    ->get()->toArray();
+                return response()->json($tags);
+            }
+        } else {
+            abort(404);
+        }
     }
 
 

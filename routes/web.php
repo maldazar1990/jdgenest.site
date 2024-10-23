@@ -140,6 +140,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["auth", "role:admin,user","s
 
         Route::group(["prefix" => "files"], function () {
             Route::get('/', 'FileController@index')->name('admin_files');
+            Route::get('/ajax', 'FileController@ajax')->name('admin_files_ajax');
             Route::get('/delete', 'FileController@delete')->name('admin_files_delete');
             Route::get('/create', 'FileController@create')->name('admin_files_create');
             Route::post('/store', 'FileController@store')->name('admin_files_store');

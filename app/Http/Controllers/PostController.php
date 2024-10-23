@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\HelperGeneral;
 use App\Http\Forms\PostForm;
+use App\Image;
 use App\Jobs\ConvertImage;
 use App\post;
 use App\Tags;
@@ -74,18 +75,7 @@ class PostController extends Controller
         }
         $post = new post();
 
-        if ( $request->file("image") ) {
-            $file = $request->file("image");
-            $name = Str::slug(time() . $file->getClientOriginalName());
-            $file->move(public_path("images/"), $name);
-            \dispatch(new ConvertImage($name,$post->id));
-            $post->image = $name;
-        } else  if ( $request->imageUrl ) {
-            HelperGeneral::deleteImage($post->image);
-            $post->image = $request->imageUrl;
-        } else if ( $request->selectImage ) {
-            $post->image = $request->selectImage.".webp";
-        }
+        $this->saveImage($request,$post);
 
         $post->title = $request->input("title");
         $post->post = $request->input("post");
@@ -155,21 +145,8 @@ class PostController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
-            HelperGeneral::deleteImage($post->image);
-            $file = $request->file("image");
-            $name = Str::slug(time() . $file->getClientOriginalName()).".".$file->getClientOriginalExtension();
-            $file->move(\public_path("images/"), $name);
-            \dispatch(new ConvertImage($name,$post->id));
-            $post->image = $name;
- 
-        } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
-            HelperGeneral::deleteImage($post->image);
-            $post->image = $request->imageUrl;
-        } else if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
-            $post->image = $request->selectImage.".webp";
-        }
         
+        $this->saveImage($request,$post);
         $post->title = $request->input("title");
         $post->post = $request->input("post");
         $post->status = $request->input("status");
@@ -197,6 +174,40 @@ class PostController extends Controller
 
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
 
+    }
+
+    protected function saveImage (Request $request, post $post) {
+        if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
+            HelperGeneral::deleteImage($post->image);
+            $file = $request->file("image");
+            $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
+            $name = Str::slug(time() . $nameWithoutExtension).".".$file->getClientOriginalExtension();
+            $file->move(\public_path("images/"), $name);
+
+            $imageDb = Image::where("name",'like',"%".$nameWithoutExtension.'%')->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
+            if ( $imageDb ){
+                $post->image = $name;
+                $post->image_id = $imageDb->id;
+            }else {
+                $imageDb = new Image();
+                $imageDb->name = $nameWithoutExtension;
+                $imageDb->file = "images/".$name;
+                $imageDb->save();
+                \dispatch(new ConvertImage($name,$post->id));
+                $post->image = $name;
+                $post->image_id = $imageDb->id;
+            }
+ 
+        } else if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
+            HelperGeneral::deleteImage($post->image);
+            $post->image = $request->imageUrl;
+            $post->image_id = null;
+        } else if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
+
+            $selectedImage = Image::where("name",$request->selectedImageId)->first();
+            $post->image = $selectedImage->file;
+            $post->image_id = $selectedImage->id;
+        }
     }
 
     public function ajax(Request $request,$title) {

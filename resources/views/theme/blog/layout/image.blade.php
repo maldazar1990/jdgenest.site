@@ -21,7 +21,11 @@
             <img decoding="async" loading="lazy" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php
-                $image = 'images/' . $image;
+                if (Str::contains($image, 'images/')) {
+                    $image = $image;
+                } else {
+                    $image = 'images/' . $image;
+                }
                 $filename = explode('.', $image);
   
 
