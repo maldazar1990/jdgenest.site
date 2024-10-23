@@ -198,25 +198,28 @@ class PostController extends Controller
                 $post->image_id = $imageDb->id;
             }
  
-        } 
+        } else {
+            if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
+                HelperGeneral::deleteImage($post->image);
+                $post->image = $request->imageUrl;
+                $post->image_id = null;
+            } else {
+                if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
+                    $selectedImage = Image::where("id",$request->selectedImageId)->first();
+                    dd($selectedImage);
         
-        if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
-            HelperGeneral::deleteImage($post->image);
-            $post->image = $request->imageUrl;
-            $post->image_id = null;
-        }  
-        
-        if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
-
-            $selectedImage = Image::where("name",$request->selectedImageId)->first();
-
-            
-            if (!isset($selectedImage->file)) {
-                $post->image = $selectedImage->file;
-                $post->image_id = $selectedImage->id;
+                    if (isset($selectedImage->file)) {
+                        $post->image = $selectedImage->file;
+                        $post->image_id = $selectedImage->id;
+                    }
+                    
+                }
             }
-            
         }
+        
+  
+        
+
     }
 
     public function ajax(Request $request,$title) {
