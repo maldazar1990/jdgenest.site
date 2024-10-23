@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Comment as Comment;
-use App\Contact as Contact;
 use App\FirewallIp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
-use Illuminate\Support\Str;
+
 
 class CommentController extends Controller
 {
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(Comment::query());
         return view('admin.index', [
 
             "title" => "Commentaire",

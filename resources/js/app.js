@@ -28,8 +28,8 @@ function cleanByTag (e) {
 
 function resetTags(event) {
     event.target.classList.add("d-none");
-    document.querySelectorAll("li[data-listclass]").forEach(function(e){
-        e.classList.remove("d-none");
+        document.querySelectorAll("li[data-listclass]").forEach(function(e){
+            e.classList.remove("d-none");
     });
     document.querySelectorAll("div[data-listclass]").forEach(function(e){
         e.classList.remove("d-none");
@@ -42,38 +42,56 @@ function resetTags(event) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
 
-  if (document.querySelector("#title")) {
-    let i = 0; /* The text */
-    //let txt = document.querySelector("#title").dataset.title;
-    //typeWriter(i,txt,"title");
-  }
-  document.querySelectorAll(".order").forEach(
+    if (document.querySelector("#title")) {
+        let i = 0; /* The text */
+        //let txt = document.querySelector("#title").dataset.title;
+        //typeWriter(i,txt,"title");
+        }
+        document.querySelectorAll(".order").forEach(
 
-      function(e){
-          e.addEventListener("click",cleanByTag,false);
-          e.addEventListener("touchstart",cleanByTag,false);
-      }
-  );
+            function(e){
+                e.addEventListener("click",cleanByTag,false);
+                e.addEventListener("touchstart",cleanByTag,false);
+            }
+        );
 
-  document.querySelectorAll(".clean-tag").forEach(function(e){
+        document.querySelectorAll(".clean-tag").forEach(function(e){
 
-        e.addEventListener("click",resetTags,false);
-        e.addEventListener("touchstart",resetTags,false);
+            e.addEventListener("click",resetTags,false);
+            e.addEventListener("touchstart",resetTags,false);
 
-  });
-
-  document.querySelectorAll("pre > code").forEach((el) => {
-        let button = document.createElement("button");
-        button.className = "copy-button";
-        button.innerHTML = "Cliquez pour copier";
-
-        el.parentNode.insertBefore(button,el);
-        button.addEventListener("click touchstart", (e) => {
-             let text = el.innerText;
-            navigator.clipboard.writeText(text);
-            button.innerHTML = "Copié !";
         });
-  });
+
+        document.querySelectorAll("pre > code").forEach((el) => {
+            let button = document.createElement("button");
+            button.className = "copy-button";
+            button.innerHTML = "Cliquez pour copier";
+
+            el.parentNode.insertBefore(button,el);
+            button.addEventListener("click touchstart", (e) => {
+                    let text = el.innerText;
+                navigator.clipboard.writeText(text);
+                button.innerHTML = "Copié !";
+            });
+        });
+
+        let head = document.querySelector(".header");
+        let title = document.querySelector("#titlewebsite");
+        let collnav = document.getElementById("navigation");
+ 
+        if ( head != null && title != null && collnav != null) {
+        collnav.addEventListener("hidden.bs.collapse",function(){
+            head.classList.add("justify-content-center");
+            title.style.top = "";
+        });
+        collnav.addEventListener("show.bs.collapse",function(){
+            head.classList.remove("justify-content-center");
+            title.style.top = '10px';
+        });
+        }
+
+  
+
 });
 
 

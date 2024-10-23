@@ -10,7 +10,6 @@ use App\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Str;
 
@@ -18,8 +17,6 @@ class PostController extends Controller
 {
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(post::query()->where("status","!=",2)->orderBy('created_at', 'desc'));
-
         return view('admin.index', [
 
             "title" => "Articles",

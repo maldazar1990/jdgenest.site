@@ -34,7 +34,7 @@ class options_table extends Model
 {
     use HasFactory;
     protected $table = 'options_table';
-
+    protected $fillable = ['option_name','option_value','type','options_id'];
 
 
     public function option_name ()  {

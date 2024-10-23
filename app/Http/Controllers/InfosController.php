@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class InfosController extends Controller
 {
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(Infos::query());
         return view('admin.index', [
             "title" => "Information",
             "liveWireTable" => "info-table-view",

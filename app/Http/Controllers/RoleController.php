@@ -6,7 +6,6 @@ use App\Http\Forms\RoleForm;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class RoleController extends Controller
@@ -18,7 +17,6 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(Role::query());
         return view('admin.index', [
 
             "title" => "Rôles",

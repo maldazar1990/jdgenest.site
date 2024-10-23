@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment as Comment;
 use App\FirewallIp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
+
 
 class IpBanController extends Controller
 {
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(FirewallIp::query());
         return view('admin.index', [
 
             "title" => "Bannies",

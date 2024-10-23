@@ -138,7 +138,7 @@ class HelperGeneral {
     public static function getImages() {
         $images = [];
         
-        $exts = ["*.jpeg","*.jpg","*.webp"];
+        $exts = ["*.jpeg","*.jpg","*.webp","*.png","*.avif"];
         foreach( $exts as $ext) {
             foreach (glob(\public_path("images/").$ext) as $filename) {
                 if ( Str::contains($filename,["_small","_medium","default"]) )

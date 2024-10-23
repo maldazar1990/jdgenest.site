@@ -23,40 +23,7 @@ class OptionsController extends Controller
         return view('admin.index', [
 
             "title" => "Options",
-            'useSendButtonAnyway' => true, // If true, even if there are no checkbox column, the main send button will be displayed.
-            "gridviews" => [
-                "dataProvider" => $dataProvider,
-                'rowsFormAction' => route('admin_options_create'),
-                'title' => "liste des options",
-                'useFilters' => false,
-                'columnFields' => [
-                    "id",
-                    [
-                        "label"=>"Nom",
-                        'attribute' => 'option_name',
-                    ],
-                    [
-                        "label"=>"Valeur",
-                        'attribute' => 'option_value',
-                    ],
-                    [
-                        'class' => \Itstructure\GridView\Columns\ActionColumn::class,
-                        "htmlAttributes" => [
-                            "width" => "25%",
-                        ],
-                        'actionTypes' => [
-
-                            'edit' => function ( $data) {
-                                return route('admin_options_edit', [$data]);
-                            },
-                            'delete' => function ($data) {
-                                return route('admin_options_delete', [$data]);
-                            },
-                        ]
-                    ]
-
-                ],
-            ],
+            "liveWireTable" => "config-view",
         ]);
     }
 

@@ -8,7 +8,6 @@ use App\Tags as Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class TagsController extends Controller
@@ -20,7 +19,6 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(Tags::query());
         return view('admin.index', [
 
             "title" => "Tags",

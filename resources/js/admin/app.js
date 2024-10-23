@@ -6,8 +6,7 @@ import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-Quill.register("modules/resize", QuillResizeImage);
-Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
+
 
 class linkmentionBlot extends MentionBlot {
     static render(data) {
@@ -25,7 +24,7 @@ class linkmentionBlot extends MentionBlot {
 }
 linkmentionBlot.blotName = "link-mention";
 
-Quill.register(linkmentionBlot);
+
 
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
@@ -84,61 +83,65 @@ $(function () {
         
     }
 
-
-    
-
-    let editor = new Quill('#quill-editor', { 
-        theme: 'snow',
-        modules: { 
-            resize: {
-                locale: {
-                  center: "center",
+    let quillEditor = document.querySelector("#quill-editor");
+    if ( quillEditor != null ) {
+        Quill.register("modules/resize", QuillResizeImage);
+        Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
+        Quill.register(linkmentionBlot);
+        let editor = new Quill('#quill-editor', { 
+            theme: 'snow',
+            modules: { 
+                resize: {
+                    locale: {
+                    center: "center",
+                    },
                 },
-              },
-            toolbar: [ [{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['link', 'image', 'video'], ['clean'] ],
-            syntax: { hljs },
-            mention: {
-                minChars:1,
-                maxChars:8,
-                blotName: 'link-mention',
-                showDenotationChar: false,
-                allowedChars: /^[A-Za-z]*$/,
-                dataAttributes: ['id', 'value', 'denotationChar', 'link'],
-                mentionDenotationChars: ["@"],
-                source: async function (searchTerm, renderList) {
-                    let values = await suggestArticle(searchTerm);
-                    renderList(values, searchTerm);
+                toolbar: [ [{ 'header': [1, 2, false] }], ['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['link', 'image', 'video'], ['clean'] ],
+                syntax: { hljs },
+                mention: {
+                    minChars:1,
+                    maxChars:8,
+                    blotName: 'link-mention',
+                    showDenotationChar: false,
+                    allowedChars: /^[A-Za-z]*$/,
+                    dataAttributes: ['id', 'value', 'denotationChar', 'link'],
+                    mentionDenotationChars: ["@"],
+                    source: async function (searchTerm, renderList) {
+                        let values = await suggestArticle(searchTerm);
+                        renderList(values, searchTerm);
+                    },
+                    onSelect: function (item, insertItem) {
+                        insertItem(item,false,"link-mention");
+                    }
+                    ,
                 },
-                onSelect: function (item, insertItem) {
-                    insertItem(item,false,"link-mention");
-                }
-                ,
-              },
-        }
-    }); 
+            }
+        }); 
 
+        window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+        window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
 
+        let quillValue = document.getElementById('quill-value');
+        editor.on('text-change', function() {
 
-    window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
-    window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
+            editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
+                blockquote.classList.add("blockquote");
+            });
 
-    let quillValue = document.getElementById('quill-value');
-    editor.on('text-change', function() {
-
-        editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
-            blockquote.classList.add("blockquote");
+            quillValue.value = editor.root.innerHTML;
         });
 
-        quillValue.value = editor.root.innerHTML;
-    });
-
-    editor.setHTML = (html) => { 
-        editor.root.innerHTML = html; 
+        editor.setHTML = (html) => { 
+            editor.root.innerHTML = html; 
+        }
+        editor.getHTML = () => {
+            return editor.root.innerHTML;
+        };
+        editor.setHTML(valpost);
     }
-    editor.getHTML = () => {
-        return editor.root.innerHTML;
-    };
-    editor.setHTML(valpost);
+
+
+    
 
 
     let menu = document.getElementById("menu");
@@ -227,6 +230,5 @@ $(function () {
             }
         });
     }
-
-
+   
 });

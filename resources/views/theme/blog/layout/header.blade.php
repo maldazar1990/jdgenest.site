@@ -38,8 +38,8 @@
         let head = document.querySelector(".header");
         let title = document.querySelector("#titlewebsite");
         let collnav = document.getElementById("navigation");
-        console.log(collnav);
         collnav.addEventListener("hidden.bs.collapse",function(){
+            console.log(1);
             head.classList.add("justify-content-center");
                 title.style.top = "";
         });

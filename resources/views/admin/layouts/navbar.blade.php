@@ -183,7 +183,7 @@ if(Auth::user()->hasAnyRole(['admin'])){
                 "link"=>"/admin/options/modifyMenu"
             ]*/
         ]
-    ];
+    ];/*
     $arrayNav[] = [
         "id"=>"usermenu",
         "name"=>"Utilisateurs",
@@ -202,7 +202,7 @@ if(Auth::user()->hasAnyRole(['admin'])){
                 "link"=>route("admin_user_create")
             ]
         ]
-    ];
+    ];*/
 
 }
 @endphp
