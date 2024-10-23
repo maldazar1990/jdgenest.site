@@ -181,10 +181,62 @@ $(function() {
     selectImage.select2({
       width: "resolve",
       placeholder: "Choississez une image",
+      ajax: {
+        url: window.appurl + "/admin/files/ajax",
+        data: function(params) {
+          var query = {
+            term: params.term
+          };
+          return query;
+        }
+      },
       templateResult: function(data) {
-        var baseurl = "/images/";
-        return $('<span><img src="' + baseurl + data.text.split(".")[0] + '_small.webp" class="" style="max-width:50px; object-fit: contain; height: auto;" /> ' + data.text + "</span>");
+        let rowImage = data.text;
+        if (rowImage != void 0) {
+          console.log(rowImage);
+          if (rowImage.includes("images/") == false) {
+            rowImage = window.location.origin + "/images/" + rowImage;
+          } else {
+            rowImage = window.location.origin + rowImage;
+          }
+          console.log(rowImage);
+          return $('<span><img src="' + rowImage + '" class="" style="max-width:50px; object-fit: contain; height: auto;" /> ' + data.name + "</span>");
+        }
       }
+    });
+    let previewImage = $("#previewImage");
+    let selectedImageId = $("#selectedImageId");
+    let imageUrl = $("#imageUrl");
+    let imageUpload = document.getElementById("imageUpload");
+    if (imageUpload) {
+      imageUpload.addEventListener("change", function(e) {
+        let output = document.getElementById("previewImage");
+        console.log(e.target.files[0]);
+        output.src = URL.createObjectURL(e.target.files[0]);
+        output.onload = function() {
+          URL.revokeObjectURL(output.src);
+        };
+      });
+    }
+    if (imageUrl.length > 0) {
+      imageUrl.on("change", function() {
+        if (!$(this).is(":invalid")) {
+          let srcImage = imageUrl.val();
+          previewImage.attr("src", srcImage);
+        }
+      });
+    }
+    selectImage.on("select2:select", function(e) {
+      var data = e.params.data;
+      console.log(selectedImageId);
+      console.log(data);
+      selectedImageId.val(data.id);
+      if (data.text.includes("images/") == false) {
+        data.text = window.location.origin + "/images/" + data.text;
+      }
+      let srcImage = previewImage.attr("src");
+      previewImage.attr("alt", srcImage);
+      previewImage.attr("src", data.text);
     });
   }
 });
