@@ -6,13 +6,15 @@ use App\HelperGeneral;
 use App\Http\Forms\FileForm;
 use App\Http\Forms\TagForm;
 use App\Image;
+use App\post;
 use App\Tags as Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class FileController extends Controller
 {
     public function index()
@@ -51,11 +53,24 @@ class FileController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()->all()]);
             } else {
+                $disk = Storage::build([
+                    'driver' => 'local',
+                    'root' => \public_path(),
+                ]);
                 $tags["results"] = Image::distinct()
                     ->select("id as id","file as text", "name")
                     ->where("title","LIKE","%".HelperGeneral::clean($request->term)."%")
                     ->orWhere("file","LIKE","%".HelperGeneral::clean($request->term)."%")
                     ->get()->toArray();
+                foreach ($tags["results"] as &$tag){
+                    $imageFile = $tag["text"];
+                    if (!Str::contains($imageFile, "images/")) {
+                        $imageFile = "images/".$imageFile;
+                    } 
+                    if (!$disk->exists($imageFile)) {
+                        unset($tag);
+                    }
+                }
                 return response()->json($tags);
             }
         } else {
@@ -93,6 +108,14 @@ class FileController extends Controller
             return redirect()->route("admin_files")
                 ->with('error','Mauvais paramètre.');
         }
+
+        $post = post::where("image_od",$image)->first();
+
+        if ($post) {
+            return redirect()->route("admin_files")
+                ->with('error','L\'image est utilisée dans un article.');
+        } 
+
         $status = HelperGeneral::deleteImage($image);
         if ($status) {
             return redirect()->route("admin_files")

@@ -69,7 +69,7 @@ class ImageGridView extends GridView
             }
 
             if (!$found) {
-                return null;
+                $imageFile = "images/default.jpg";
             }
         }
 
