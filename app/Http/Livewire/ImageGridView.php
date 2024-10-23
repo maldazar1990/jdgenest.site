@@ -33,12 +33,13 @@ class ImageGridView extends GridView
         if ( !\str_contains($imageFile,".webp") and !\str_contains($imageFile,".avif") and !\str_contains($imageFile,".jpeg") and !\str_contains($imageFile,".jpg") ) {
             $imageFile = $imageFile.".webp";
         }
-
-        if ( !\str_contains($imageFile,'images/') )
+        if ( !\str_contains($imageFile,'images/') ) {
             $imageFile = "images/".$imageFile;
+        }
+           
 
         return [
-            "image" => "/images/".$imageFile,
+            "image" => config("app.url")."/".$imageFile,
             "title"=>$model->name,
         ];
     }

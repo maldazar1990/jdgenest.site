@@ -4,8 +4,8 @@
         $imageMedium = $filename . '_medium.' . $ext;
         $imageSmall = $filename . '_small.' . $ext;
     @endphp
-
     @if($size)
+
         @php
             switch ($size) {
                 case('small'):
@@ -23,8 +23,11 @@
             }
 
         @endphp
-        <source srcset="{{asset($image)}}" type="image/{{$ext}}">
+        @if(File::exists(public_path($image)))
+            <source srcset="{{asset($image)}}" type="image/{{$ext}}">
+        @endif
     @else
+
         @if(File::exists(public_path($image)))
             @if ( File::exists(public_path($imageMedium)) and File::exists(public_path($imageSmall)))
                 <source media="(min-width: 1280px)" srcSet="{{asset($image)}}" type="image/{{$ext}}"/>
