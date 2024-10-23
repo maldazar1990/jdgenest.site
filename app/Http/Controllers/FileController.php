@@ -77,7 +77,7 @@ class FileController extends Controller
         HelperGeneral::createNewImage($new_name);
         $modelImage = new Image();
         $modelImage->name = $request->name;
-        $modelImage->file = $request->name."."."webp";
+        $modelImage->file = "images/".$new_name;
         $modelImage->save();
         return redirect()->route("admin_files")
             ->with('success','Nouvelle image téléchargée.');

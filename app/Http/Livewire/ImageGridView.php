@@ -54,13 +54,22 @@ class ImageGridView extends GridView
             $imageFile = "images/".$imageFile;
         } 
         if (!$this->disk->exists($imageFile)) {
-            $imageFileWithoutExt = \explode('.',$imageFile)[0].".jpg";
-            $imageFile = $imageFileWithoutExt.".avif";
-            if ( !$this->disk->exists($imageFile) ) {
-                $imageFile = $imageFileWithoutExt.".jpg";
-                if ( !$this->disk->exists($imageFile) ) {
-                    $imageFile = "images/default.jpg";
+           
+            $dir = public_path('images/');
+            $files =  scandir ($dir);
+            $match = $model->name;
+            $found = false;
+            foreach ($files as $file) {
+                if(stripos($file, $match) != false){
+                    $imageFile="images/".$file;
+                    $found = true;
+                    break;
                 }
+                    
+            }
+
+            if (!$found) {
+                $imageFile = "images/default.jpg";
             }
         }
 
