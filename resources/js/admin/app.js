@@ -5,11 +5,7 @@ import hljs from 'highlight.js';
 import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
-import 'select2';
-import "../../../node_modules/select2/dist/js/select2.full";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-import '../../../node_modules/select2/dist/css/select2.css';
-
 Quill.register("modules/resize", QuillResizeImage);
 Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
 
@@ -84,6 +80,8 @@ $(function () {
                 dataType: 'json',
             },
         }).val($("#preselectedtags").val().split(",")).trigger("change");
+
+        
     }
 
 
@@ -103,6 +101,7 @@ $(function () {
                 minChars:1,
                 maxChars:8,
                 blotName: 'link-mention',
+                showDenotationChar: false,
                 allowedChars: /^[A-Za-z]*$/,
                 dataAttributes: ['id', 'value', 'denotationChar', 'link'],
                 mentionDenotationChars: ["@"],
