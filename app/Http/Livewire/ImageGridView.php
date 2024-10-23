@@ -4,7 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Image;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use LaravelViews\Views\GridView;
+use Illuminate\Support\Str;
 
 class ImageGridView extends GridView
 {
@@ -14,6 +16,15 @@ class ImageGridView extends GridView
     protected $model = Image::class;
     public $maxCols = 3;
     protected $paginate = 10;
+    private $disk;
+
+    public function __construct()
+    {
+        $this->disk = Storage::build([
+            'driver' => 'local',
+            'root' => \public_path(),
+        ]);
+    }
 
     public function sortableBy()
     {
@@ -30,13 +41,28 @@ class ImageGridView extends GridView
     public function card($model)
     {
         $imageFile = $model->file;
-        if ( !\str_contains($imageFile,".webp") and !\str_contains($imageFile,".avif") and !\str_contains($imageFile,".jpeg") and !\str_contains($imageFile,".jpg") ) {
-            $imageFile = $imageFile.".webp";
+        
+
+        if (Str::contains($imageFile, 'http')) {
+            return [
+                "image" => $imageFile,
+                "title"=>$model->name,
+            ];
         }
-        if ( !\str_contains($imageFile,'images/') ) {
+        
+        if (!Str::contains($imageFile, "images/")) {
             $imageFile = "images/".$imageFile;
+        } 
+        if (!$this->disk->exists($imageFile)) {
+            $imageFileWithoutExt = \explode('.',$imageFile)[0].".jpg";
+            $imageFile = $imageFileWithoutExt.".avif";
+            if ( !$this->disk->exists($imageFile) ) {
+                $imageFile = $imageFileWithoutExt.".jpg";
+                if ( !$this->disk->exists($imageFile) ) {
+                    $imageFile = "images/default.jpg";
+                }
+            }
         }
-           
 
         return [
             "image" => config("app.url")."/".$imageFile,

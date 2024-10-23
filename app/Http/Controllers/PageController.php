@@ -212,8 +212,6 @@ class PageController extends Controller
         $contact->text = $request->text;
         $contact->ip = $request->ip();
         $contact->save();
-
-        dd(env("MAIL_PERSO_EMAIL"));
         dispatch(new SendEmailBasicJob($request->savon,"Merci pour votre message","mail.email",''));
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));
 
