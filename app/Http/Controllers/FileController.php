@@ -62,13 +62,13 @@ class FileController extends Controller
                     ->where("title","LIKE","%".HelperGeneral::clean($request->term)."%")
                     ->orWhere("file","LIKE","%".HelperGeneral::clean($request->term)."%")
                     ->get()->toArray();
-                foreach ($tags["results"] as &$tag){
+                foreach ($tags["results"] as $key => $tag){
                     $imageFile = $tag["text"];
                     if (!Str::contains($imageFile, "images/")) {
                         $imageFile = "images/".$imageFile;
                     } 
                     if (!$disk->exists($imageFile)) {
-                        unset($tag);
+                        unset($tags["results"][$key]);
                     }
                 }
                 return response()->json($tags);
