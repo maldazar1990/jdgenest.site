@@ -3713,4 +3713,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
       button.innerHTML = "Copié !";
     });
   });
+  let head = document.querySelector(".header");
+  let title = document.querySelector("#titlewebsite");
+  let collnav = document.getElementById("navigation");
+  if (head != null && title != null && collnav != null) {
+    collnav.addEventListener("hidden.bs.collapse", function() {
+      head.classList.add("justify-content-center");
+      title.style.top = "";
+    });
+    collnav.addEventListener("show.bs.collapse", function() {
+      head.classList.remove("justify-content-center");
+      title.style.top = "10px";
+    });
+  }
 });
