@@ -15,8 +15,9 @@
                 
                 $typeImage = 0;
             } else {
+                $dbImage = App\Image::find($model->image_id);
                 if ($model->image_id)  {
-                    $dbImage = App\Image::find($model->image_id);
+                    
                     if ($dbImage) {
 
                         if (Str::contains($dbImage->file, 'images/')) {
