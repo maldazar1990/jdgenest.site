@@ -16,10 +16,15 @@
                         <div class="">
                             <h4>Études et expériences</h4>
                             <ul class="timeline">
-                                @foreach($userInfo->infos()->where("type","!=","exp")->orderBy('datestart', 'desc')->get() as $info)
+                   
+                                @foreach( $infos as $info)
                                     @php
                                     $tagClass = "";
-                                    foreach ($info->tags()->get() as $tag){
+                                    $tags = Cache::rememberForever("tags_info_".$info->id, function () use ($info) {
+                                        return $info->tags()->get();
+                                    });
+
+                                    foreach ($tags as $tag){
                                         $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
                                     }
                                     @endphp

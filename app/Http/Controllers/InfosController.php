@@ -9,6 +9,7 @@ use App\post;
 use Illuminate\Http\Request;
 use App\Tags;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -181,6 +182,10 @@ class InfosController extends Controller
         $infos->save();
         $infos->tags()->detach();
         $tagsIds = $request->tags;
+        Cache::forget('infos');
+        foreach($infos->tags()->get() as $tag) {
+            Cache::forget('tags_info_'.$tag->id);
+        }
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
 

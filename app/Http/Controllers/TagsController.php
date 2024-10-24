@@ -142,6 +142,10 @@ class TagsController extends Controller
         foreach ($tags->posts()->get() as $post) {
             Cache::forget('tags_post_'.$post->id);
         }
+        foreach($tags->infos()->get() as $info) {
+            Cache::forget('tags_info_'.$info->id);
+
+        }
         Cache::forget('tags');
         $tags->save();
         $request->session()->flash('message', 'Enregistrer avec succès');
@@ -162,6 +166,14 @@ class TagsController extends Controller
             $request->session()->flash('error', 'Impossible de supprimer ce tag, il est utilisé');
             return redirect()->route('admin_tags');
         } else {
+            foreach ($tags->posts()->get() as $post) {
+                Cache::forget('tags_post_'.$post->id);
+            }
+            foreach($tags->infos()->get() as $info) {
+                Cache::forget('tags_info_'.$info->id);
+    
+            }
+            Cache::forget('tags');
             $tags->delete();
 
             $request->session()->flash('message', "Enregistrer avec succès");

@@ -184,17 +184,22 @@ class PageController extends Controller
     }
 
     function about(Request $request){
+        $userInfo = $this->userInfo;
         return view('theme.blog.about',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
             "title" => "En résumé",
             "message" => $this->userInfo->presentation,
+            'infos'=> Cache::rememberForever("infos", function () use ($userInfo) {
+                return $userInfo->infos()->where("type","info")->get();
+            }),
             'SEOData' => new SEOData(
                 title:  "En résumé",
                 description: $this->userInfo->presentation,
                 image: asset("images/".$this->userInfo->image),
                 author: $this->userInfo->name,
                 type: "article",
+                
             ),
         ]);
     }
