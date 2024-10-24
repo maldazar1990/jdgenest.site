@@ -1,4 +1,4 @@
-sq<?php
+<?php
 
 return [
 
