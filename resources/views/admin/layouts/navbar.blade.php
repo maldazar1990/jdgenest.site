@@ -37,26 +37,7 @@ $arrayNav = [
                 "link"=>route("admin_posts_create")
             ]
         ]
-    ],/*
-    [
-        "id"=>"pagemenu",
-        "name"=>"Pages",
-        "icon"=>"fa fa-file-text",
-        "collapsed"=>(Str::contains(Route::currentRouteName(), 'page') ? "" : "collapsed"),
-        "isShow"=>(Str::contains(Route::currentRouteName(), 'page') ? "show" : ""),
-        "links"=>[
-            [
-                "icon"=>"fa fa-file-text",
-                "name"=>"Liste des pages",
-                "link"=>route("admin_page")
-            ],
-            [
-                "icon"=>"fa fa-plus",
-                "name"=>"Créer une page",
-                "link"=>route("admin_page_create")
-            ]
-        ]
-    ],*/
+    ],
     [
         "id"=>"imagemenu",
         "name"=>"Images",
@@ -141,25 +122,6 @@ if(Auth::user()->hasAnyRole(['admin'])){
         ]
     ];
     $arrayNav[] = [
-        "id"=>"rolemenu",
-        "name"=>"Rôles",
-        "icon"=>"fa fa-user",
-        "collapsed"=>(Str::contains(Route::currentRouteName(), 'role') ? "" : "collapsed"),
-        "isShow"=>(Str::contains(Route::currentRouteName(), 'role') ? "show" : ""),
-        "links"=>[
-            [
-                "icon"=>"fa fa-user",
-                "name"=>"Liste des rôles",
-                "link"=>route("admin_role")
-            ],
-            [
-                "icon"=>"fa fa-plus",
-                "name"=>"Ajouter un rôle",
-                "link"=>route("admin_role_create")
-            ]
-        ]
-    ];
-    $arrayNav[] = [
         "id"=>"optionmenu",
         "name"=>"Options",
         "icon"=>"fa fa-cog",
@@ -176,33 +138,9 @@ if(Auth::user()->hasAnyRole(['admin'])){
                 "name"=>"Ajouter une option",
                 "link"=>route("admin_options_create")
             ]
-            ,/*
-            [
-                "icon"=>"fa fa-compass",
-                "name"=>"Modifier le menu",
-                "link"=>"/admin/options/modifyMenu"
-            ]*/
+         
         ]
-    ];/*
-    $arrayNav[] = [
-        "id"=>"usermenu",
-        "name"=>"Utilisateurs",
-        "icon"=>"fa fa-user",
-        "collapsed"=>(Str::contains(Route::currentRouteName(), 'user') ? "" : "collapsed"),
-        "isShow"=>(Str::contains(Route::currentRouteName(), 'user') ? "show" : ""),
-        "links"=>[
-            [
-                "icon"=>"fa fa-user",
-                "name"=>"Liste des utilisateurs",
-                "link"=>route("admin_user_list")
-            ],
-            [
-                "icon"=>"fa fa-plus",
-                "name"=>"Ajouter un utilisateur",
-                "link"=>route("admin_user_create")
-            ]
-        ]
-    ];*/
+    ];
 
 }
 @endphp

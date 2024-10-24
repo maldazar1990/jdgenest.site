@@ -113,10 +113,10 @@ class UsersController extends Controller
         if($user->id == 1) {
             FacadesCache::forget('userInfo');
         }
-        $request->session()->flash('message', 'Task was successful!');
+
         if ( $user->id == auth()->user()->id ) {
             return redirect()->route('admin_user');
         }
-        return redirect()->route('admin_user');
+        return redirect()->route('admin_user')->with('message', 'emregistré avec succès');
     }
 }
