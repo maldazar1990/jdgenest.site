@@ -30,7 +30,7 @@
             <div class="blog-post-body">
 
                 @if ($post->image)
-                    <div class="mb-4">
+                    <div class="mb-4 d-flex flex-column align-items-center">
                         @include("theme.blog.layout.image", ['image' => $post->image])
                     </div>
                 @endif
