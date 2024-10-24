@@ -273,5 +273,6 @@ return [
     "description"=>env("APP_DESCRIPTION"),
     "rule_image"=>"mimes:jpeg,png,jpg,webp,avif|max:2048",
     "maxblog"=>5,
+    "host"=>env("APP_HOST"),
 
 ];

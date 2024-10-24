@@ -17,8 +17,7 @@ class RedirectToNonWWWMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (substr($request->header('host'), 0, 4) == 'www.') {
-            $request->headers->set('host', 'jdgenest.site');
-            dump($request);
+            $request->headers->set('host', config("app.host"));
             return redirect()->to($request->path());
         }
         
