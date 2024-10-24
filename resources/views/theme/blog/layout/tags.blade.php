@@ -9,7 +9,10 @@
                 }
             }
         } else {
-            $tags = $post->tags()->groupBy("tags.id")->get();
+            
+            $tags =Cache::remember( "tags_post_".$post->id,60*60*24, function () use ($post) {
+                return $post->tags()->groupBy("tags.id")->get();
+            });
         }
 
     @endphp

@@ -13,6 +13,7 @@ use App\post;
 use App\Tags;
 use App\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -58,6 +59,7 @@ class PageController extends Controller
 
     function index(Request $request,$tagId = null){
         if ($tagId != null) {
+             
             $posts = post::whereHas('tags', function ($query) use ($tagId) {
                 $query->where('tags.id', $tagId);
             })
@@ -67,6 +69,7 @@ class PageController extends Controller
             })
                 ->where("post.status",0)
                 ->orderBy('post.created_at', 'desc')->paginate(config("app.maxblog"));
+           
 
         } else if ( $request->has('search') or $request->has('tags') ) {
             $validator = Validator::make($request->all(), [
@@ -88,13 +91,15 @@ class PageController extends Controller
             ->where("post.status",0)
             ->paginate(10);
         } else {
-            $posts = Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
+            $posts =  Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
+            Cache::forever('allPosts',$posts);
         }
-        $tags = Tags::whereIn("post_tags.post_id",$posts->pluck('id')->toArray())
-            ->select("tags.id","tags.title")
-            ->distinct()
-            ->join("post_tags","post_tags.tags_id","=","tags.id")
-            ->get();
+        $postsIds = $posts->pluck('id')->toArray();
+        $tags =  Tags::whereIn("post_tags.post_id",$postsIds)
+        ->select("tags.id","tags.title")
+        ->distinct()
+        ->join("post_tags","post_tags.tags_id","=","tags.id")
+        ->get();
         
 
 
@@ -118,11 +123,14 @@ class PageController extends Controller
 
     function post(Request $request,$slug){
 
-        if ( is_numeric($slug) )
-            $post = Post::where("id",$slug)->first();
+        if ( is_numeric($slug) ) {
+            $post =  Post::where("id",$slug)->first();
+            Cache::forever("post_id_".$slug,$post);
+        }else {
+            $post =  Post::where("slug",$slug)->first();
+            Cache::forever("post_slug_".$slug,$post);
+        }
             
-        else
-            $post = Post::where("slug",$slug)->first();
 
         if ($post == null) {
             return redirect()->route('default');
@@ -139,12 +147,15 @@ class PageController extends Controller
             $image = asset("images/".$image);
         }
 
+        $comments = $post->comments()->get();
+        Cache::forever("post_comments_".$post->id,$comments);
+
         return view('theme.blog.post',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
             'post' => $post,
             'image' => $image,
-            "comments" => $post->comments()->get(),
+            "comments" => $comments,
             'SEOData' => new SEOData(
                 title: $post->title,
                 description: Str::limit(strip_tags($post->post), 50),

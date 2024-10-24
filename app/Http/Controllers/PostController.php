@@ -8,6 +8,7 @@ use App\Image;
 use App\Jobs\ConvertImage;
 use App\post;
 use App\Tags;
+use Doctrine\Common\Cache\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -100,6 +101,7 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
+        Cache::forget('allPosts');
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Enregistré avec succès');
     }
 
@@ -168,9 +170,12 @@ class PostController extends Controller
 
                 $post->tags()->attach($tag);
 
-
             }
         }
+
+        Cache::forget('post_id_'.$post->id);
+        Cache::forget('post_slug_'.$post->slug);
+        Cache::forget('allPosts');
 
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
 
@@ -255,6 +260,9 @@ class PostController extends Controller
     {
         $posts = post::where( 'id', $id )->first();
         $posts->status = 2;
+        Cache::forget('post_id_'.$post->id);
+        Cache::forget('post_slug_'.$post->slug);
+        Cache::forget('allPosts');
         $posts->save();
 	return redirect()->route('admin_posts');
 

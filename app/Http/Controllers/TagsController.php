@@ -6,6 +6,7 @@ use App\HelperGeneral;
 use App\Http\Forms\TagForm;
 use App\Tags as Tags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -92,6 +93,7 @@ class TagsController extends Controller
         $tags = new Tags;
         $tags->title = $request->input("title");
         $tags->save();
+        Cache::forget('tags');
         $request->session()->flash('success', 'Enregistrer avec succès');
         return redirect()->route('admin_tags');
     }
@@ -137,6 +139,10 @@ class TagsController extends Controller
         }
 
         $tags->title = $request->input("title");
+        foreach ($tags->posts()->get() as $post) {
+            Cache::forget('tags_post_'.$post->id);
+        }
+        Cache::forget('tags');
         $tags->save();
         $request->session()->flash('message', 'Enregistrer avec succès');
         return redirect()->route('admin_tags');
