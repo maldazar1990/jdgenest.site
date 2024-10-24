@@ -33,7 +33,7 @@ class InfosController extends Controller
             'url' => route('admin_infos_insert'),
         ]);
 
-        return view('admin.editWithImage', [
+        return view('admin.editInfo', [
             'title' => "Ajouter une information",
             'form' => $form,
         ]);
@@ -133,7 +133,7 @@ class InfosController extends Controller
             'url' => route('admin_infos_update', $id),
             'model' => $infos,
         ]);
-        return view("admin.editWithImage", [
+        return view("admin.editInfo", [
             "title" => "Modifier une information",
             "form" => $form,
             "model" => $infos,

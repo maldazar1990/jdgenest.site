@@ -37,7 +37,7 @@ class PostController extends Controller
             'url' => route("admin_posts_insert"),
         ]);
 
-        return view("admin.editWithImage",[
+        return view("admin.editPost",[
             "title" => "Publier un article",
             "form"  => $form,
         ]);
@@ -121,7 +121,7 @@ class PostController extends Controller
         ]);
 
 
-        return view("admin.editWithImage",[
+        return view("admin.editPost",[
             "title" => "Modifier une publication",
             "form" => $form,
             "model" => $posts,
@@ -173,10 +173,10 @@ class PostController extends Controller
             }
         }
 
-        if ( Cache::has('post_id_'.$posts->id) )
-            Cache::forget('post_id_'.$posts->id);
-        if ( Cache::has('post_slug_'.$posts->slug) )
-            Cache::forget('post_slug_'.$posts->slug);
+        if ( Cache::has('post_id_'.$post->id) )
+            Cache::forget('post_id_'.$post->id);
+        if ( Cache::has('post_slug_'.$post->slug) )
+            Cache::forget('post_slug_'.$post->slug);
         Cache::forget('allPosts');
 
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
