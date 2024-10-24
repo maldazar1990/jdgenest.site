@@ -8,7 +8,9 @@ use App\Http\Forms\UserForm;
 use App\Role;
 use App\Tags as Tags;
 use App\Users;
+use Doctrine\Common\Cache\Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache as FacadesCache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -224,6 +226,9 @@ class UsersController extends Controller
 
 
         $user->save();
+        if($user->id == 1) {
+            FacadesCache::forget('userInfo');
+        }
         $request->session()->flash('message', 'Task was successful!');
         if ( $user->id == auth()->user()->id ) {
             return redirect()->route('admin_user');

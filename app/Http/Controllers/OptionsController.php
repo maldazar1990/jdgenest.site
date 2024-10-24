@@ -6,6 +6,7 @@ use App\Http\Forms\OptionForm;
 use App\options_table;
 use Crivion\Options\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -90,7 +91,7 @@ class OptionsController extends Controller
         $option->option_name = $request->option_name;
         $option->option_value = $request->option_value;
         $option->save();
-
+        Cache::forget('optionsArray');
         return redirect()->route('admin_options')->with('message', 'Option ajoutée avec succès');
     }
 
@@ -149,6 +150,7 @@ class OptionsController extends Controller
     {
         $options = options_table::find($id);
         $options->delete();
+        Cache::forget('optionsArray');
         return redirect()->route('admin_options')->with('message', 'Option supprimée avec succès');
     }
 

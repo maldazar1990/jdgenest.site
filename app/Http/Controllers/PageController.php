@@ -28,8 +28,18 @@ class PageController extends Controller
 
     function __construct()
     {
-        $this->options = options_table::all()->pluck('option_value', 'option_name')->toArray();
-        $this->userInfo = Users::find(1)->first();
+            
+        if (Cache::has("optionsArray")) {
+            $this->options = Cache::get("optionsArray");
+        } else {
+            $this->options = options_table::all()->pluck('option_value', 'option_name')->toArray();
+            Cache::put("optionsArray",$this->options);
+        }
+
+        $this->userInfo =Cache::rememberForever('userInfo',function(){
+            return Users::find(1)->first();
+        });
+  
         setlocale(LC_TIME,'fr_FR');
     }
 
