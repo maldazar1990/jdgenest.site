@@ -34,6 +34,15 @@
     }
 }
 
+@media (min-width: 2000px) {
+	.main-wrapper {
+		
+		.container {
+			max-width: 1200px;
+		}
+	}
+}
+
 
 
 // We occasionally use media queries that go in the other direction (the given screen size or smaller):
