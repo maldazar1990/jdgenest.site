@@ -15,9 +15,9 @@
                 
                 $typeImage = 0;
             } else {
-                $dbImage = App\Image::find($model->image_id);
+                
                 if ($model->image_id)  {
-                    
+                    $dbImage = App\Image::find($model->image_id);
                     if ($dbImage) {
 
                         if (Str::contains($dbImage->file, 'images/')) {
@@ -29,8 +29,8 @@
                         $typeImage = 1;
                     }
                 } else {
-                    if (Str::contains($dbImage->file, 'images/')) {
-                        $image = asset($dbImage->file);
+                    if (Str::contains($model->image, 'images/')) {
+                        $image = asset($model->image);
                     } else {
                         $image = asset("images/" .$model->image);
                     }
