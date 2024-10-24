@@ -91,8 +91,9 @@ class PageController extends Controller
             ->where("post.status",0)
             ->paginate(10);
         } else {
-            $posts =  Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
-            Cache::forever('allPosts',$posts);
+            $posts =  Cache::rememberForever('allPosts',function(){
+                return Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
+            });
         }
         $postsIds = $posts->pluck('id')->toArray();
         $tags =  Tags::whereIn("post_tags.post_id",$postsIds)
@@ -124,11 +125,15 @@ class PageController extends Controller
     function post(Request $request,$slug){
 
         if ( is_numeric($slug) ) {
-            $post =  Post::where("id",$slug)->first();
-            Cache::forever("post_id_".$slug,$post);
+            $post =  Cache::rememberForever("post_id_".$slug,function() use ($slug){
+                return Post::where("id",$slug)->first();
+            });
+            
         }else {
-            $post =  Post::where("slug",$slug)->first();
-            Cache::forever("post_slug_".$slug,$post);
+  
+            $post =  Cache::rememberForever("post_slug_".$slug,function() use ($slug){
+                return Post::where("slug",$slug)->first();
+            });
         }
             
 
@@ -147,8 +152,10 @@ class PageController extends Controller
             $image = asset("images/".$image);
         }
 
-        $comments = $post->comments()->get();
-        Cache::forever("post_comments_".$post->id,$comments);
+ 
+        $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
+            return $post->comments()->get();
+        });
 
         return view('theme.blog.post',[
             'options' => $this->options,

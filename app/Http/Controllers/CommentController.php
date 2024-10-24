@@ -38,6 +38,7 @@ class CommentController extends Controller
 
         $comment = Comment::where( 'id', $id )->first();
         Cache::forget("post_comments_".$comment->post_id);
+    
         $comment->delete();
         
         $request->session()->flash('message', "Enregistrer avec succès");
