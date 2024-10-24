@@ -185,6 +185,9 @@ class PageController extends Controller
 
     function about(Request $request){
         $userInfo = $this->userInfo;
+        $infos = Cache::rememberForever("infos",function() use ($userInfo){
+            return$userInfo->infos()->where("type","info")->get();
+        });
         $exps = Cache::rememberForever("exps",function() use ($userInfo){
             return $userInfo->infos()->where("type","exp")->orderBy('datestart', 'desc')->get();
         });
@@ -196,7 +199,7 @@ class PageController extends Controller
             'userInfo' => $this->userInfo,
             "title" => "En résumé",
             "message" => $this->userInfo->presentation,
-            'infos'=> $userInfo->infos()->where("type","info")->get(),
+            'infos'=> $infos,
             "otherExps" => $otherExps,
             "exps" => $exps,
             'SEOData' => new SEOData(

@@ -100,6 +100,7 @@ class InfosController extends Controller
         $tagsIds = $request->input("tags");
         Cache::forget("exps");
         Cache::forget("otherExp");
+        Cache::forget("infos");
         $infos->tags()->detach();
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
@@ -186,6 +187,8 @@ class InfosController extends Controller
         $tagsIds = $request->tags;
         Cache::forget("exps");
         Cache::forget("otherExp");
+        Cache::forget("infos");
+
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
 
@@ -212,6 +215,8 @@ class InfosController extends Controller
         $infos->delete();
         Cache::forget("exps");
         Cache::forget("otherExp");
+        Cache::forget("infos");
+
         $request->session()->flash('message', 'Supprimé avec succès');
         return redirect()->route("admin_infos");
     }
