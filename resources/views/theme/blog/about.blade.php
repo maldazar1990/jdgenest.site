@@ -20,9 +20,7 @@
                                 @foreach( $infos as $info)
                                     @php
                                     $tagClass = "";
-                                    $tags = Cache::rememberForever("tags_info_".$info->id, function () use ($info) {
-                                        return $info->tags()->get();
-                                    });
+                                    $tags = $info->tags()->get();
 
                                     foreach ($tags as $tag){
                                         $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
@@ -43,6 +41,7 @@
                                             @endif
                                         </small>
                                         <div>
+                    
                                             @foreach( $info->tags()->groupBy("tags.id")->get() as $tag)
                                                 <span class="badge badge-pill bg-secondary disable-link">{{$tag->title}}</span>
                                             @endforeach

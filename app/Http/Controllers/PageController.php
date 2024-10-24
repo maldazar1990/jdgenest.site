@@ -190,9 +190,7 @@ class PageController extends Controller
             'userInfo' => $this->userInfo,
             "title" => "En résumé",
             "message" => $this->userInfo->presentation,
-            'infos'=> Cache::rememberForever("infos", function () use ($userInfo) {
-                return $userInfo->infos()->where("type","info")->get();
-            }),
+            'infos'=> $userInfo->infos()->where("type","info")->get(),
             'SEOData' => new SEOData(
                 title:  "En résumé",
                 description: $this->userInfo->presentation,

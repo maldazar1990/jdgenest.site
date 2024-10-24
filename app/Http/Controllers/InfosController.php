@@ -182,10 +182,7 @@ class InfosController extends Controller
         $infos->save();
         $infos->tags()->detach();
         $tagsIds = $request->tags;
-        Cache::forget('infos');
-        foreach($infos->tags()->get() as $tag) {
-            Cache::forget('tags_info_'.$tag->id);
-        }
+
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
 
