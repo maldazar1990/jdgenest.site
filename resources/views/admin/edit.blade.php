@@ -9,7 +9,11 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
-
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{ Session::get('error') }}
+                </div>
+            @endif
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>

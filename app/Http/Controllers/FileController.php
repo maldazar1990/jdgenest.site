@@ -85,9 +85,17 @@ class FileController extends Controller
             "name" => "required | string | max:255",
         ]);
 
-        $image = $request->file('image');
 
-        $new_name = rand() .$request->name. '.' . $image->getClientOriginalExtension();
+        $image = $request->file('image');
+        $nameWithoutExtension = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+        $existImage = Image::where("file","like","%".$nameWithoutExtension."%")->first(); 
+
+        if ($existImage) {
+            return redirect()->route("admin_files_create")
+                ->with('error','L\'image existe déjà.');
+        }
+
+        $new_name = $image->getClientOriginalName();
         $image->move(public_path('images'), $new_name);
         HelperGeneral::createNewImage($new_name);
         $modelImage = new Image();
@@ -95,35 +103,7 @@ class FileController extends Controller
         $modelImage->file = "images/".$new_name;
         $modelImage->save();
         return redirect()->route("admin_files")
-            ->with('success','Nouvelle image téléchargée.');
-    }
-
-    function delete(Request $request)
-    {
-        if ( $image = $request->get('image') ){
-            if(!HelperGeneral::searchImages($image))
-                return redirect()->route("admin_files")
-                    ->with('error','Le fichier n\'existe pas.');
-        } else {
-            return redirect()->route("admin_files")
-                ->with('error','Mauvais paramètre.');
-        }
-
-        $post = post::where("image_od",$image)->first();
-
-        if ($post) {
-            return redirect()->route("admin_files")
-                ->with('error','L\'image est utilisée dans un article.');
-        } 
-
-        $status = HelperGeneral::deleteImage($image);
-        if ($status) {
-            return redirect()->route("admin_files")
-                ->with('message','Image supprimée.');
-        } else {
-            return redirect()->route("admin_files")
-                ->with('error','Erreur lors de la suppression de l\'image.');
-        }
+            ->with('message','Nouvelle image téléchargée.');
     }
 
 }

@@ -203,8 +203,7 @@ class UsersController extends Controller
         if ( $request->image and $user->roles()->where("name","admin")->count() > 0 ) {
             HelperGeneral::deleteImage($user->image);
             $file = $request->file("image");
-            $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
-            $name = Str::slug(time() . $nameWithoutExtension).$file->getClientOriginalExtension();
+            $name = $file->getClientOriginalName();
             $file->move(public_path("images"), $name);
             HelperGeneral::createNewImage($name);
             $user->image = $name;

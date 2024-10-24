@@ -181,7 +181,7 @@ class PostController extends Controller
             HelperGeneral::deleteImage($post->image);
             $file = $request->file("image");
             $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
-            $name = Str::slug(time() . $nameWithoutExtension).".".$file->getClientOriginalExtension();
+            $name = $file->getClientOriginalName();
             $file->move(\public_path("images/"), $name);
 
             $imageDb = Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();

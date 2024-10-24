@@ -18,29 +18,13 @@ class PostForm extends Form
     public function buildForm()
     {
         $modelImage = $this->model->image ?? "";
-        if ($modelImage) {
-            if (str_contains($modelImage, ".")) {
-                $imageName = explode(".", $modelImage);
-                $imageName = $imageName[count($imageName) - 2];
-            } else {
-                $imageName = $this->model->image;
-            }
-        } else {
-            $imageName = "";
-        }
+        
         $this
             ->add('title', 'text',[
                 "label" => "Titre",
                 "rules" => "required|string|max:255",
             ]);
-            /*->add('post', 'textarea',[
-                "label" => "Contenu",
-                "rules" => "string",
-                "attr" => [
-                    "class" => "form-control ckeditor",
-                    "id" => "editor",
-                ]
-            ]);*/
+ 
 
             $this->add('image', 'file',[
                 
@@ -56,21 +40,7 @@ class PostForm extends Form
                 "rules" => "url",
                 "value" => (Str::contains($modelImage, 'http')) ? $modelImage : null,
             ])
-            ->add('selectImage', 'select',[
-
-                "value" => $this->getData('image'),
-                "attr"=>[
-                    "placeholder"=>"Image",
-                    "class"=>"form-control selectimage  mw-25",
-                ],
-                "style"=>"max-width: 30%;",
-                "choices" => HelperGeneral::getImages(),
-                'selected' => function ($data) use ($imageName,$modelImage ) {
-                    // Returns the array of short names from model relationship data
-                    return (Str::contains($modelImage, 'http')) ? null: $imageName;
-                },
-                'empty_value' => 'Choisir une image existante',
-            ])
+           
             ->add("hiddenTypeImage","hidden",[
                 "attr" => [
                     "id" => "hiddenTypeImage",

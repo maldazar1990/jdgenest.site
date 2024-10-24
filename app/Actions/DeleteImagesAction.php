@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\HelperGeneral;
 use App\Image;
+use App\post;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -36,7 +37,8 @@ class DeleteImagesAction extends Action
         try {
             foreach ($selectedModels as $idModel) {
                 $model = Image::find($idModel);
-                if (HelperGeneral::isImageUsed($model->name)) {
+                $post = post::where("image_od",$idModel)->first();
+                if (HelperGeneral::isImageUsed($model->name) or $post) {
                     HelperGeneral::deleteImage($model->file);
                     $model->delete();
                 } else {
