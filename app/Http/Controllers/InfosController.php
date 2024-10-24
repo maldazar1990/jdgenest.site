@@ -16,7 +16,13 @@ use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class InfosController extends Controller
-{
+{   
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = Tags::all();
+    }
     public function index()
     {
         return view('admin.index', [
@@ -28,14 +34,12 @@ class InfosController extends Controller
     public function create(Request $request, FormBuilder $formBuilder)
     {
 
-        $form = $formBuilder->create(infosForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_infos_insert'),
-        ]);
 
         return view('admin.editInfo', [
             'title' => "Ajouter une information",
-            'form' => $form,
+            'info' => null,
+            'tags' => $this->tags,
+            "route" => route("admin_infos_insert"),
         ]);
     }
 
@@ -52,7 +56,7 @@ class InfosController extends Controller
             "duree" => "min:0 | max:40",
             "dateend" => "date|after:datestart",
             "image" => config("app.rule_image"),
-            "type" => "required|in:tech,exp,job,school",
+            "type" => "required|in:exp,job,school",
 
         ];
 
@@ -79,7 +83,7 @@ class InfosController extends Controller
         $infos = new Infos();
         if ( $request->file("image") ) {
             $file = $request->file("image");
-            $name = Str::slug(time() . $file->getClientOriginalName());
+            $name = $file->getClientOriginalName();
             $file->move(public_path("images"), $name);
             HelperGeneral::createNewImage($name);
             $infos->image = $name;
@@ -127,16 +131,13 @@ class InfosController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $infos = Infos::where('id', $id)->first();
-        $form = \FormBuilder::create(infosForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_infos_update', $id),
-            'model' => $infos,
-        ]);
+        $info = Infos::where('id', $id)->first();
+ 
         return view("admin.editInfo", [
             "title" => "Modifier une information",
-            "form" => $form,
-            "model" => $infos,
+            "route" => route("admin_infos_update", $id),
+            "tags" => $this->tags,
+            "info" => $info,
         ]);
 
     }

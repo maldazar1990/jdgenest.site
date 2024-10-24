@@ -141,16 +141,18 @@ class HelperGeneral {
         $exts = ["*.jpeg","*.jpg","*.webp","*.png","*.avif"];
         foreach( $exts as $ext) {
             foreach (glob(\public_path("images/").$ext) as $filename) {
-                if ( Str::contains($filename,["_small","_medium","default"]) )
-                    continue;
-                $file = explode("/", $filename);
-                $file = end($file);
-                $index = explode(".",$file)[0];
-                $images[$index] = $file;
+                    if ( Str::contains($filename,["_small","_medium","default"]) )
+                        continue;
+                    $file = explode("/", $filename);
+                    $file = end($file);
+                    $index = explode(".",$file)[0];
+                    $images[$index] = $file;
+
             }
         }
         return $images;
     }
+
 
     static function wordToMinute($text){
         return round(str_word_count($text)/200);

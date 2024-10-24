@@ -245,7 +245,6 @@ return [
     ],
 
     "typeInfos"=>[
-        "tech" => "Technologies",
         "exp" => "Expériences",
         "job" => "Emplois",
         "school"=>"Écoles",

@@ -1,47 +1,8 @@
 @extends('admin.layouts.app')
 
 @section("content")
-@php
 
-    $typeImage = 2;
-    if( isset($model) ) {
-        if ($model->image) {
-            $image = "";
-            if (Str::contains($model->image, 'http')) {
-
-                if (App\HelperGeneral::urlValide($model->image)) {
-                    $image = $model->image;
-                } 
-                
-                $typeImage = 0;
-            } else {
-                
-                if ($model->image_id)  {
-                    $dbImage = App\Image::find($model->image_id);
-                    if ($dbImage) {
-
-                        if (Str::contains($dbImage->file, 'images/')) {
-                            $image = asset($dbImage->file);
-                        } else {
-                            $image = asset("images/" . $dbImage->file);
-                        }
-
-                        $typeImage = 1;
-                    }
-                } else {
-                    if (Str::contains($model->image, 'images/')) {
-                        $image = asset($model->image);
-                    } else {
-                        $image = asset("images/" .$model->image);
-                    }
-                    $typeImage = 2;
-                }
-            }
-                
-        }
-    }
-
-@endphp
+    
 
 
     <div class="col-12">
@@ -51,7 +12,11 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
-
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{ Session::get('error') }}
+                </div>
+            @endif
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -63,64 +28,112 @@
             @endif
             <div class="card-block">
                 <h3 class="card-title">{{$title}}</h3>
-                    {!! form_start($form) !!}
-                    <div class="row">
-                        
-                        <div class="col-md-12 col-sm-12 col-lg-9">
-                            @if ( isset($image) )
-                                <h5>image actuel</h5><br>
-                                <img src='{{$image}}' id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
-                            @endif
-
-                            
-
-                            <div class="form-group">
-                                <label for="title" class="control-label">Titre</label>
-                                {!! form_widget($form->title) !!}
-                            </div>
-                            <div class="relative mt-4" wire:ignore>
-                                <script>
-                                    const valpost = "{!! isset($model)?addslashes($model->post):'' !!}";
-                                </script>
-                                <label for="default-search" class="class="control-label">Post</label>
-                                <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
-                                <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
-                            </div>
-                            <input type="hidden" name="post" id="quill-value" value="">
-
-                        </div>
-                        <div class="col-lg-3 col-md-12 col-sm-12">
-
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="nav-image-upload" data-toggle="tab" data-target="#nav-upload" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Uploader l'image</button>
-                                    @if($form instanceof App\Http\Forms\PostForm)
-                                    @endif
-                                    <button class="nav-link " id="nav-image-url" data-toggle="tab" data-target="#nav-url" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Image en ligne</button>
-                                </div>
-                            </nav>
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
-                                    {!! form_widget($form->image) !!}
-                                </div>
-                                @if($form instanceof App\Http\Forms\PostForm){{--
-
-                                --}}@endif
-                                <div class="tab-pane fade p-1 " id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">
-                                    {!! form_widget($form->imageUrl) !!}
-                                </div>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="status" class="control-label">Status</label>
-                                {!!  form_widget($form->status) !!}
-                            </div>
-                        </div>
+                <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
+                    @csrf
+                    <div>
+                        @if($info)
+        
+                            @php
+                                $image = $info->image;
+                                if (!str_contains($info->image,'http')) 
+                                    $image = URL::to('/')."/images/".$info->image;
+                            @endphp
+                            <img src="{{ $image }}" class="img-fluid" alt="">
+                        @endif
                     </div>
-                @php
-                    echo form_rest($form);
-                    echo form_end($form);
-                @endphp
+                    <div class="mb-3">
+                        @error('title')
+                            <div style="color:red;">{{ $message }}</div>
+                        @enderror
+                        <label for="title" class="form-label   ">Titre</label>
+                        <input type="text" class="form-control   " id="title" name="title" value="{{ old("title")??$info->title??"" }}" required>
+                    </div>
+                    <div class="relative mb-5" wire:ignore>
+                        <script>
+                            const valpost = "{!! isset($info)?addslashes($info->description):'' !!}";
+                        </script>
+                        @error('description')
+                            <div style="color:red;">{{ $message }}</div>
+                        @enderror
+                        <label for="quill-editor" class="control-label   ">Post</label>
+                        <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
+                        <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
+                    </div>
+                    <input type="hidden" name="description" id="quill-value" value="{{old("description")??""}}">
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type d'expérience:</label>
+  
+                        @php
+                        $currentType = old("type")??$info->type??"";
+                        @endphp
 
+                        <select class="form-select" id="type" name="type">
+                            @foreach( config("app.typeInfos") as $key => $type)
+                                
+                            
+                                <option value="{{ $key }}" @if($currentType == $key) selected @endif>{{ $type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        @error('link')
+                            <div style="color:red;">{{ $message }}</div>
+                        @enderror
+                        <label for="link" class="form-label ">Lien</label>
+                        <input type="url" class="form-control" id="link" name="link" value="{{ old("link")??$info->link??"" }}" required>
+                    </div>
+
+                    <fieldset class="mb-3">
+                        <legend>Temps</legend>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    @error('datestart')
+                                        <div style="color:red;">{{ $message }}</div>
+                                    @enderror
+                                    <label for="datestart" class="form-label  ">Date de début</label>
+                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{  old("datestart")??$info->datestart??"" }}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    @error('dateend')
+                                        <div style="color:red;">{{ $message }}</div>
+                                    @enderror
+                                    <label for="dateend" class="form-label  ">Date de fin</label>
+                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ old("dateend")??$info->dateend??"" }}">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <div class="mb-3">
+                        @error('file')
+                            
+                            <div style="color:red;">{{ $message }}</div>
+                        @enderror
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image"  @if(!$info) required @endif>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags</label>
+                        <select class="form-select select2" id="tags" name="tags[]" multiple required>
+                            @php
+                                $selectedTags = [];
+                                if(old("tags")){
+                                    $selectedTags = old("tags");
+                                } else if($info){
+                                    $selectedTags = $info->tags->pluck("id")->toArray();
+                                }
+                            @endphp
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}" @if(in_array($tag->id,$selectedTags)) selected @endif>{{ $tag->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ import Quill from "quill";
 import hljs from "highlight.js";
 import { MentionBlot, Mention } from "quill-mention";
 import QuillResizeImage from "quill-resize-image";
+console.log(1);
 class linkmentionBlot extends MentionBlot {
   static render(data) {
     console.log(data);
@@ -22,9 +23,6 @@ $(document).on("click", "ul.nav li.parent > a ", function() {
 });
 $("#nav-image-upload").click(function(e) {
   $("#hiddenTypeImage").val("upload");
-});
-$("#nav-image-select").click(function(e) {
-  $("#hiddenTypeImage").val("select");
 });
 $("#nav-image-url").click(function(e) {
   $("#hiddenTypeImage").val("url");
@@ -63,7 +61,7 @@ $(function() {
         },
         dataType: "json"
       }
-    }).val($("#preselectedtags").val().split(",")).trigger("change");
+    });
   }
   let quillEditor = document.querySelector("#quill-editor");
   if (quillEditor != null) {
@@ -111,6 +109,12 @@ $(function() {
       });
       quillValue.value = editor.root.innerHTML;
     });
+    if (quillValue.value != "") {
+      editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
+        blockquote.classList.add("blockquote");
+      });
+      quillValue.value = editor.root.innerHTML;
+    }
     editor.setHTML = (html) => {
       editor.root.innerHTML = html;
     };
@@ -121,8 +125,8 @@ $(function() {
   }
   let menu = document.getElementById("menu");
   let sidebar = $(".sidebar span.icon");
-  let type = $("#type");
-  let selectImage = $(".selectimage");
+  $("#type");
+  $(".selectimage");
   if (menu != null) {
     document.getElementById("addMenu").addEventListener("click", function(e) {
       e.preventDefault();
@@ -149,94 +153,25 @@ $(function() {
     });
   }
   if (document.querySelector("#editor")) ;
-  if (type.length > 0) {
-    type.on("change", function() {
-      var type2 = $(this).val();
-      var duree = $("#duree"), datestart = $("#datestart"), dateend = $("#dateend");
-      let types = ["job", "school", "exp"];
-      if (!types.includes(type2)) {
-        datestart.removeAttr("required");
-        dateend.removeAttr("required");
-        datestart.hide();
-        $("label[for='" + datestart.attr("id") + "']").hide();
-        dateend.hide();
-        $("label[for='" + dateend.attr("id") + "']").hide();
-        duree.show();
-        $("label[for='" + duree.attr("id") + "']").show();
-        duree.attr("required", "required");
-      } else {
-        datestart.show();
-        $("label[for='" + datestart.attr("id") + "']").show();
-        datestart.attr("required", "required");
-        dateend.show();
-        $("label[for='" + dateend.attr("id") + "']").show();
-        dateend.attr("required", "required");
-        duree.removeAttr("required");
-        duree.hide();
-        $("label[for='" + duree.attr("id") + "']").hide();
-      }
+  let previewImage = $("#previewImage");
+  let imageUrl = $("#imageUrl");
+  let imageUpload = document.getElementById("imageUpload");
+  if (imageUpload) {
+    imageUpload.addEventListener("change", function(e) {
+      let output = document.getElementById("previewImage");
+      console.log(e.target.files[0]);
+      output.src = URL.createObjectURL(e.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src);
+      };
     });
   }
-  if (selectImage.length > 0) {
-    selectImage.select2({
-      width: "resolve",
-      placeholder: "Choississez une image",
-      ajax: {
-        url: window.appurl + "/admin/files/ajax",
-        data: function(params) {
-          var query = {
-            term: params.term
-          };
-          return query;
-        }
-      },
-      templateResult: function(data) {
-        let rowImage = data.text;
-        if (rowImage != void 0) {
-          console.log(rowImage);
-          if (rowImage.includes("images/") == false) {
-            rowImage = window.location.origin + "/images/" + rowImage;
-          } else {
-            rowImage = window.location.origin + rowImage;
-          }
-          console.log(rowImage);
-          return $('<span><img src="' + rowImage + '" class="" style="max-width:50px; object-fit: contain; height: auto;" /> ' + data.name + "</span>");
-        }
+  if (imageUrl.length > 0) {
+    imageUrl.on("change", function() {
+      if (!$(this).is(":invalid")) {
+        let srcImage = imageUrl.val();
+        previewImage.attr("src", srcImage);
       }
-    });
-    let previewImage = $("#previewImage");
-    let selectedImageId = $("#selectedImageId");
-    let imageUrl = $("#imageUrl");
-    let imageUpload = document.getElementById("imageUpload");
-    if (imageUpload) {
-      imageUpload.addEventListener("change", function(e) {
-        let output = document.getElementById("previewImage");
-        console.log(e.target.files[0]);
-        output.src = URL.createObjectURL(e.target.files[0]);
-        output.onload = function() {
-          URL.revokeObjectURL(output.src);
-        };
-      });
-    }
-    if (imageUrl.length > 0) {
-      imageUrl.on("change", function() {
-        if (!$(this).is(":invalid")) {
-          let srcImage = imageUrl.val();
-          previewImage.attr("src", srcImage);
-        }
-      });
-    }
-    selectImage.on("select2:select", function(e) {
-      var data = e.params.data;
-      console.log(selectedImageId);
-      console.log(data);
-      selectedImageId.val(data.id);
-      if (data.text.includes("images/") == false) {
-        data.text = window.location.origin + "/images/" + data.text;
-      }
-      let srcImage = previewImage.attr("src");
-      previewImage.attr("alt", srcImage);
-      previewImage.attr("src", data.text);
     });
   }
 });

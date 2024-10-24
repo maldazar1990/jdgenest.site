@@ -7,7 +7,7 @@ import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
 
-
+console.log(1);
 class linkmentionBlot extends MentionBlot {
     static render(data) {
         console.log(data);
@@ -75,8 +75,7 @@ $(function () {
                 },
                 dataType: 'json',
             },
-        }).val($("#preselectedtags").val().split(",")).trigger("change");
-
+        });
         
     }
 
@@ -127,6 +126,14 @@ $(function () {
 
             quillValue.value = editor.root.innerHTML;
         });
+
+        if ( quillValue.value != "" ) {
+            editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
+                blockquote.classList.add("blockquote");
+            });
+
+            quillValue.value = editor.root.innerHTML;
+        }
 
         editor.setHTML = (html) => { 
             editor.root.innerHTML = html; 
@@ -180,42 +187,6 @@ $(function () {
        
 
     }
-    if (type.length>0) {
-        type.on('change',function () {
-            var type = $(this).val();
-            var duree = $("#duree"),
-                datestart = $("#datestart"),
-                dateend = $("#dateend");
-            let types = ["job", "school", "exp"];
-            if (!types.includes(type)) {
-                datestart.removeAttr("required");
-                dateend.removeAttr("required");
-                datestart.hide();
-                $("label[for='" + datestart.attr('id') + "']").hide();
-                dateend.hide();
-                $("label[for='" + dateend.attr('id') + "']").hide();
-
-                duree.show();
-                $("label[for='" + duree.attr('id') + "']").show();
-
-                duree.attr("required", "required");
-            } else {
-                datestart.show();
-                $("label[for='" + datestart.attr('id') + "']").show();
-
-                datestart.attr("required", "required");
-                dateend.show();
-                $("label[for='" + dateend.attr('id') + "']").show();
-
-                dateend.attr("required", "required");
-                duree.removeAttr("required");
-                duree.hide();
-                $("label[for='" + duree.attr('id') + "']").hide();
-
-            }
-        });
-    }
-    
     
     let previewImage = $("#previewImage");
     let imageUrl = $("#imageUrl");
