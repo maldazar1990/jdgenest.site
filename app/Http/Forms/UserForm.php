@@ -18,9 +18,10 @@ class UserForm extends Form
                 'label' => 'Email',
                 'rules' => 'required|email',
             ]);
-            $this->add('password', 'password', [
+            $this->add('password','password', [
                 'label' => 'Password',
                 'rules' => 'required|min:6',
+		'value'=>''
             ]);
             if( $this->model->hasRole('admin') ) {
                 $this->add('jobTitle', 'text', [
