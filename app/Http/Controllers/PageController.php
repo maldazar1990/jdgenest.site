@@ -185,12 +185,20 @@ class PageController extends Controller
 
     function about(Request $request){
         $userInfo = $this->userInfo;
+        $exps = Cache::rememberForever("exps",function() use ($userInfo){
+            return $userInfo->infos()->where("type","exp")->orderBy('datestart', 'desc')->get();
+        });
+        $otherExps = Cache::rememberForever("otherExp",function() use ($userInfo){
+            return $userInfo->infos()->where("type","!=","exp")->orderBy('datestart', 'desc')->get();
+        });
         return view('theme.blog.about',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
             "title" => "En résumé",
             "message" => $this->userInfo->presentation,
             'infos'=> $userInfo->infos()->where("type","info")->get(),
+            "otherExps" => $otherExps,
+            "exps" => $exps,
             'SEOData' => new SEOData(
                 title:  "En résumé",
                 description: $this->userInfo->presentation,

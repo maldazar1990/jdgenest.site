@@ -16,13 +16,10 @@
                         <div class="">
                             <h4>Études et expériences</h4>
                             <ul class="timeline">
-                   
-                                @foreach( $infos as $info)
+                                @foreach($otherExps as $info)
                                     @php
                                     $tagClass = "";
-                                    $tags = $info->tags()->get();
-
-                                    foreach ($tags as $tag){
+                                    foreach ($info->tags()->get() as $tag){
                                         $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
                                     }
                                     @endphp
@@ -41,7 +38,6 @@
                                             @endif
                                         </small>
                                         <div>
-                    
                                             @foreach( $info->tags()->groupBy("tags.id")->get() as $tag)
                                                 <span class="badge badge-pill bg-secondary disable-link">{{$tag->title}}</span>
                                             @endforeach
@@ -68,7 +64,7 @@
                         <div class="col-12">
                             <h4 class="mb-3">Projets</h4>
                             <div class="row row-cols-1 row-cols-md-2 g-4">
-                                @foreach($userInfo->infos()->where("type","exp")->get() as $info)
+                                @foreach($exps as $info)
                                     @php
                                         if (!\Illuminate\Support\Str::contains($info->image, 'http') and !empty($info->image)) {
                                             $image =  asset('images/' . $info->image);

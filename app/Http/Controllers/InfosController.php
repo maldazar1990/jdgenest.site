@@ -98,6 +98,8 @@ class InfosController extends Controller
         $infos->users_id = Auth::user()->id;
         $infos->save();
         $tagsIds = $request->input("tags");
+        Cache::forget("exps");
+        Cache::forget("otherExp");
         $infos->tags()->detach();
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
@@ -182,7 +184,8 @@ class InfosController extends Controller
         $infos->save();
         $infos->tags()->detach();
         $tagsIds = $request->tags;
-
+        Cache::forget("exps");
+        Cache::forget("otherExp");
         if( $tagsIds ) {
             foreach($tagsIds as $tagsId) {
 
@@ -207,7 +210,8 @@ class InfosController extends Controller
         HelperGeneral::deleteImage($infos->image);
         $infos->tags()->detach();
         $infos->delete();
-
+        Cache::forget("exps");
+        Cache::forget("otherExp");
         $request->session()->flash('message', 'Supprimé avec succès');
         return redirect()->route("admin_infos");
     }

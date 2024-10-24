@@ -8,7 +8,7 @@ use App\Image;
 use App\Jobs\ConvertImage;
 use App\post;
 use App\Tags;
-use Doctrine\Common\Cache\Cache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -85,7 +85,7 @@ class PostController extends Controller
         $post->user_id = Auth::user()->id;
         $post->type = config("app.typePost.post");
         $post->save();
-
+        Cache::forget('allPosts');
         $tagsIds = $request->input("tags");
         $post->tags()->detach();
         if( $tagsIds ) {
@@ -173,8 +173,10 @@ class PostController extends Controller
             }
         }
 
-        Cache::forget('post_id_'.$post->id);
-        Cache::forget('post_slug_'.$post->slug);
+        if ( Cache::has('post_id_'.$posts->id) )
+            Cache::forget('post_id_'.$posts->id);
+        if ( Cache::has('post_slug_'.$posts->slug) )
+            Cache::forget('post_slug_'.$posts->slug);
         Cache::forget('allPosts');
 
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
@@ -260,8 +262,10 @@ class PostController extends Controller
     {
         $posts = post::where( 'id', $id )->first();
         $posts->status = 2;
-        Cache::forget('post_id_'.$post->id);
-        Cache::forget('post_slug_'.$post->slug);
+        if ( Cache::has('post_id_'.$posts->id) )
+            Cache::forget('post_id_'.$posts->id);
+        if ( Cache::has('post_slug_'.$posts->slug) )
+            Cache::forget('post_slug_'.$posts->slug);
         Cache::forget('allPosts');
         $posts->save();
 	return redirect()->route('admin_posts');
