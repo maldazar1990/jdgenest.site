@@ -17,7 +17,7 @@ class RedirectToNonWWWMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (substr($request->header('host'), 0, 4) == 'www.') {
-            $request->headers->set('host', 'robindirksen.com');
+            $request->headers->set('host', config('app.url'));
 
             return Redirect::to($request->path());
         }
