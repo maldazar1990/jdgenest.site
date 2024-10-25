@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use App\HelperGeneral;
 use App\Image as Image;
+use App\post;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class AddImage2BDD extends Command
 {
@@ -31,7 +33,7 @@ class AddImage2BDD extends Command
     public function handle()
     {
   
-        $images = HelperGeneral::getImages();
+        /*$images = HelperGeneral::getImages();
         foreach($images as $name => $image){
             $name = \str_replace("_small","",$name);
             $name = \str_replace("_medium","",$name);
@@ -43,19 +45,22 @@ class AddImage2BDD extends Command
                 $newImage->file = "images/".$name;
                 $newImage->save();
             }
-        }
-
+        }*/
+        post::where("image","")->update(["image"=>"default"]);
         foreach(Image::all() as $img){
+            $filename = $img->name;
+            $path = \public_path("images/");
             if (\str_contains($img->file, ".") == false) {
-                $img->file = $img->file.".webp";
-                $img->save();
+                $files = File::glob($path."*".$img->file.".*");
+                $ext = File::extension($files[0]);
+                dump($files);
             
             }
-            if (\str_contains($img->file, "images/") == false) {
+            /*if (\str_contains($img->file, "images/") == false) {
                 
                 $img->file = "images/".$img->file;
                 $img->save();
-            }
+            }*/
         }
 
         return Command::SUCCESS;

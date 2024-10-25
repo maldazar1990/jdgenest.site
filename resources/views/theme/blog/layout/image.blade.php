@@ -25,7 +25,7 @@
                 
 
                 if ( str_contains($image,".") and File::exists(public_path("images/".$image)) ) 
-                    $filename = explode('.', $image);
+                    $filename = explode('.', $image)[0];
                 else {
                     $filename = $image;
                     $path = \public_path("images/");
@@ -45,8 +45,8 @@
 
 
             @endphp
-            @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])
-            @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'webp',"size"=>$size])
+            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
+            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
             <img
                 class="{{$class}}"
                 src="{{asset($image)}}"
