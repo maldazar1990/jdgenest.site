@@ -51,10 +51,10 @@ class AddImage2BDD extends Command
 	   if ( !str_contains($img->file,".") ){
 		
 		$fileimage = $img->file;
-		$fileimage = str_replace("avif",".avif",$fileimage);
+		$fileimage = str_replace("jpg",".jpg",$fileimage);
 		dump($fileimage);
 		$img->file = $fileimage;
-		$img->save(); 
+		$img->save();
 	   } 
             
             /*if (\str_contains($img->file, "images/") == false) {
