@@ -1,5 +1,7 @@
 @if($ext and $filename)
+    
     @php
+
         $image = $filename.".".$ext;
         $imageMedium = $filename . '_medium.' . $ext;
         $imageSmall = $filename . '_small.' . $ext;

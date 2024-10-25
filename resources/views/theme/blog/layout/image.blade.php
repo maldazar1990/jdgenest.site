@@ -43,7 +43,7 @@
                     $image = 'images/' . $image;
                 }
 
-
+                $filename = "images/".$filename;
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
