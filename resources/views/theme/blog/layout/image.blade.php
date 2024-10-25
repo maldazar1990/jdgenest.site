@@ -30,8 +30,8 @@
                     $filename = $image;
                     $path = \public_path("images/");
 	            if ( str_contains($image,".")) {
-			$image = explode(".",$image)[0];		    
-		    }
+                    $image = explode(".",$image)[0];		    
+                }
                     $files = File::glob($path."*".$image.".*");
                     $ext = File::extension($files[0]);
                     $image = $image.".".$ext;

@@ -176,8 +176,6 @@ class PageController extends Controller
                 asset("/images/".$image);
             }
         }
-
-
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
