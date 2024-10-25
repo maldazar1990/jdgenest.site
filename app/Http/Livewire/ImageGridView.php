@@ -50,7 +50,6 @@ class ImageGridView extends GridView
             ];
         }
         
-       
 
         return [
             "image" => asset($model->file),

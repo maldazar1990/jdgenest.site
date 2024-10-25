@@ -47,12 +47,16 @@ class AddImage2BDD extends Command
         }*/
 
 	 foreach(Image::all() as $img){
+	
+	   if ( !str_contains($img->file,".") ){
+		
+		$fileimage = $img->file;
+		$fileimage = str_replace("avif",".avif",$fileimage);
+		dump($fileimage);
+		$img->file = $fileimage;
+		$img->save(); 
+	   } 
             
-            $path = \public_path("/");
-		$files = File::exists(public_path("/".$img->file));
-		if (empty($files)){
-			$img->file;
-		}            
             /*if (\str_contains($img->file, "images/") == false) {
                 
                 $img->file = "images/".$img->file;
