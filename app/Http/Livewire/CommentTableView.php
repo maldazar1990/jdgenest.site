@@ -13,6 +13,7 @@ class CommentTableView extends TableView
      */
     protected $model = Comment::class;
     protected $paginate = 10;
+    public $sortOrder = 'desc';
     public $searchBy = ["post"];
 
     /**

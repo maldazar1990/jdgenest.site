@@ -12,6 +12,7 @@ class BanTableView extends TableView
      */
     protected $model = FirewallIp::class;
     protected $paginate = 10;
+    public $sortOrder = 'desc';
     public $searchBy = ["ip"];
     /**
      * Sets the headers of the table as you want to be displayed
