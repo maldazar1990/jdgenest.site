@@ -144,7 +144,7 @@ class PostController extends Controller
             } else {
                 
                 if ($posts->image_id)  {
-                    $dbImage = Image::find($posts->image_id);
+                    $dbImage = Image::where("id",$posts->image_id);
                     if ($dbImage) {
 
                         if (Str::contains($dbImage->file, 'images/')) {

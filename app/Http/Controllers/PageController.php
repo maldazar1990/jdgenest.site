@@ -151,18 +151,21 @@ class PageController extends Controller
             return redirect()->route('default');
         }
 
-        if ($post->image_id != null) {
-            $image = Image::find($post->image_id)->first()->file;
-        } else {
+       
+        if ( $post->image != null ) { 
             $image = $post->image;
             if ( !\str_contains($image,'.') ) {
                 $image = $image.".jpg";
                 
             }
             $image = asset("images/".$image);
-        }
 
- 
+            
+        } else {
+            if ($post->image_id != null) {
+                $image =  Image::where("id",$post->image_id)->first()->file;
+            }
+        }
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
@@ -176,7 +179,7 @@ class PageController extends Controller
             'SEOData' => new SEOData(
                 title: $post->title,
                 description: Str::limit(strip_tags($post->post), 50),
-                image: $image,
+                image: asset("/images/".$image),
                 author: $post->user->name,
                 type: "article",
             ),
