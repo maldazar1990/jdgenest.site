@@ -46,6 +46,11 @@ class AddImage2BDD extends Command
         }
 
         foreach(Image::all() as $img){
+            if (\str_contains($img->file, ".") == false) {
+                $img->file = $img->file.".webp";
+                $img->save();
+            
+            }
             if (\str_contains($img->file, "images/") == false) {
                 
                 $img->file = "images/".$img->file;
