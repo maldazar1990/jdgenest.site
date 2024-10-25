@@ -156,7 +156,7 @@ class PageController extends Controller
             return redirect()->route('default');
         }
 
-       
+        $image = "";
         if ( $post->image != null ) { 
             $image = $post->image;
             if ( !\str_contains($image,'.') ) {
@@ -176,6 +176,8 @@ class PageController extends Controller
                 asset("/images/".$image);
             }
         }
+
+
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
