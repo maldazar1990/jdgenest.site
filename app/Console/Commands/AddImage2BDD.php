@@ -30,14 +30,26 @@ class AddImage2BDD extends Command
      */
     public function handle()
     {
-
+  
         $images = HelperGeneral::getImages();
         foreach($images as $name => $image){
-            if (DB::table('image')->where('name', $name)->doesntExist()) {
+            $name = \str_replace("_small","",$name);
+            $name = \str_replace("_medium","",$name);
+            $name = \str_replace("jpg","",$name);
+            $images = Image::where("name",'like',"%".$name."%")->get();
+            if ($images->count() == 0) {
                 $newImage = new Image();
                 $newImage->name = $name;
-                $newImage->file = $image;
+                $newImage->file = "images/".$name;
                 $newImage->save();
+            }
+        }
+
+        foreach(Image::all() as $img){
+            if (\str_contains($img->file, "images/") == false) {
+                
+                $img->file = "images/".$img->file;
+                $img->save();
             }
         }
 

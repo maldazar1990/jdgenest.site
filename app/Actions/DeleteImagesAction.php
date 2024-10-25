@@ -36,7 +36,7 @@ class DeleteImagesAction extends Action
     {
         try {
             foreach ($selectedModels as $idModel) {
-                $model = Image::where('id',$idModel);
+                $model = Image::where('id',$idModel)->first();
                 $post = post::where("image_od",$idModel)->first();
                 if (HelperGeneral::isImageUsed($model->name) or $post) {
                     HelperGeneral::deleteImage($model->file);

@@ -164,12 +164,12 @@ class PageController extends Controller
         } else {
             if ($post->image_id != null) {
                 $image =  Image::where("id",$post->image_id)->first()->file;
+                asset("/images/".$image);
             }
         }
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
-
         return view('theme.blog.post',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
@@ -179,7 +179,7 @@ class PageController extends Controller
             'SEOData' => new SEOData(
                 title: $post->title,
                 description: Str::limit(strip_tags($post->post), 50),
-                image: asset("/images/".$image),
+                image: $image,
                 author: $post->user->name,
                 type: "article",
             ),
