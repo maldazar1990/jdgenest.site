@@ -53,7 +53,7 @@ class ImageGridView extends GridView
 
         return [
             "image" => asset($model->file),
-            "title"=>$model->name,
+            "title"=>substr($model->name,0,"15")."-".$model->created_at,
         ];
     }
 
