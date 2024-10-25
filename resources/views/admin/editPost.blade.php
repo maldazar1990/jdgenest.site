@@ -3,43 +3,7 @@
 @section("content")
 @php
 
-    $typeImage = 2;
-    if( isset($model) ) {
-        if ($model->image) {
-            $image = "";
-            if (Str::contains($model->image, 'http')) {
-
-                if (App\HelperGeneral::urlValide($model->image)) {
-                    $image = $model->image;
-                } 
-                
-                $typeImage = 0;
-            } else {
-                
-                if ($model->image_id)  {
-                    $dbImage = App\Image::find($model->image_id);
-                    if ($dbImage) {
-
-                        if (Str::contains($dbImage->file, 'images/')) {
-                            $image = asset($dbImage->file);
-                        } else {
-                            $image = asset("images/" . $dbImage->file);
-                        }
-
-                        $typeImage = 1;
-                    }
-                } else {
-                    if (Str::contains($model->image, 'images/')) {
-                        $image = asset($model->image);
-                    } else {
-                        $image = asset("images/" .$model->image);
-                    }
-                    $typeImage = 2;
-                }
-            }
-                
-        }
-    }
+    
 
 @endphp
 
@@ -70,6 +34,10 @@
                             @if ( isset($image) )
                                 <h5>image actuel</h5><br>
                                 <img src='{{$image}}' id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
+                            @else
+                                <h5>image actuel</h5><br>
+                                <img src="images/default.jpg" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
+
                             @endif
 
                             
@@ -113,6 +81,18 @@
                             <div class="form-group mt-4">
                                 <label for="status" class="control-label">Status</label>
                                 {!!  form_widget($form->status) !!}
+                            </div>
+                            <div class="mb-3">
+                                 @php
+                                    
+                                @endphp
+                                <label for="tags" class="form-label">Tags</label>
+                                <select class="form-select select2" id="tags" name="tags[]" multiple required>
+                                   
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}" @if(in_array($tag->id,$selectedTags)) selected @endif>{{ $tag->title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

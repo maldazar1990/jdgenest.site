@@ -5,17 +5,12 @@ namespace App\Http\Controllers;
 use App\HelperGeneral;
 use App\Http\Forms\NewUserForm;
 use App\Http\Forms\UserForm;
-use App\Role;
-use App\Tags as Tags;
 use App\Users;
-use Doctrine\Common\Cache\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache as FacadesCache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class UsersController extends Controller

@@ -37,9 +37,20 @@ class PostController extends Controller
             'url' => route("admin_posts_insert"),
         ]);
 
+        
+        
+
+        $tags = Tags::all();
+        $selectedTags = [];
+        if(old("tags")){
+            $selectedTags = old("tags");
+        } 
+
         return view("admin.editPost",[
             "title" => "Publier un article",
             "form"  => $form,
+            "selectedTags" => $selectedTags,
+            "tags" => $tags,
         ]);
     }
 
@@ -63,7 +74,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $rules = $this->rules();
         $rules["title"] = $rules["title"] . "|unique:post,title";
 
@@ -120,11 +131,61 @@ class PostController extends Controller
             'model' => $posts,
         ]);
 
+        $typeImage = 2;
+        if ($posts->image) {
+            $image = "";
+            if (Str::contains($posts->image, 'http')) {
+
+                if (HelperGeneral::urlValide($posts->image)) {
+                    $image = $posts->image;
+                } 
+                
+                $typeImage = 0;
+            } else {
+                
+                if ($posts->image_id)  {
+                    $dbImage = Image::find($posts->image_id);
+                    if ($dbImage) {
+
+                        if (Str::contains($dbImage->file, 'images/')) {
+                            $image = asset($dbImage->file);
+                        } else {
+                            $image = asset("images/" . $dbImage->file);
+                        }
+
+                        $typeImage = 1;
+                    }
+                } else {
+                    if (Str::contains($posts->image, 'images/')) {
+                        $image = asset($posts->image);
+                    } else {
+                        $image = asset("images/" .$posts->image);
+                    }
+                    $typeImage = 2;
+                }
+            }
+                
+        }
+        
+
+        $tags = Tags::all();
+        $selectedTags = [];
+        if(old("tags")){
+            $selectedTags = old("tags");
+        } else if($posts){
+            $selectedTags = $posts->tags->pluck("id")->toArray();
+        }
+
+
 
         return view("admin.editPost",[
             "title" => "Modifier une publication",
             "form" => $form,
             "model" => $posts,
+            "selectedTags" => $selectedTags,
+            "typeImage" => $typeImage,
+            "image" => $image,
+            "tags" => $tags,
         ]);
 
     }

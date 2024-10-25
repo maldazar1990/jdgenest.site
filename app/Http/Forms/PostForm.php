@@ -54,34 +54,7 @@ class PostForm extends Form
                     return $val != 2;
                 },ARRAY_FILTER_USE_KEY),
             ]);
-        $tags = Tags::all()->pluck('title', 'id')->toArray();
-        $selectedTags = [];
-
-        if ($this->model){
-            foreach($this->model->tags()->get() as $tag){
-                $selectedTags[] = $tag->id;
-            }
-        }
-
-        $this->add('tags[]', 'select', [
-            "multiple"=>"multiple",
-            "name"=>"tags[]",
-            "choices" => $tags,
-            //"selected" => $selectedTags,
-            "attr" => [
-                "class" => "select2 form-control mw-25",
-            ],
-            'label' => 'Tags',
-        ]);
-
-        $this->add("preselectedtags", "hidden",[
-            "attr" => [
-                "id" => "preselectedtags",
-                "class" => "preselectedtags",
-            ],
-            "value" => implode(",", $selectedTags),
-        ]);
-
+       
         $this->add("submit", "submit", [
             "label" => "Enregistrer",
         ]);

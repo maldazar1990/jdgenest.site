@@ -150,8 +150,7 @@ $(function () {
 
     let menu = document.getElementById("menu");
     let sidebar = $(".sidebar span.icon");
-    let type = $("#type");
-    let selectImage = $(".selectimage");
+
     if ( menu != null ) {
 
        //
