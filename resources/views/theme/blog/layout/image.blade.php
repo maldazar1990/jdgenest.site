@@ -22,11 +22,16 @@
         @else
             @php
                 
-                if ( str_contains($image,".") ) 
+                
+
+                if ( str_contains($image,".") and File::exists(public_path("images/".$image)) ) 
                     $filename = explode('.', $image);
                 else {
                     $filename = $image;
                     $path = \public_path("images/");
+
+
+
                     $files = File::glob($path."*".$image.".*");
 
                     $ext = File::extension($files[0]);
@@ -38,6 +43,7 @@
                 } else {
                     $image = 'images/' . $image;
                 }
+
 
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])
