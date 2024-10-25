@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\HelperGeneral;
@@ -46,23 +45,20 @@ class AddImage2BDD extends Command
                 $newImage->save();
             }
         }*/
-        post::where("image","")->update(["image"=>"default"]);
-        foreach(Image::all() as $img){
-            $filename = $img->name;
-            $path = \public_path("images/");
-            if (\str_contains($img->file, ".") == false) {
-                $files = File::glob($path."*".$img->file.".*");
-                $ext = File::extension($files[0]);
-                dump($files);
+
+	 foreach(Image::all() as $img){
             
-            }
+            $path = \public_path("/");
+		$files = File::exists(public_path("/".$img->file));
+		if (empty($files)){
+			$img->file;
+		}            
             /*if (\str_contains($img->file, "images/") == false) {
                 
                 $img->file = "images/".$img->file;
                 $img->save();
             }*/
         }
-
         return Command::SUCCESS;
     }
 }
