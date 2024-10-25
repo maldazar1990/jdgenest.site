@@ -21,13 +21,23 @@
             <img decoding="async" loading="lazy" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php
+                
+                if ( str_contains($image,".") ) 
+                    $filename = explode('.', $image);
+                else {
+                    $filename = $image;
+                    $path = \public_path("images/");
+                    $files = File::glob($path."*".$image.".*");
+
+                    $ext = File::extension($files[0]);
+                    $image = $image.".".$ext;
+                }
+
                 if (Str::contains($image, 'images/')) {
                     $image = $image;
                 } else {
                     $image = 'images/' . $image;
                 }
-                $filename = explode('.', $image);
-  
 
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename[0], 'ext' => 'avif',"size"=>$size])

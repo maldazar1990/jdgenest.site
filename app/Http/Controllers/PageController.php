@@ -15,6 +15,7 @@ use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -101,7 +102,11 @@ class PageController extends Controller
             ->where("post.status",0)
             ->paginate(10);
         } else {
-            $posts =  Cache::rememberForever('allPosts',function(){
+            $pageTag = 1;
+            if ( $request->has('page') ) {
+                $pageTag = $request->page;
+            }
+            $posts =  Cache::rememberForever('allPosts'.$pageTag,function(){
                 return Post::orderBy('created_at', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
             });
         }
@@ -155,7 +160,11 @@ class PageController extends Controller
         if ( $post->image != null ) { 
             $image = $post->image;
             if ( !\str_contains($image,'.') ) {
-                $image = $image.".jpg";
+                
+                $path = \public_path("images/");
+                $files = File::glob($path."*".$image.".*");
+                $ext = File::extension($files[0]);
+                $image = $image.".".$ext;
                 
             }
             $image = asset("images/".$image);
