@@ -16,6 +16,7 @@ class ImageGridView extends GridView
     protected $model = Image::class;
     public $maxCols = 3;
     public $sortOrder = 'desc';
+    public $sortBy = 'created_at';
     protected $paginate = 10;
     private $disk;
 
