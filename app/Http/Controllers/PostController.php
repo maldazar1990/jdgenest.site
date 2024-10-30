@@ -96,7 +96,6 @@ class PostController extends Controller
         $post->user_id = Auth::user()->id;
         $post->type = config("app.typePost.post");
         $post->save();
-        Cache::forget('allPosts');
         $tagsIds = $request->input("tags");
         $post->tags()->detach();
         if( $tagsIds ) {
@@ -112,7 +111,7 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
-        Cache::forget('allPosts');
+        Cache::flush();
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Enregistré avec succès');
     }
 
@@ -234,11 +233,7 @@ class PostController extends Controller
             }
         }
 
-        if ( Cache::has('post_id_'.$post->id) )
-            Cache::forget('post_id_'.$post->id);
-        if ( Cache::has('post_slug_'.$post->slug) )
-            Cache::forget('post_slug_'.$post->slug);
-        Cache::forget('allPosts');
+        Cache::flush();
 
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
 

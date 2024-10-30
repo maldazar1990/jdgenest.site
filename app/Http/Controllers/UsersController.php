@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\HelperGeneral;
 use App\Http\Forms\NewUserForm;
 use App\Http\Forms\UserForm;
@@ -15,6 +16,8 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 class UsersController extends Controller
 {
+    use PasswordValidationRules;
+
     /**
      * Display a listing of the resource.
      *

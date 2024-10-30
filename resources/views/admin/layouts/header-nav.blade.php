@@ -19,6 +19,7 @@
         <div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="{{route("admin_user")}}"><em class="fa fa-user-circle mr-1"></em> Profile</a>
             <a class="dropdown-item" href="{{route("default")}}"><em class="fa fa-link mr-1"></em> Site Web</a>
+            <a class="dropdown-item" href="{{route("two-factor.login")}}"><em class="fa fa-key mr-1"></em> 2fa</a>
             <a class="dropdown-item" href="{{route("get-logout")}}"><em class="fa fa-power-off mr-1"></em> déconnection</a>
         </div>
     </div>

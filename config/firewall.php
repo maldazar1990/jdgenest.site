@@ -8,8 +8,6 @@ return [
 
     'models' => [
         'user' => '\App\Models\User',
-        // 'log' => '\App\Models\YourLogModel',
-        // 'ip' => '\App\Models\YourIpModel',
     ],
 
     'log' => [
@@ -38,8 +36,8 @@ return [
         'mail' => [
             'enabled' => true,
             'name' => env('FIREWALL_EMAIL_NAME', 'Laravel Firewall'),
-            'from' => env('FIREWALL_EMAIL_FROM', 'firewall@mydomain.com'),
-            'to' => env('FIREWALL_EMAIL_TO', 'admin@mydomain.com'),
+            'from' => env('FIREWALL_EMAIL_FROM', 'jdgenest19@gmail.com'),
+            'to' => env('FIREWALL_EMAIL_TO', 'jdgenest@icloud.com'),
         ],
 
         'slack' => [

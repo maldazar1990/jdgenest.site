@@ -178,9 +178,9 @@ return [
         Itstructure\GridView\GridViewServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-
         shweshi\OpenGraph\Providers\OpenGraphProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
 
 
 

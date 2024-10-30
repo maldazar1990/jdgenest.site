@@ -4,6 +4,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
  * App\Users
@@ -56,6 +57,7 @@ class Users extends Authenticatable
 {
     use HasRoles;
     use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -66,14 +68,12 @@ class Users extends Authenticatable
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
+        'two_factor_recovery_codes',
+        'two_factor_secret',
         'password', 'remember_token',
     ];
+
 
     /**
      * The attributes that should be cast to native types.

@@ -2,6 +2,19 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
+use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
+use Laravel\Fortify\Http\Controllers\ProfileInformationController;
+use Laravel\Fortify\Http\Controllers\ProfilePhotoController;
+use Laravel\Fortify\Http\Controllers\PasswordController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
 if (!function_exists("crawlerDetect")) {
     function crawlerDetect($USER_AGENT)
@@ -59,16 +72,31 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/archive', 'PageController@index')->name('archive');
     Route::get('/archive/{tagId}', 'PageController@index')->name('archiveByTag')->where('tagId', "[0-9A-Za-z\-]+");
     Route::get('/post/{slug}', 'PageController@post')->name('post')->where('slug', "[0-9A-Za-z\-]+");
-    Auth::routes();
-    Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');
     Route::get('/adminhome', 'HomeController@index')->name('admin');
-    Route::get('/testemail', 'PageController@testemail');
-
-
+    
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
+    Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');
+    
+    // Two-factor authentication routes
+    Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
+    Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
+    Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
+    Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
 });
+Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
+
+Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'verified']], function () {
+        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
+        Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
+        Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
+        Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ["auth", "role:admin,user","searchbot"]], function () {
         Route::group(['prefix' => 'tags'], function () {
             Route::get('/', 'TagsController@index')->name('admin_tags');
             Route::get('/ajax', 'TagsController@ajax')->name('admin_tags_ajax');
