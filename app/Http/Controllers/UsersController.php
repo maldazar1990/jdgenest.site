@@ -7,12 +7,14 @@ use App\HelperGeneral;
 use App\Http\Forms\NewUserForm;
 use App\Http\Forms\UserForm;
 use App\Users;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache as FacadesCache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Laravel\Fortify\TwoFactorAuthenticationProvider;
 
 class UsersController extends Controller
 {
@@ -64,6 +66,17 @@ class UsersController extends Controller
         ];
     }
 
+
+    public function confirm(Request $request)
+    {
+        $confirmed = $request->user()->confirmTwoFactorAuth($request->code);
+    
+        if (!$confirmed) {
+            return back()->withErrors('Invalid Two Factor Authentication code');
+        }
+    
+        return back();
+    }
 
     /**
      * Update the specified resource in storage.

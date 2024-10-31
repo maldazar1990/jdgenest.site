@@ -16,10 +16,12 @@
             </div><!--//container-->
         </section>
     @endif
-    <section class="blog-list d-flex flex-column">
-        <div class="container single-col-max-width pt-3 pb-3">
-            @yield('content')
-        </div>
-    </section>
+        <section class="blog-list d-flex flex-column">
+            <div class="container single-col-max-width pt-3 pb-3">
+                @yield('content')
+            </div>
+        </section>
+    </div>
     @include("theme.blog.layout.footer")
 </div><!--//main-wrapper-->
+

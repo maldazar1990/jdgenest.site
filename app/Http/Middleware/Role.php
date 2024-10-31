@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class Role
 {
@@ -19,13 +20,13 @@ class Role
     public function handle(Request $request, Closure $next)
     {
         $roles = array_slice(func_get_args(), 2);
-
-        if (! Auth::user()->hasAnyRole($roles)) {
-            throw new AuthorizationException("Tu n'as pas l'autorisation");
-            Auth::logout();
-            return redirect()->route('default');
+        if ( Route::current()->uri != "admin/two-factor-challenge") {
+            if (! Auth::user()->hasAnyRole($roles)) {
+                throw new AuthorizationException("Tu n'as pas l'autorisation");
+                Auth::logout();
+                return redirect()->route('default');
+            }
         }
-
         return $next($request);
     }
 }

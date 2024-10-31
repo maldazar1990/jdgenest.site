@@ -1,11 +1,7 @@
 @extends('theme.blog.layout.app')
 
 @section("content")
-    <script>
-        function onSubmit(token) {
-            document.querySelector("form").submit();
-        }
-    </script>
+
     <div class="d-none d-sm-block">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

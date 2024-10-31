@@ -1,9 +1,12 @@
 <?php
 
 namespace App;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
+use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
@@ -58,6 +61,7 @@ class Users extends Authenticatable
     use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -74,15 +78,6 @@ class Users extends Authenticatable
         'password', 'remember_token',
     ];
 
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function name ()  {
         return \Attribute::make(
@@ -116,5 +111,20 @@ class Users extends Authenticatable
 
     public function infos(){
         return $this->hasMany('App\Infos');
+    }
+
+    public function confirmTwoFactorAuth($code)
+    {
+        $codeIsValid = app(TwoFactorAuthenticationProvider::class)
+            ->verify(decrypt($this->two_factor_secret), $code);
+
+        if ($codeIsValid) {
+            $this->two_factor_confirmed_at = \carbon()->now();
+            $this->save();
+
+            return true;
+        }
+
+        return false;
     }
 }

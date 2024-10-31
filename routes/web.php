@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TwoFactorAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -85,16 +86,18 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
     Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
     Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
+    Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
+    Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
+    
 });
-Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
-Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
 
-Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'verified']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
         Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
         Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
         Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
         Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
+        Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
 
 
         Route::group(['prefix' => 'tags'], function () {

@@ -39,8 +39,15 @@
                         @if(auth()->user()->two_factor_secret)
                             @method('DELETE')
                             <button class="btn btn-danger">Disable</button>
+                            
+                            <br>	
+                            <div class="mt-4 font-medium text-sm">
+                                @foreach (auth()->user()->recoveryCodes() as $code)
+                                    {{ $code }}<br>
+                                @endforeach
+                            </div>
                         @else
-                            Two factor authentication is not enabled.
+                            L'authentification à deux facteurs n'est pas activée.
                             <button class="btn btn-primary">Enable</button>
                         @endif
                     </form>
@@ -56,35 +63,19 @@
                             Two factor authentication is enabled.
                         </div>
                         
-                        <h3>QR Code for authenticator applications</h3>
+                        <h3>Code QR pour les applications d'authentification</h3>
                         <div class="pt-5 pb-5">
                             {!!  auth()->user()->twoFactorQrCodeSvg() !!}
                         </div>
-                        <form method="POST" action="{{url("/user/confirmed-two-factor-authentication")}}">
+                        <form method="POST" action="{{route("twofactorconfirm")}}">
                             @csrf
                             
                             <div class="form-group mt-3">
                                 <label for="code">Code</label>
                                 <input type="text" class="form-control" name="code" id="code">
                             </div>
-                            <button class="btn btn-primary">Confirm</button>
+                            <button class="btn btn-primary">Confirmer</button>
                         </form>
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if (session('status') == 'two-factor-authentication-confirmed')
-            @dump(session())
-             <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-block">
-                        
-                        <div class="mb-4 font-medium text-sm">
-                            Two factor authentication confirmed and enabled successfully.
-                        </div>
-                        <div class="mb-4 font-medium text-sm">
-                            $request->user()->recoveryCodes()
-                        </div>
                     </div>
                 </div>
             </div>
