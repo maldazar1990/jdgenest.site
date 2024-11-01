@@ -38,26 +38,39 @@
     </div>
     @if($form instanceof App\Http\Forms\UserForm )
     
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-block">
-                    <form method="POST" action="{{ url('/user/two-factor-authentication') }}">
-                        @csrf
-                        <h3 class="card-title">2 facteurs</h3>
-                        @if(auth()->user()->two_factor_secret)
-                            @method('DELETE')
-                            <button class="btn btn-danger">Désactivé</button>
-                            
-                            <br>	
-                            
-                        @else
+        
+        @if (auth()->user()->two_factor_secret)
+            @if (session('status') != 'two-factor-authentication-enabled' and !session("error_code"))
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <form method="POST" action="{{ url('/user/two-factor-authentication') }}">
+                                @csrf
+                                <h3 class="card-title">2 facteurs</h3>
+                    
+                                    @method('DELETE')
+                                    <button class="btn btn-danger">Désactivé</button>
+                                    <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif    	
+        @else
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <form method="POST" action="{{ url('/user/two-factor-authentication') }}">
+                            @csrf
+                            <h3 class="card-title">2 facteurs</h3>
                             L'authentification à deux facteurs n'est pas activée.
                             <button class="btn btn-primary">Activé</button>
-                        @endif
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
+
         @if (session('status') == 'two-factor-authentication-enabled' or session("error_code"))
             <div class="col-12">
                 <div class="card mb-4">
