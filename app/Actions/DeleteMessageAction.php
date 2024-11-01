@@ -4,10 +4,13 @@ namespace App\Actions;
 
 use App\Contact;
 use LaravelViews\Actions\Action;
+use LaravelViews\Actions\Confirmable;
 use LaravelViews\Views\View;
 
 class DeleteMessageAction extends Action
 {
+    use Confirmable;
+
     /**
      * Any title you want to be displayed
      * @var String
@@ -20,6 +23,11 @@ class DeleteMessageAction extends Action
      */
     public $icon = "trash";
 
+    public function getConfirmationMessage($item = null)
+    {
+        return 'Êtes-vous sûr de vouloir supprimer ce message?';	
+    }
+
     /**
      * Execute the action when the user clicked on the button
      *
@@ -31,5 +39,7 @@ class DeleteMessageAction extends Action
         // Your code here
         Contact::whereKey($selectedModels)->delete();
         $this->success('Message supprimé avec succès');
+        return Redirect()->route('admin_msg');
+        
     }
 }

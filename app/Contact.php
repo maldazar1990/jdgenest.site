@@ -40,7 +40,7 @@ class Contact extends Model
         );
     }
 
-    public function text ()  {
+    public function name ()  {
         return \Attribute::make(
             get: fn ($value) => Crypt::decryptString($value),
             set: fn ($value) => Crypt::encryptString($value),

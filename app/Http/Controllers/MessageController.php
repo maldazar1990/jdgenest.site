@@ -34,6 +34,14 @@ class MessageController extends Controller
         return redirect()->route('admin_msg');
     }
 
+    public function show(Request $request, $id)
+    {
+        $contact = Contact::where( 'id', $id )->first();
+        return view('admin.viewLivewire', [
+            "contact" => $contact,
+        ]);
+    }
+
     public function ban(Request $request, $id)
     {
 

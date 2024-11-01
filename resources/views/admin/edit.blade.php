@@ -38,7 +38,7 @@
                         <h3 class="card-title">2 facteurs</h3>
                         @if(auth()->user()->two_factor_secret)
                             @method('DELETE')
-                            <button class="btn btn-danger">Disable</button>
+                            <button class="btn btn-danger">Désactivé</button>
                             
                             <br>	
                             <div class="mt-4 font-medium text-sm">
@@ -48,7 +48,7 @@
                             </div>
                         @else
                             L'authentification à deux facteurs n'est pas activée.
-                            <button class="btn btn-primary">Enable</button>
+                            <button class="btn btn-primary">Activé</button>
                         @endif
                     </form>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="card-block">
                         <h3 class="card-title">Activé code qr</h3>
                         <div class="mb-4 font-medium text-sm">
-                            Two factor authentication is enabled.
+                            L'authentification à deux facteurs est activée.
                         </div>
                         
                         <h3>Code QR pour les applications d'authentification</h3>

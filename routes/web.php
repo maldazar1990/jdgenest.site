@@ -180,6 +180,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
 
         Route::group(["prefix" => "message", "middleware" => "role:admin"], function () {
             Route::get('/', 'MessageController@index')->name('admin_msg');
+            Route::get('/show/{id}', 'MessageController@show')->name('admin_msg_show')->where("id", "[0-9A-Za-z\-]+");
             Route::get('/delete/{id}', 'MessageController@destroy')->name('admin_msg_delete')->where("id", "[0-9A-Za-z\-]+");
             Route::post('/deleteall', 'MessageController@deleteAll')->name('admin_msg_delete_all');
             Route::get('/ban/{id}', 'MessageController@ban')->name('admin_msg_ban')->where("id", "[0-9A-Za-z\-]+");

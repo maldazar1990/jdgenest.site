@@ -13,9 +13,9 @@ class TwoFactorAuthController extends Controller
         $confirmed = $request->user()->confirmTwoFactorAuth($request->code);
 
         if (!$confirmed) {
-            return back()->withErrors('Invalid Two Factor Authentication code');
+            return back()->withErrors('Code d\'authentification à deux facteurs invalide');
         }
-        return back()->with('message', 'Two Factor Authentication has been confirmed')
+        return back()->with('message', 'L\'authentification à deux facteurs a été confirmée')
         ->with("two-factor-authentication-confirmed", true);	
     }
 }

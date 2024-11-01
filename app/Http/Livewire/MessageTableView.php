@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use LaravelViews\Facades\Header;
 use App\Contact;
+use Illuminate\Support\Facades\Crypt;
 use LaravelViews\Views\TableView;
 
 class MessageTableView extends TableView
@@ -13,6 +14,8 @@ class MessageTableView extends TableView
     protected $model = Contact::class;
     public $searchBy = ['name', 'email', 'message'];
     protected $paginate = 10;
+    public $sortOrder = 'desc';
+    public $sortBy = 'created_at';
     /**
      * Sets the headers of the table as you want to be displayed
      *
@@ -23,7 +26,7 @@ class MessageTableView extends TableView
         return [
             Header::title('Nom')->sortBy('name'),
             Header::title('Email')->sortBy('email'),
-            Header::title('Message')->sortBy('message'),
+            Header::title('Message')->sortBy('text'),
             Header::title('Date')->sortBy('created_at'),
         ];
     }
@@ -35,10 +38,11 @@ class MessageTableView extends TableView
      */
     public function row($model): array
     {
+        $name = substr(Crypt::decryptString($model->name),0,20);
         return [
-            substr($model->name,0,20),
-            substr($model->email,0,50),
-            substr($model->message,0,20),
+            "<a href='".route("admin_msg_show",$model)."'>" . $name . "</a>",
+            substr(Crypt::decryptString($model->email),0,50),
+            substr($model->text,0,20),
             $model->created_at->format("d/m/Y"),
         ];
     }
