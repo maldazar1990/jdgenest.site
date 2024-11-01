@@ -49,11 +49,7 @@
                             <button class="btn btn-danger">Désactivé</button>
                             
                             <br>	
-                            <div class="mt-4 font-medium text-sm">
-                                @foreach (auth()->user()->recoveryCodes() as $code)
-                                    {{ $code }}<br>
-                                @endforeach
-                            </div>
+                            
                         @else
                             L'authentification à deux facteurs n'est pas activée.
                             <button class="btn btn-primary">Activé</button>
@@ -62,7 +58,7 @@
                 </div>
             </div>
         </div>
-        @if (session('status') == 'two-factor-authentication-enabled')
+        @if (session('status') == 'two-factor-authentication-enabled' or session("error_code"))
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-block">
@@ -75,6 +71,11 @@
                         <div class="pt-5 pb-5">
                             {!!  auth()->user()->twoFactorQrCodeSvg() !!}
                         </div>
+                        <div class="mt-4 font-medium text-sm">
+                                @foreach (auth()->user()->recoveryCodes() as $code)
+                                    {{ $code }}<br>
+                                @endforeach
+                            </div>
                         <form method="POST" action="{{route("twofactorconfirm")}}">
                             @csrf
                             
