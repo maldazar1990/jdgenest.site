@@ -20,21 +20,17 @@ class UserForm extends Form
             ]);
             $this->add('password','password', [
                 'label' => 'Password',
-                'rules' => 'required|min:6',
-		'value'=>''
+                'rules' => 'min:6',
+		        'value'=>''
             ]);
             if( $this->model->hasRole('admin') ) {
                 $this->add('jobTitle', 'text', [
                     'label' => 'Titre',
                     'rules' => 'required',
                 ]);
-
-                $this->add('presentation', 'textarea', [
-                    'label' => 'Présentation',
-                    'rules' => 'required',
+                $this->add("presentation","hidden",[
                     "attr" => [
-                        "class" => "form-control editor",
-                        "id" => "editor",
+                        "id" => "quill-value",
                     ]
                 ]);
                 $this->add('image', 'file', [

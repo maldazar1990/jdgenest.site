@@ -57,7 +57,6 @@
                         @enderror
                         <label for="quill-editor" class="control-label   ">Post</label>
                         <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
-                        <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
                     </div>
                     <input type="hidden" name="description" id="quill-value" value="{{old("description")??""}}">
                     <div class="mb-3">

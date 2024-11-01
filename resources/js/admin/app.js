@@ -80,7 +80,19 @@ $(function () {
     }
 
     let quillEditor = document.querySelector("#quill-editor");
+    let quillValue = document.getElementById('quill-value');
+    if (!quillEditor && quillValue != null) {
+        let divQuill = document.createElement("div");
+            divQuill.setAttribute("id","quill-editor");
+            divQuill.classList.add("mb-3");
+            divQuill.style.height = "300px";
+        quillValue.insertAdjacentElement("afterend",divQuill);
+        quillEditor = document.querySelector("#quill-editor");
+        console.log(quillEditor);
+    }
+    
     if ( quillEditor != null ) {
+
         Quill.register("modules/resize", QuillResizeImage);
         Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
         Quill.register(linkmentionBlot);
@@ -114,18 +126,18 @@ $(function () {
             }
         }); 
 
-        window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
-        window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
-
-        let quillValue = document.getElementById('quill-value');
-        editor.on('text-change', function() {
-
+        editor.on('text-change', function(delta, oldDelta, source) {
             editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
                 blockquote.classList.add("blockquote");
             });
-
+            
             quillValue.value = editor.root.innerHTML;
         });
+
+        window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+        window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
+
+        
 
         if ( quillValue.value != "" ) {
             editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {

@@ -1,7 +1,12 @@
 @extends('admin.layouts.app')
 
 @section("content")
+    @if ( $form instanceof App\Http\Forms\UserForm )
+        <script>
+            const valpost = "{!! addslashes(auth()->user()->presentation) !!}";
+        </script>
 
+    @endif
     <div class="col-12">
         <div class="card mb-4">
             @if(Session::has('message'))
@@ -25,11 +30,14 @@
             @endif
             <div class="card-block">
                 <h3 class="card-title">{{$title}}</h3>
+                {!! form_start($form) !!}
                 {!! form($form) !!}
+                {!! form_end($form) !!}
             </div>
         </div>
     </div>
     @if($form instanceof App\Http\Forms\UserForm )
+    
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-block">

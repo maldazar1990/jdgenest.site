@@ -75,7 +75,8 @@ class HelperGeneral {
                 self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality);
             }
 
-            if (function_exists('imageavif')) {
+            if ($format == \IMAGETYPE_AVIF) {
+                $img = \imagecreatefromavif(PATHIMAGE.$image);
                 imageavif($img, PATHIMAGE . $filename . ".avif",$quality);
                 self::resizeImagesForThumb($width, $height, $img, PATHIMAGE . $filename, $quality, "avif");
             }
