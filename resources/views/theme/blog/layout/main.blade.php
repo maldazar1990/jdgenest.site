@@ -21,7 +21,6 @@
                 @yield('content')
             </div>
         </section>
-    </div>
     @include("theme.blog.layout.footer")
 </div><!--//main-wrapper-->
 
