@@ -79,7 +79,7 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/post/{slug}', 'PageController@post')->name('post')->where('slug', "[0-9A-Za-z\-]+");
     Route::get('/adminhome', 'HomeController@index')->name('admin');
     
-    Route::get('login', [AuthenticatedSessionController::class, 'create']);
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');

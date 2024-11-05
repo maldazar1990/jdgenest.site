@@ -224,7 +224,10 @@ a.text-link {
 }
 
 .cta-section {
+	background-color: $theme-color-secondary!important;
+	color:white;
 	.heading {
+		color:white;
 		font-size: 2rem;
 		font-weight: bold;
 	}

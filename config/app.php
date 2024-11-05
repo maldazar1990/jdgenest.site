@@ -181,7 +181,7 @@ return [
         shweshi\OpenGraph\Providers\OpenGraphProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-
+        \Spatie\Feed\FeedServiceProvider::class,
 
 
     ],
