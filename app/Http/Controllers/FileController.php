@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\HelperGeneral;
+use App\Helpers\HelperGeneral;
 use App\Http\Forms\FileForm;
-use App\Http\Forms\TagForm;
+use App\Http\Helpers\ImageConverter;
 use App\Image;
-use App\post;
-use App\Tags as Tags;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -97,7 +93,8 @@ class FileController extends Controller
 
         $new_name = $image->getClientOriginalName();
         $image->move(public_path('images'), $new_name);
-        HelperGeneral::createNewImage($new_name);
+        $img = new ImageConverter($new_name);
+        $img->convertAll();
         $modelImage = new Image();
         $modelImage->name = $request->name;
         $modelImage->file = "images/".$new_name;

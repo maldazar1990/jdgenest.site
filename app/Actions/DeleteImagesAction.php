@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\HelperGeneral;
+use App\Http\Helpers\Image as HelpersImage;
 use App\Image;
 use App\post;
 use LaravelViews\Actions\Action;
@@ -38,8 +39,9 @@ class DeleteImagesAction extends Action
             foreach ($selectedModels as $idModel) {
                 $model = Image::where('id',$idModel)->first();
                 $post = post::where("image_od",$idModel)->first();
-                if (HelperGeneral::isImageUsed($model->name) or $post) {
-                    HelperGeneral::deleteImage($model->file);
+                $img = new HelpersImage($model->file);
+                if (HelpersImage::isImageUsed($model->name) or $post) {
+                    $img->deleteImage();
                     $model->delete();
                 } else {
                     $this->error("L'image " . $model->name . " est utilisée dans une page, elle ne peut pas être supprimée");

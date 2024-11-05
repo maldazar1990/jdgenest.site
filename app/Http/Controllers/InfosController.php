@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\HelperGeneral;
 use App\Http\Forms\infosForm;
+use App\Http\Helpers\Image;
+use App\Http\Helpers\ImageConverter;
 use App\Infos;
 use App\post;
 use Illuminate\Http\Request;
@@ -85,10 +87,12 @@ class InfosController extends Controller
             $file = $request->file("image");
             $name = $file->getClientOriginalName();
             $file->move(public_path("images"), $name);
-            HelperGeneral::createNewImage($name);
+            $img = new ImageConverter($name);
+            $img->convertAll();
             $infos->image = $name;
         } else if ( $request->imageUrl ) {
-            HelperGeneral::deleteImage($infos->image);
+            $img = new Image($infos->image);
+            $img->deleteImage();
 
             $infos->image = $request->imageUrl;
         }
@@ -168,11 +172,11 @@ class InfosController extends Controller
             Storage::delete(public_path("images/").$filename[0].".webp");            $file = $request->file("image");
             $name = Str::slug(time() . $file->getClientOriginalName());
             $file->move(public_path("images"), $name);
-            HelperGeneral::createNewImage($name);
             $infos->image = $name;
 
         } else if ( $request->imageUrl ) {
-            HelperGeneral::deleteImage($infos->image);
+            $img = new Image($infos->image);
+            $img->deleteImage();
             $infos->image = $request->imageUrl;
         }
         $infos->title = $request->input("title");
@@ -211,7 +215,8 @@ class InfosController extends Controller
     {
 
         $infos = Infos::where('id', $id)->first();
-        HelperGeneral::deleteImage($infos->image);
+        $img = new Image($infos->image);
+        $img->deleteImage();
         $infos->tags()->detach();
         $infos->delete();
         Cache::forget("exps");

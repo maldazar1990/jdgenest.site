@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\HelperGeneral;
+use App\Http\Helpers\Image;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -33,7 +34,8 @@ class DeleteInfoAction extends Action
      */
     public function handle($model, View $view)
     {
-        HelperGeneral::deleteImage($model->image);
+        $img = new Image($model->image);
+        $img->deleteImage();
         $model->tags()->detach();
         $model->delete();
 

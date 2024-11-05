@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\HelperGeneral;
 use App\Http\Forms\PostForm;
+use App\Http\Helpers\Image as HelpersImage;
 use App\Image;
 use App\Jobs\ConvertImage;
 use App\post;
@@ -241,7 +242,8 @@ class PostController extends Controller
 
     protected function saveImage (Request $request, post $post) {
         if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
-            HelperGeneral::deleteImage($post->image);
+            $img = new HelpersImage($post->image);
+            $img->deleteImage();
             $file = $request->file("image");
             $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
             $name = $file->getClientOriginalName();
@@ -263,7 +265,8 @@ class PostController extends Controller
  
         } else {
             if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
-                HelperGeneral::deleteImage($post->image);
+                $img = new HelpersImage($post->image);
+                $img->deleteImage();
                 $post->image = $request->imageUrl;
                 $post->image_id = null;
             } else {

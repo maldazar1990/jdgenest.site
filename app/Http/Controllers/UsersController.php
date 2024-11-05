@@ -6,6 +6,8 @@ use App\Actions\Fortify\PasswordValidationRules;
 use App\HelperGeneral;
 use App\Http\Forms\NewUserForm;
 use App\Http\Forms\UserForm;
+use App\Http\Helpers\Image;
+use App\Http\Helpers\ImageConverter;
 use App\Users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -98,11 +100,13 @@ class UsersController extends Controller
         }
 
         if ( $request->image and $user->roles()->where("name","admin")->count() > 0 ) {
-            HelperGeneral::deleteImage($user->image);
+            $img = new Image($user->image);
+            $img->deleteImage();
             $file = $request->file("image");
             $name = $file->getClientOriginalName();
             $file->move(public_path("images"), $name);
-            HelperGeneral::createNewImage($name);
+            $img = new ImageConverter($name);
+            $img->convertAll();
             $user->image = $name;
         }
         $user->email = $request->input("email");

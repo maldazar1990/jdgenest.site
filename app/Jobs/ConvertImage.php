@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\HelperGeneral;
+use App\Http\Helpers\ImageConverter;
 use App\post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,7 +30,8 @@ class ConvertImage implements ShouldQueue
      */
     public function handle(): void
     {
-        HelperGeneral::createNewImage($this->image);
+        $img = new ImageConverter($this->image);
+        $img->convertAll();
         $filename = explode('.', $this->image);
         $image = $filename[0].".webp";
 

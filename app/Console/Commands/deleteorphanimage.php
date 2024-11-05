@@ -3,10 +3,12 @@
 namespace App\Console\Commands;
 
 use App\HelperGeneral;
+use App\Http\Helpers\Image;
 use App\Infos;
 use App\post;
 use App\Users;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class deleteorphanimage extends Command
@@ -33,11 +35,12 @@ class deleteorphanimage extends Command
     public function handle()
     {
         $path = public_path('images');
-        $files = \File::files($path);
+        $files = File::files($path);
         foreach($files as $file){
             $filename = $file->getFilename();
             $filename = explode(".", $filename);
-            HelperGeneral::deleteImage($filename);
+            $img = new Image($filename);
+            $img->deleteImage();
         }
         return Command::SUCCESS;
     }

@@ -38,14 +38,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(\App\HelperGeneral::getImages() as $key=>$image)
+                        @foreach(\App\Http\Helpers­\Image::getImages() as $key=>$image)
                             <tr class="border h-25" >
                                 <td>{{$key}}</td>
                                 <td>
                                     <img style="max-height: 100px" src="{{asset('images/'.$image)}}" alt="{{$key}}" class="img-fluid">
                                 </td>
                                 <td class="border">
-                                    @if(!\App\HelperGeneral::isImageUsed($key))
+                                    @if(!\App\Http\Helpers\Image::isImageUsed($key))
                                         <a class="btn btn-danger link-light" href="{{route('admin_files_delete')}}?image={{$key}}">Supprimer</a>
                                     @else
                                         Ne peut pas être supprimé
