@@ -27,6 +27,8 @@
                 <ul class="social-list list-inline py-3 mx-auto">
                     <li class="list-inline-item"><a href="{{$options["linkedin"]}}"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
                     <li class="list-inline-item"><a href="{{$options['gitlab']}}"><i class="fab fa-github-alt fa-fw"></i></a></li>
+                    <li class="list-inline-item"><a rel="alternate" type="application/atom+xml" title="News" href="/feed"><i class="fa fa-rss"></i></a></li>
+
                 </ul><!--//social-list-->
                 <hr>
             </div><!--//profile-section-->

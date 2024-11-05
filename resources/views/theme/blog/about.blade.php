@@ -78,9 +78,7 @@
                                         foreach ($info->tags()->get() as $tag){
                                             $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
                                         }
-                                        $smartpost = strip_tags($info->description);
-                                        $smartpost = str_replace('&nbsp;', ' ', $smartpost);
-                                        $smartpost =  Str::words($smartpost, 10, '....');
+                                        $smartpost = \App\Http\Helpers\HelperGeneral::getFirstWordFromText($info->description,50);
                                     @endphp
 
                                     <div class="col" data-listclass="{{$tagClass}}">
@@ -96,7 +94,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{$info->title}}</h5>
 
-                                                <p class="card-text">{{$smartpost}}</p>
+                                                <p class="card-text">{{\App\Http\Helpers\HelperGeneral::getFirstWordFromText($info->description)}}</p>
                                                 <small>
                                                     @if($info->dateend < \Illuminate\Support\Facades\Date::today())
                                                         <span class="float-right w-100 mb-1">{{$info->datestart}}  à {{$info->dateend}}</span>

@@ -2,12 +2,16 @@
 
 namespace App;
 
+use App\Http\Helpers\HelperGeneral;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Comment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Feed\Feed;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 use Watson\Rememberable\Rememberable;
 
 /**
@@ -51,10 +55,27 @@ use Watson\Rememberable\Rememberable;
  * @method static Builder|post whereUserId($value)
  * @mixin \Eloquent
  */
-class post extends Model
+class post extends Model  implements Feedable
 {
     use Rememberable;
     protected $table = "post";
+
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create([
+            'id' => $this->id,
+            'title' => $this->title,
+            'summary' => HelperGeneral::getFirstWordFromText($this->post),
+            'updated' => $this->updated_at,
+            'link' => route("post",["slug" => $this->slug]),
+            'authorName' => $this->user->name,
+        ]);
+    }
+
+    public static function getFeedItems()
+    {
+        return post::limit(10)->orderBy('updated_at', 'desc')->get();
+    }
 
     protected static function booted()
     {

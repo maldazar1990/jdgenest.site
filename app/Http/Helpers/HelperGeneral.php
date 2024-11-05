@@ -8,7 +8,13 @@ use Illuminate\Support\Str;
 define('PATHIMAGE',$path = \public_path("images/"));
 
 class HelperGeneral {
-     
+
+    static function getFirstWordFromText(string $text, int $length = 30): string{
+        $smartpost = strip_tags($text);
+        $smartpost = str_replace('&nbsp;', ' ', $smartpost);
+        $smartpost =  Str::words($smartpost, $length);
+        return $smartpost;
+    }
     static function clean($string) {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.

@@ -31,6 +31,10 @@ class  Image {
                 $path . $filename . ".png",
                 $path . $filename . "_medium.webp",
                 $path . $filename . "_small.webp",
+                $path . $filename . "_medium.jpg",
+                $path . $filename . "_small.jpg",
+                $path . $filename . "_medium.jpeg",
+                $path . $filename . "_small.jpeg",
                 $path . $filename . ".avif",
                 $path . $filename . "_medium.avif",
                 $path . $filename . "_small.avif"];

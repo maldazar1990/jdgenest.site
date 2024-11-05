@@ -17,6 +17,9 @@ use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
+Route::feeds();
+
+
 if (!function_exists("crawlerDetect")) {
     function crawlerDetect($USER_AGENT)
     {
@@ -64,6 +67,7 @@ if (!function_exists("crawlerDetect")) {
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/', 'PageController@index')->name("default");
     Route::get('/about', 'PageController@about')->name('about');
@@ -75,17 +79,12 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/post/{slug}', 'PageController@post')->name('post')->where('slug', "[0-9A-Za-z\-]+");
     Route::get('/adminhome', 'HomeController@index')->name('admin');
     
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create']);
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');
     
     // Two-factor authentication routes
-    Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
-    Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
-    Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
-    Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
     Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
     Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
@@ -93,10 +92,10 @@ Route::group(['middleware' => 'firewall.all'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
-        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
+        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create']);
         Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
-        Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
-        Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
+        Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store']);
+        Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy']);
         Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
 
 
@@ -130,16 +129,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::post('/update/{id}', 'PostController@update')->name('admin_posts_update')->where("id", "[0-9A-Za-z\-]+");
             Route::get('/delete/{id}', 'PostController@destroy')->name('admin_posts_delete')->where("id", "[0-9A-Za-z\-]+");
         });
-
-        Route::group(["prefix" => "page"], function () {
-            Route::get('/', 'AdminPageController@index')->name('admin_page');
-            Route::get('/create', 'AdminPageController@create')->name('admin_page_create');
-            Route::post('/insert', 'AdminPageController@store')->name('admin_page_insert');
-            Route::get('/{id}', 'AdminPageController@edit')->name('admin_page_edit');
-            Route::post('/update/{id}', 'AdminPageController@update')->name('admin_page_update')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'AdminPageController@destroy')->name('admin_page_delete')->where("id", "[0-9A-Za-z\-]+");
-        });
-
         Route::group(["prefix" => "infos", "middleware" => "role:admin"], function () {
             Route::get('/', 'InfosController@index')->name('admin_infos');
             Route::get('/create', 'InfosController@create')->name('admin_infos_create');
@@ -159,16 +148,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::post('/insertMenu', 'OptionsController@menu')->name('admin_options_menu');
             Route::get('/modifyMenu', 'OptionsController@modifyMenu')->name('admin_options_menu_index');
         });
-
-        Route::group(["prefix" => "role", "middleware" => "role:admin"], function () {
-            Route::get('/', 'RoleController@index')->name('admin_role');
-            Route::get('/create', 'RoleController@create')->name('admin_role_create');
-            Route::post('/insert', 'RoleController@store')->name('admin_role_insert');
-            Route::get('/{id}', 'RoleController@edit')->name('admin_role_edit');
-            Route::post('/update/{id}', 'RoleController@update')->name('admin_role_update')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'RoleController@destroy')->name('admin_role_delete')->where("id", "[0-9A-Za-z\-]+");
-        });
-
         Route::group(["prefix" => "files"], function () {
             Route::get('/', 'FileController@index')->name('admin_files');
             Route::get('/ajax', 'FileController@ajax')->name('admin_files_ajax');
