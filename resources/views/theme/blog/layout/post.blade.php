@@ -21,8 +21,8 @@
     </div><!--//row-->
 </div>
 --}}
-<div class="col-12 col-md-6 col-lg-6 mb-5">
-    <div class="card rounded-0 border-0 shadow-sm eq-height" >
+<div class="col-12 col-md-6 col-lg-6 mb-5 ">
+    <div class="card rounded-0 border-0 shadow-sm eq-height shadow-animation" >
         <div class="position-relative">
             @include("theme.blog.layout.image", ['image' => $post->image,"class" => "img-fluid","size"=>"small"])
         </div>
