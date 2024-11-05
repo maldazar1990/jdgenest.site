@@ -34,7 +34,7 @@
                                 <td>Nombre d'images</td>
                                 <td>
                                     <a href="{{route("admin_files")}}">
-                                        {{count(\App\Http\Helpers­\Image::getImages())}}
+                                        {{count(\App\Http\Helpers\Image::getImages())}}
                                     </a>
                                 </td>
                             </tr>

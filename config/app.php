@@ -271,7 +271,7 @@ return [
     "mailperso" => env("MAIL_PERSO"),
     "description"=>env("APP_DESCRIPTION"),
     "rule_image"=>"mimes:jpeg,png,jpg,webp,avif|max:2048",
-    "maxblog"=>5,
+    "maxblog"=>6,
     "host"=>env("APP_HOST"),
 
 ];

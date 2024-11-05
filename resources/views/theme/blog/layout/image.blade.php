@@ -22,19 +22,22 @@
         @else
             @php
                 
-                
+                if ( str_contains($image,".") and \File::exists(public_path("images/".$image)) )
 
-                if ( str_contains($image,".") and File::exists(public_path("images/".$image)) ) 
                     $filename = explode('.', $image)[0];
                 else {
                     $filename = $image;
                     $path = \public_path("images/");
-	            if ( str_contains($image,".")) {
-                    $image = explode(".",$image)[0];		    
-                }
+                    if ( str_contains($image,".")) {
+                        $image = explode(".",$image)[0];
+                    }
                     $files = File::glob($path."*".$image.".*");
-                    $ext = File::extension($files[0]);
-                    $image = $image.".".$ext;
+                    if (count($files) != 0) {
+                        $ext = File::extension($files[0]);
+                        $image = $image.".".$ext;
+                    } else {
+                        $image = "default.jpg";
+                    }
                 }
 
                 if (Str::contains($image, 'images/')) {
@@ -47,6 +50,7 @@
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
+            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'jpeg',"size"=>$size])
             <img
                 class="{{$class}}"
                 src="{{asset($image)}}"

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\HelperGeneral;
+use App\Http\Helpers\HelperGeneral;
 use App\Http\Forms\FileForm;
 use App\Http\Helpers\ImageConverter;
 use App\Image;

@@ -216,7 +216,7 @@ a.text-link {
 /* Main wrapper */
 .main-wrapper {
 	margin-left: $sidebar-width;
-	background: #fff;
+	background: $theme-bg-light;
 	
 	.container {
 		max-width: $single-col-max-width;
