@@ -14,6 +14,8 @@ class  ImageConverter
     private $width;
     private $height;
 
+    private const MEDIUMWIDTH = 767;
+    private const LARGEWIDTH = 1280;
     public function __construct($image)
     {
         $this->image = $image;
@@ -90,9 +92,16 @@ class  ImageConverter
                 $function = "imageavif";
                 break;
         }
-        
-        call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality-10);
-        call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality-20);
+
+        if ( $this->width < self::MEDIUMWIDTH) {
+            call_user_func($function,$img, $newfile . "_small.".$format,$quality);
+            return;
+        } else {
+            call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality-10);
+            call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality-20);
+            return;
+        }
+
     }
 
 }
