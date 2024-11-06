@@ -261,7 +261,6 @@ class PageController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        dd($request->text);
         $contact = new Contact();
         $contact->name = Crypt::encryptString($request->name);
         $contact->email = Crypt::encryptString($request->savon);
