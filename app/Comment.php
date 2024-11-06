@@ -44,6 +44,8 @@ use Watson\Rememberable\Rememberable;
  * @method static Builder|Comment whereType($value)
  * @method static Builder|Comment whereUpdatedAt($value)
  * @method static Builder|Comment whereUserId($value)
+ * @property string|null $image_id
+ * @method static Builder|Comment whereImageId($value)
  * @mixin \Eloquent
  */
 class Comment extends Model

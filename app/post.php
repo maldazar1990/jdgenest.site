@@ -53,6 +53,8 @@ use Watson\Rememberable\Rememberable;
  * @method static Builder|post whereType($value)
  * @method static Builder|post whereUpdatedAt($value)
  * @method static Builder|post whereUserId($value)
+ * @property string|null $image_id
+ * @method static Builder|post whereImageId($value)
  * @mixin \Eloquent
  */
 class post extends Model  implements Feedable

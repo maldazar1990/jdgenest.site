@@ -54,6 +54,12 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereRole($role)
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereUpdatedAt($value)
+ * @property string|null $two_factor_secret
+ * @property string|null $two_factor_recovery_codes
+ * @property string|null $two_factor_confirmed_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereTwoFactorConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereTwoFactorRecoveryCodes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereTwoFactorSecret($value)
  * @mixin \Eloquent
  */
 class Users extends Authenticatable
