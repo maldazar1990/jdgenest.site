@@ -15,7 +15,7 @@ class MessageTableView extends TableView
     public $searchBy = ['name', 'email', 'message'];
     protected $paginate = 10;
     public $sortOrder = 'desc';
-    public $sortBy = 'created_at';
+    public $sortBy = 'id';
     /**
      * Sets the headers of the table as you want to be displayed
      *
@@ -40,7 +40,7 @@ class MessageTableView extends TableView
     {
         $name = substr(Crypt::decryptString($model->name),0,20);
         return [
-            "<a href='".route("admin_msg_show",$model->id)."'>" . $name . "</a>",
+            "<a href='/admin/message/show/".$model->id."'>" . $name . "</a>",
             substr(Crypt::decryptString($model->email),0,50),
             substr($model->text,0,20),
             $model->created_at->format("d/m/Y"),

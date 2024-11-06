@@ -13,7 +13,7 @@ class PostTableView extends TableView
     protected $paginate = 10;
     public $sortOrder = 'desc';
     protected $model = post::class;
-    public $sortBy = 'created_at';
+    public $sortBy = 'id';
     public $searchBy = ['title', 'post'];
     /**
      * Sets the headers of the table as you want to be displayed
