@@ -95,8 +95,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
         Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
         Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
         Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
-
-
         Route::group(['prefix' => 'tags'], function () {
             Route::get('/', 'TagsController@index')->name('admin_tags');
             Route::get('/ajax', 'TagsController@ajax')->name('admin_tags_ajax');

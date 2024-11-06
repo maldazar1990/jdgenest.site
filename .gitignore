@@ -9,7 +9,8 @@ COMMIT_MSG.aim.txt
 .phpunit.result.cache
 /public/images/
 /public_html/images/
-
+_ide_helper_models.php
+npm-debug.log.*
 .idea
 phpunit.xml
 /database/homestead.sqlite
