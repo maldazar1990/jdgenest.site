@@ -76,10 +76,20 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
+
         Fortify::authenticateUsing(function(Request $request){
             $user = User::where('email',$request->email)->first();
 
+
+
+
             if($user && Hash::check($request->password,$user->password)){
+                if ( $user->two_factor_secret and $user->two_factor_confirmed_at == 0) {
+                    $user->forceFill([
+                        'two_factor_secret' => "",
+                        "two_factor_recovery_codes" => "",
+                    ])->save();
+                }
                 return $user;
             }
         });

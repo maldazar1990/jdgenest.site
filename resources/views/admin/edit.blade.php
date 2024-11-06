@@ -39,8 +39,8 @@
     @if($form instanceof App\Http\Forms\UserForm )
     
         
-        @if (auth()->user()->two_factor_secret)
-            @if (session('status') != 'two-factor-authentication-enabled' and !session("error_code"))
+        @if (auth()->user()->two_factor_secret )
+            @if (session('status') != 'two-factor-authentication-enabled' and !session("error_code") and auth()->user()->two_factor_confirmed_at != 0 )
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-block">
@@ -70,8 +70,7 @@
                 </div>
             </div>
         @endif
-
-        @if (session('status') == 'two-factor-authentication-enabled' or session("error_code"))
+        @if ((session('status') == 'two-factor-authentication-enabled' or session("error_code")) or (auth()->user()->two_factor_confirmed_at==0and auth()->user()->two_factor_secret != ""))
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-block">

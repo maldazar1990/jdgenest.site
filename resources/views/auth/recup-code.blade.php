@@ -5,21 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Défi à deux facteurs') }}</div>
+                    <div class="card-header">{{ __('Code de récupération à deux facteurs') }}</div>
 
                     <div class="card-body">
-                        {{ __('Veuillez entrer votre code d\'authentification pour vous connecter.') }}
+                        {{ __('Veuillez entrer votre code de récupération d\'authentification pour vous connecter.') }}
 
                         <form method="POST" action="{{ route('two-factor.login') }}">
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="code" class="col-md-4 col-form-label text-md-end">{{ __('Code') }}</label>
+                                <label for="recovery_code" class="col-md-4 col-form-label text-md-end">{{ __('Code de récupération') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="code" type="code" class="form-control @error('code') is-invalid @enderror" name="code" required >
+                                    <input id="recovery_code" type="text" class="form-control @error('recovery_code') is-invalid @enderror" name="recovery_code" required >
 
-                                    @error('code')
+                                    @error('recovery_code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -32,7 +32,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Confirmer le code') }}
                                     </button>
-                                    <a href="{{route("recupForm")}}">Code de récupération</a>
+
                                 </div>
                             </div>
                         </form>

@@ -83,11 +83,15 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('admin_login_post');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');
+    Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
+    Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
+    Route::get("recupForm",function(){
+        return view("auth.recup-code");
+    })->name("recupForm");
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
-        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
-        Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
+
         Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
         Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
         Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
