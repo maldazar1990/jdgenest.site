@@ -8,6 +8,7 @@ use App\FirewallIp;
 use App\Http\Forms\ContactForm;
 use App\Image;
 use App\Jobs\SendEmailBasicJob;
+use App\Mail\SendEmailBasic;
 use App\options_table;
 use App\post;
 use App\Tags;
@@ -267,8 +268,11 @@ class PageController extends Controller
         $contact->text = $request->text;
         $contact->ip = $request->ip();
         $contact->save();
-        dispatch(new SendEmailBasicJob($request->savon,"Merci pour votre message","mail.email",''));
-        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));
+        $email = new SendEmailBasic("Merci pour votre message","mail.email","");
+        Mail::to($this->savon)
+            ->send($email);
+        /*dispatch(new SendEmailBasicJob($request->savon,"Merci pour votre message","mail.email",''));
+        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));*/
 
         $request->session()->flash('message', 'Ton message a été envoyé avec succès');
         return redirect()->route('contact');
