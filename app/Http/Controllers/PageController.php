@@ -269,7 +269,7 @@ class PageController extends Controller
         $contact->ip = $request->ip();
         $contact->save();
         $email = new SendEmailBasic("Merci pour votre message","mail.email","");
-        Mail::to($this->savon)
+        Mail::to($request->savon)
             ->send($email);
         /*dispatch(new SendEmailBasicJob($request->savon,"Merci pour votre message","mail.email",''));
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));*/
