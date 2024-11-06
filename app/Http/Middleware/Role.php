@@ -23,7 +23,7 @@ class Role
 
         if (!Auth::user())
         {
-            return redirect()->route('login');
+            return redirect()->route('admin_login');
         }
 
         if ( Route::current()->uri != "admin/two-factor-challenge") {
