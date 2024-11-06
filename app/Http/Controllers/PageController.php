@@ -268,11 +268,7 @@ class PageController extends Controller
         $contact->text = $request->text;
         $contact->ip = $request->ip();
         $contact->save();
-        $email = new SendEmailBasic("Merci pour votre message","mail.email","");
-        Mail::to($request->savon)
-            ->send($email);
-        /*dispatch(new SendEmailBasicJob($request->savon,"Merci pour votre message","mail.email",''));
-        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));*/
+        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));
 
         $request->session()->flash('message', 'Ton message a été envoyé avec succès');
         return redirect()->route('contact');
