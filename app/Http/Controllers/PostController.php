@@ -258,7 +258,7 @@ class PostController extends Controller
                 $imageDb->name = $nameWithoutExtension;
                 $imageDb->file = "images/".$name;
                 $imageDb->save();
-                \dispatch(new ConvertImage($name,$post->id));
+                \dispatch(new ConvertImage($name,$post->id))->onQueue("default");
                 $post->image = $name;
                 $post->image_id = $imageDb->id;
             }

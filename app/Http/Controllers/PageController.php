@@ -268,7 +268,7 @@ class PageController extends Controller
         $contact->text = $request->text;
         $contact->ip = $request->ip();
         $contact->save();
-        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));
+        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''))->onQueue("default");
 
         $request->session()->flash('message', 'Ton message a été envoyé avec succès');
         return redirect()->route('contact');
@@ -298,7 +298,7 @@ class PageController extends Controller
         $comment->ip = $request->ip();
         $comment->save();
 
-        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''))->delay(60);
+        dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''))->delay(60)->onQueue("default");
 
         return back()->with('message', 'Ton commentaire a été envoyé avec succès');
     }
