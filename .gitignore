@@ -28,6 +28,7 @@ main.zip
 ehthumbs.db
 Thumbs.db
 .phpstorm.meta.php
+resources/sitemap.xml
 _ide_helper.php
 # Obsidian files for documentation editin
 docs/.obsidian/workspace.json

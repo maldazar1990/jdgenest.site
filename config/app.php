@@ -182,6 +182,8 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         \Spatie\Feed\FeedServiceProvider::class,
+        Verschuur\Laravel\RobotsTxt\Providers\RobotsTxtProvider::class
+
 
 
     ],
