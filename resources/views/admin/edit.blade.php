@@ -98,6 +98,11 @@
                             </div>
                             <button class="btn btn-primary">Confirmer</button>
                         </form>
+                        <form method="POST" action="{{ url('/user/two-factor-authentication') }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">Désactivé</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -20,6 +20,12 @@ class Role
     public function handle(Request $request, Closure $next)
     {
         $roles = array_slice(func_get_args(), 2);
+
+        if (!Auth::user())
+        {
+            return redirect()->route('login');
+        }
+
         if ( Route::current()->uri != "admin/two-factor-challenge") {
             if (! Auth::user()->hasAnyRole($roles)) {
                 throw new AuthorizationException("Tu n'as pas l'autorisation");

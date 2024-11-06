@@ -14,8 +14,7 @@ class  ImageConverter
     private $width;
     private $height;
 
-    private const MEDIUMWIDTH = 767;
-    private const LARGEWIDTH = 1280;
+    private const MEDIUMWIDTH = 800;
     public function __construct($image)
     {
         $this->image = $image;
@@ -53,6 +52,7 @@ class  ImageConverter
     {
         imageavif($img, \public_path("images/") . $this->filename . ".avif", $quality);
         $this->resizeImagesForThumb($img, \public_path("images/") . $this->filename, $quality, "avif");
+        return;
     }
 
     private function convertToJpeg(GdImage $img,$quality = 90)
@@ -62,6 +62,7 @@ class  ImageConverter
         imagesavealpha($img, true);
         imagejpeg($img, \public_path("images/") . $this->filename . ".jpeg", $quality);
         $this->resizeImagesForThumb($img, \public_path("images/") . $this->filename, $quality,"jpeg");
+        return;
     }
 
     function convertAll(): void
@@ -70,7 +71,7 @@ class  ImageConverter
         $this->convertToWebp($img);
         $this->convertToJpeg($img);
         $this->convertToAvif($img);
-    
+        return;
     }
 
     private  function resizeImage(int $new_width,int $new_height,GdImage $image):GdImage

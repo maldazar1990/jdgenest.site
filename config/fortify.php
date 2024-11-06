@@ -83,9 +83,8 @@ return [
     |
     */
 
-    'prefix' => 'www',
-
-    'domain' => "jdgenest.site",
+    'prefix' => '',
+    'domain' => env("APP_DOMAIN","jdgenest.site"),
 
     /*
     |--------------------------------------------------------------------------
@@ -144,8 +143,8 @@ return [
     'features' => [
         Features::resetPasswords(),
         Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
+            'confirm' => false,
+            'confirmPassword' => false,
         ]),
     ],
 

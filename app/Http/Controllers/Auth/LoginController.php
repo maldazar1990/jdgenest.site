@@ -50,7 +50,7 @@ class LoginController extends Controller
         ];
 
         if(!Auth::validate($credentials)){
-            return redirect()->to('login')
+            return redirect()->to('admin_login')
                 ->withErrors(['email' => 'Email ou mot de passe incorrect']);
         }
 
@@ -58,7 +58,7 @@ class LoginController extends Controller
             $user = Auth::user();
             return $this->authenticated($request, $user);
         }
-        return redirect()->to('login')
+        return redirect()->to('admin_login')
             ->withErrors(['email' => 'Email ou mot de passe incorrect']);
 
 

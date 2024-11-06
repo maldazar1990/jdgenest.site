@@ -79,23 +79,13 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/post/{slug}', 'PageController@post')->name('post')->where('slug', "[0-9A-Za-z\-]+");
     Route::get('/adminhome', 'HomeController@index')->name('admin');
     
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('admin_login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');
-    
-    // Two-factor authentication routes
-    Route::get('email/verify', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
-    Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
-    
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
-        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create']);
-        Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
-        Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store']);
-        Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy']);
         Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
 
 
