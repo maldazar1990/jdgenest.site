@@ -40,7 +40,7 @@ class MessageTableView extends TableView
     {
         $name = substr(Crypt::decryptString($model->name),0,20);
         return [
-            "<a href='".route("admin_msg_show",$model)."'>" . $name . "</a>",
+            "<a href='".route("admin_msg_show",$model->id)."'>" . $name . "</a>",
             substr(Crypt::decryptString($model->email),0,50),
             substr($model->text,0,20),
             $model->created_at->format("d/m/Y"),
