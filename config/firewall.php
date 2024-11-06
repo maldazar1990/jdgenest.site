@@ -4,10 +4,10 @@ return [
 
     'enabled' => true,
 
-    'whitelist' => [env('FIREWALL_WHITELIST', '')],
+    'whitelist' => [env('FIREWALL_WHITELIST', '127.0.0.1')],
 
     'models' => [
-        'user' => '\App\Models\User',
+        'user' => '\App\Users',
     ],
 
     'log' => [
@@ -38,14 +38,6 @@ return [
             'name' => env('FIREWALL_EMAIL_NAME', 'Laravel Firewall'),
             'from' => env('FIREWALL_EMAIL_FROM', 'jdgenest19@gmail.com'),
             'to' => env('FIREWALL_EMAIL_TO', 'jdgenest@icloud.com'),
-        ],
-
-        'slack' => [
-            'enabled' => env('FIREWALL_SLACK_ENABLED', false),
-            'emoji' => env('FIREWALL_SLACK_EMOJI', ':fire:'),
-            'from' => env('FIREWALL_SLACK_FROM', 'Laravel Firewall'),
-            'to' => env('FIREWALL_SLACK_TO'), // webhook url
-            'channel' => env('FIREWALL_SLACK_CHANNEL', null), // set null to use the default channel of webhook
         ],
 
     ],
@@ -91,7 +83,14 @@ return [
 
             // https://github.com/jenssegers/agent
             'browsers' => [
-                'allow' => [], // i.e. 'Chrome', 'Firefox'
+                'allow' => [
+                    'Opera' ,
+                    'Edge',
+                    'Vivaldi',
+                    'Chrome',
+                    'Firefox',
+                    'Safari',
+                ], // i.e. 'Chrome', 'Firefox'
                 'block' => [], // i.e. 'IE'
             ],
 
@@ -124,7 +123,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*","adminhome","login"], // i.e. 'admin/*'
             ],
 
             // https://github.com/JayBizzle/Crawler-Detect/blob/master/raw/Crawlers.txt
