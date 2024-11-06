@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail as Mail;
 
 class SendEmailBasicJob implements ShouldQueue
@@ -36,9 +37,12 @@ class SendEmailBasicJob implements ShouldQueue
      */
     public function handle()
     {
+        Log::info("email start");
 
         $email = new SendEmailBasic($this->title,$this->mailView,$this->message);
         Mail::to($this->to)
             ->send($email);
+
+        Log::info("email end");
     }
 }

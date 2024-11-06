@@ -39,5 +39,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // or run this command for daily routine
+
     }
 }

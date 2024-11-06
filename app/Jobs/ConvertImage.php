@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ConvertImage implements ShouldQueue
 {
@@ -30,6 +31,7 @@ class ConvertImage implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("image convert start");
         $img = new ImageConverter($this->image);
         $img->convertAll();
         $filename = explode('.', $this->image);
@@ -38,5 +40,6 @@ class ConvertImage implements ShouldQueue
         $post = post::find($this->idPost);
         $post->image = $image;
         $post->save();
+        Log::info("image convert end");
     }
 }
