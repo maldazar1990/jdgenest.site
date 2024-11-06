@@ -86,6 +86,10 @@ Route::group(['middleware' => 'firewall.all'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
+        Route::get('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])->name('two-factor.login');
+        Route::post('two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store']);
+        Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
+        Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
         Route::post('/2fa-confirm', [TwoFactorAuthController::class, 'confirm'])->name('twofactorconfirm');
 
 

@@ -141,7 +141,6 @@ return [
     "emailVerification"=>false,
 
     'features' => [
-        Features::resetPasswords(),
         Features::twoFactorAuthentication([
             'confirm' => false,
             'confirmPassword' => false,
