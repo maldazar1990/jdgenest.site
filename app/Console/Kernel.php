@@ -39,8 +39,5 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // or run this command for daily routine
-        $schedule->command(GenerateSitemap::class)->daily();
-        $schedule->command(AddImage2BDD::class)->hourly();
-
     }
 }
