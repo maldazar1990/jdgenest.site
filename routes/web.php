@@ -80,7 +80,7 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get('/adminhome', 'HomeController@index')->name('admin');
     
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('admin_login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('admin_login_post');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware('honeypot');
 });
