@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    @if($form instanceof App\Http\Forms\UserForm )
+    @if($form instanceof App\Http\Forms\UserForm and env("APP_ENV")!="Production")
     
         
         @if (auth()->user()->two_factor_secret )
