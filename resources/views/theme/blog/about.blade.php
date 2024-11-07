@@ -32,9 +32,9 @@
                                         </div>
                                         <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today())
-                                                <span class="float-right w-100 mb-1">{{$info->datestart}}  à {{$info->dateend}}</span>
+                                                <span class="float-right w-100 mb-1">{{substr($info->datestart,0,10)}}  à {{substr($info->dateend,0,10)}}</span>
                                             @else
-                                                <span class="float-right w-100 mb-1">Depuis {{$info->datestart}}</span>
+                                                <span class="float-right w-100 mb-1">Depuis {{substr($info->datestart,0,10)}}</span>
                                             @endif
                                         </small>
                                         <div>
@@ -97,9 +97,9 @@
                                                 <p class="card-text">{{\App\Http\Helpers\HelperGeneral::getFirstWordFromText($info->description)}}</p>
                                                 <small>
                                                     @if($info->dateend < \Illuminate\Support\Facades\Date::today())
-                                                        <span class="float-right w-100 mb-1">{{$info->datestart}}  à {{$info->dateend}}</span>
+                                                        <span class="float-right w-100 mb-1">{{substr($info->datestart,0,10)}}  à {{substr($info->dateend,0,10)}}</span>
                                                     @else
-                                                        <span class="float-right w-100 mb-1">Depuis {{$info->datestart}}</span>
+                                                        <span class="float-right w-100 mb-1">Depuis {{substr($info->datestart,0,10)}}</span>
                                                     @endif
                                                 </small>
                                                 <br>
