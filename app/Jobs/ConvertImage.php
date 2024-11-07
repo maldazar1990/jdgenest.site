@@ -7,6 +7,7 @@ use App\Http\Helpers\ImageConverter;
 use App\post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -16,30 +17,32 @@ class ConvertImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $image,$idPost;
+    private $image,$model;
     /**
      * Create a new job instance.
      */
-    public function __construct( $image,$idPost)
+    public function __construct( string $image,Model $model)
     {
+        Log::info("instanciation convertion");
         $this->image = $image;
-        $this->idPost = $idPost;
+        $this->model = $model;
     }
-
     /**
      * Execute the job.
      */
     public function handle(): void
     {
         Log::info("image convert start");
+        Log::info($this->image);
         $img = new ImageConverter($this->image);
+        Log::info("image convert convertion");
         $img->convertAll();
+        Log::info("image convert convertion end");
         $filename = explode('.', $this->image);
         $image = $filename[0].".webp";
-
-        $post = post::find($this->idPost);
-        $post->image = $image;
-        $post->save();
+        Log::info($image);
+        $this->model->image = $image;
+        $this->model->save();
         Log::info("image convert end");
     }
 }

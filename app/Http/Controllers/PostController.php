@@ -59,7 +59,7 @@ class PostController extends Controller
         return array(
 
             'title' => "required|max:255",
-            "image" => config("app.rule_image"),
+            "image" => "required|".config("app.rule_image"),
             "post" => "required",
             "tags" => "required",
             "status"=>"required|in:0,1,2",
@@ -82,6 +82,7 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
+
             return redirect()->route('admin_posts_create')
                 ->withErrors($validator)
                 ->withInput();
@@ -132,8 +133,9 @@ class PostController extends Controller
         ]);
 
         $typeImage = 2;
+        $image = "";
         if ($posts->image) {
-            $image = "";
+
             if (Str::contains($posts->image, 'http')) {
 
                 if (HelperGeneral::urlValide($posts->image)) {
@@ -154,6 +156,9 @@ class PostController extends Controller
                         }
 
                         $typeImage = 1;
+                    } else {
+                        $image = asset("images/" . $dbImage->file);
+                        $typeImage = 1;
                     }
                 } else {
                     if (Str::contains($posts->image, 'images/')) {
@@ -165,6 +170,9 @@ class PostController extends Controller
                 }
             }
                 
+        } else {
+            $image = asset("images/" .$posts->image);
+            $typeImage = 1;
         }
         
 
@@ -175,7 +183,6 @@ class PostController extends Controller
         } else if($posts){
             $selectedTags = $posts->tags->pluck("id")->toArray();
         }
-
 
 
         return view("admin.editPost",[
@@ -235,36 +242,23 @@ class PostController extends Controller
         }
 
         Cache::flush();
-
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Sauvegardé avec succès');
 
     }
 
-    protected function saveImage (Request $request, post $post) {
+    protected function saveImage (Request $request, post $post):Image|null {
+        $Imageobj = new Image();
         if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
-            \App\Http\Helpers\Image::saveNewImage($request, $post);
+           $Imageobj = \App\Http\Helpers\Image::saveNewImage($request, $post);
  
         } else {
-            if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {
-                $img = new HelpersImage($post->image);
-                $img->deleteImage();
-                $post->image = $request->imageUrl;
-                $post->image_id = null;
-            } else {
-                if ( $request->hiddenTypeImage == "select" or $request->selectImage  ) {
-                    $selectedImage = Image::where("id",$request->selectedImageId)->first();        
-                    if (isset($selectedImage->file)) {
-                        $post->image = $selectedImage->file;
-                        $post->image_id = $selectedImage->id;
-                    }
-                    
-                }
-            }
+            $img = new HelpersImage($post->image);
+            $img->deleteImage();
+            $post->image = $request->imageUrl;
+            $post->image_id = null;
+            return null;
         }
-        
-  
-        
-
+        return $Imageobj;
     }
 
     public function ajax(Request $request,$title) {

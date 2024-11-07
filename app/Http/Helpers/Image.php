@@ -8,7 +8,6 @@ use App\post;
 use App\Users;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 class  Image {
     private $image;
@@ -77,27 +76,31 @@ class  Image {
         return $images;
     }
 
-    public static function saveNewImage(Request $request,Model $model) {
-        $img = new HelpersImage($model->image);
-        $img->deleteImage();
+    public static function saveNewImage(\Illuminate\Http\Request $request,Model $model):\App\Image {
+        if ($model->image) {
+            $img = new HelpersImage($model->image);
+            $img->deleteImage();
+        }
+
         $file = $request->file("image");
         $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
         $name = $file->getClientOriginalName();
         $file->move(\public_path("images/"), $name);
 
-        $imageDb = Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
+        $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
         if ( $imageDb ){
             $model->image = $name;
             $model->image_id = $imageDb->id;
         }else {
-            $imageDb = new Image();
+            $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
             $imageDb->file = "images/".$name;
             $imageDb->save();
-            dispatch(new ConvertImage($name,$model->id));
+            dispatch(new ConvertImage($name,$model));
             $model->image = $name;
             $model->image_id = $imageDb->id;
         }
+        return $imageDb;
     }
 
 }
