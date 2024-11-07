@@ -30,13 +30,13 @@
                                         <div class="d-flex justify-content-start align-content-start">
                                             @include("theme.blog.layout.image", ['image' => $info->image,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
                                         </div>
-                                        {{--<small>
+                                        <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today())
                                                 <span class="float-right w-100 mb-1">{{$info->datestart}}  à {{$info->dateend}}</span>
                                             @else
                                                 <span class="float-right w-100 mb-1">Depuis {{$info->datestart}}</span>
                                             @endif
-                                        </small>--}}
+                                        </small>
                                         <div>
                                             @foreach( $info->tags()->groupBy("tags.id")->get() as $tag)
                                                 <span class="badge badge-pill bg-secondary disable-link">{{$tag->title}}</span>

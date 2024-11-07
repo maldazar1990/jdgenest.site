@@ -57,7 +57,7 @@ class InfosController extends Controller
             "datestart" => "date",
             "duree" => "min:0 | max:40",
             "dateend" => "date|after:datestart",
-            "image" => config("app.rule_image"),
+            "image" => "mimes:jpeg,png,jpg,webp,avif|max:4096",
             "type" => "required|in:exp,job,school",
 
         ];
