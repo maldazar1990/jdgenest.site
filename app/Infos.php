@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * App\Infos
@@ -41,10 +43,30 @@ use Illuminate\Database\Eloquent\Model;
 class Infos extends Model
 {
     protected $fillable = [
-        'title', 'description', 'image', 'status', 'user_id'
+        'title', 'description', 'image', 'status', 'user_id',"datestart","dateend"
     ];
     public function tags() {
         return $this->belongsToMany('App\Tags', 'infos_tags', 'infos_id', 'tags_id');
+    }
+
+    public function datestart ()  {
+        return \Attribute::make(
+            get: function($value) {
+                $date = Carbon::parse($value);
+                return $date->format('Y-m-d');
+            },
+            set: fn ($value) => $value,
+        );
+    }
+
+    public function dateend ()  {
+        return \Attribute::make(
+            get: function($value) {
+                $date = Carbon::parse($value);
+                return $date->format('Y-m-d');
+            },
+            set: fn ($value) => $value,
+        );
     }
 
 
