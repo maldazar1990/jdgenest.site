@@ -242,26 +242,7 @@ class PostController extends Controller
 
     protected function saveImage (Request $request, post $post) {
         if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
-            $img = new HelpersImage($post->image);
-            $img->deleteImage();
-            $file = $request->file("image");
-            $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
-            $name = $file->getClientOriginalName();
-            $file->move(\public_path("images/"), $name);
-
-            $imageDb = Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
-            if ( $imageDb ){
-                $post->image = $name;
-                $post->image_id = $imageDb->id;
-            }else {
-                $imageDb = new Image();
-                $imageDb->name = $nameWithoutExtension;
-                $imageDb->file = "images/".$name;
-                $imageDb->save();
-                dispatch(new ConvertImage($name,$post->id));
-                $post->image = $name;
-                $post->image_id = $imageDb->id;
-            }
+            \App\Http\Helpers\Image::saveNewImage($request, $post);
  
         } else {
             if ( $request->hiddenTypeImage == "url" or $request->imageUrl  ) {

@@ -30,4 +30,6 @@ class Image extends Model
         'name', 'image'
     ];
     protected $table = 'image';
+
+
 }

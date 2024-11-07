@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Crypt;
 
 /**
@@ -67,6 +68,11 @@ class Infos extends Model
             },
             set: fn ($value) => $value,
         );
+    }
+
+    public function image():BelongsTo
+    {
+        return $this->belongsTo(Image::class);
     }
 
 

@@ -104,4 +104,9 @@ class post extends Model  implements Feedable
     {
         return $this->hasMany(post::class,"post_id",'id');
     }
+
+    public function image():BelongsTo
+    {
+        return $this->belongsTo(Image::class);
+    }
 }

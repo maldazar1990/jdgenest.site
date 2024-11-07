@@ -100,14 +100,7 @@ class UsersController extends Controller
         }
 
         if ( $request->image and $user->roles()->where("name","admin")->count() > 0 ) {
-            $img = new Image($user->image);
-            $img->deleteImage();
-            $file = $request->file("image");
-            $name = $file->getClientOriginalName();
-            $file->move(public_path("images"), $name);
-            $img = new ImageConverter($name);
-            $img->convertAll();
-            $user->image = $name;
+            Image::saveNewImage($request, $user);
         }
         $user->email = $request->input("email");
 

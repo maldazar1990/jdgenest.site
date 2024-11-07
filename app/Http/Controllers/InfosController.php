@@ -7,6 +7,7 @@ use App\Http\Forms\infosForm;
 use App\Http\Helpers\Image;
 use App\Http\Helpers\ImageConverter;
 use App\Infos;
+use App\Jobs\ConvertImage;
 use App\post;
 use Illuminate\Http\Request;
 use App\Tags;
@@ -83,19 +84,7 @@ class InfosController extends Controller
         }
 
         $infos = new Infos();
-        if ( $request->file("image") ) {
-            $file = $request->file("image");
-            $name = $file->getClientOriginalName();
-            $file->move(public_path("images"), $name);
-            $img = new ImageConverter($name);
-            $img->convertAll();
-            $infos->image = $name;
-        } else if ( $request->imageUrl ) {
-            $img = new Image($infos->image);
-            $img->deleteImage();
-
-            $infos->image = $request->imageUrl;
-        }
+        Image::saveNewImage($request, $infos);
         $infos->title = $request->input("title");
         $infos->description = $request->input("description");
         $infos->link = $request->input("link");
@@ -165,20 +154,7 @@ class InfosController extends Controller
                 ->withInput();
         }
 
-        if ( $request->file("image") ) {
-            $filename = explode(".",$infos->image);
-            Storage::delete(public_path("images/").$infos->image);
-            Storage::delete(public_path("images/").$filename[0].".avif");
-            Storage::delete(public_path("images/").$filename[0].".webp");            $file = $request->file("image");
-            $name = Str::slug(time() . $file->getClientOriginalName());
-            $file->move(public_path("images"), $name);
-            $infos->image = $name;
-
-        } else if ( $request->imageUrl ) {
-            $img = new Image($infos->image);
-            $img->deleteImage();
-            $infos->image = $request->imageUrl;
-        }
+        Image::saveNewImage($request, $infos);
         $infos->title = $request->input("title");
         $infos->description = $request->input("description");
         $infos->link = $request->input("link");

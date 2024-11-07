@@ -1,10 +1,14 @@
 <?php
 namespace App\Http\Helpers;
 
+use App\Http\Helpers\Image as HelpersImage;
 use App\Infos;
+use App\Jobs\ConvertImage;
 use App\post;
 use App\Users;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 class  Image {
     private $image;
@@ -71,6 +75,29 @@ class  Image {
             }
         }
         return $images;
+    }
+
+    public static function saveNewImage(Request $request,Model $model) {
+        $img = new HelpersImage($model->image);
+        $img->deleteImage();
+        $file = $request->file("image");
+        $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
+        $name = $file->getClientOriginalName();
+        $file->move(\public_path("images/"), $name);
+
+        $imageDb = Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
+        if ( $imageDb ){
+            $model->image = $name;
+            $model->image_id = $imageDb->id;
+        }else {
+            $imageDb = new Image();
+            $imageDb->name = $nameWithoutExtension;
+            $imageDb->file = "images/".$name;
+            $imageDb->save();
+            dispatch(new ConvertImage($name,$model->id));
+            $model->image = $name;
+            $model->image_id = $imageDb->id;
+        }
     }
 
 }
