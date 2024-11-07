@@ -22,5 +22,7 @@ class redirecttonowww
 
             return Redirect::to($request->path(),301);
         }
+
+        return $next($request);
     }
 }
