@@ -55,16 +55,24 @@ class PostController extends Controller
         ]);
     }
 
-    public function rules (  ) {
-        return array(
+    public function rules ( $isUpdate = false ) {
+        $rules = array(
 
             'title' => "required|max:255",
-            "image" => "required|".config("app.rule_image"),
+
             "post" => "required",
             "tags" => "required",
             "status"=>"required|in:0,1,2",
 
         );
+
+        if ($isUpdate){
+            $rules["images"] = config("app.rule_image");
+        } else {
+            $rules["images"] = "required|".config("app.rule_image");
+        }
+
+        return $rules;
     }
 
     /**
@@ -208,7 +216,7 @@ class PostController extends Controller
     {
 
         $post = post::where( 'id', $id )->first();
-        $validator = Validator::make($request->all(), $this->rules());
+        $validator = Validator::make($request->all(), $this->rules(true));
         
         if ($validator->fails()) {
             return redirect()->route('admin_posts_edit', $id)
@@ -248,14 +256,18 @@ class PostController extends Controller
 
     protected function saveImage (Request $request, post $post):Image|null {
         $Imageobj = new Image();
-        if ( $request->hiddenTypeImage == "upload" or $request->file("image")  ) {
+        if ( $request->file("image")  ) {
            $Imageobj = \App\Http\Helpers\Image::saveNewImage($request, $post);
  
-        } else {
-            $img = new HelpersImage($post->image);
-            $img->deleteImage();
+        } elseif($request->imageUrl) {
+            if ($post->image) {
+                $img = new HelpersImage($post->image);
+                $img->deleteImage();
+            }
             $post->image = $request->imageUrl;
             $post->image_id = null;
+            return null;
+        } else {
             return null;
         }
         return $Imageobj;

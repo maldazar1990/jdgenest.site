@@ -4,7 +4,7 @@ return [
 
     'enabled' => true,
 
-    'whitelist' => [env('FIREWALL_WHITELIST', '127.0.0.1')],
+    'whitelist' => [env('FIREWALL_WHITELIST', '127.0.0.1'), env('FIREWALL_WHITELIST', '::1'), env('FIREWALL_WHITELIST', 'localhost'), env('FIREWALL_WHITELIST', '192.168.2.*'),],
 
     'models' => [
         'user' => '\App\Users',
@@ -67,7 +67,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
         ],
 
@@ -78,7 +78,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             // https://github.com/jenssegers/agent
@@ -186,12 +186,12 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
                 'only' => [], // i.e. 'first_name'
-                'except' => [], // i.e. 'password'
+                'except' => ["admin/*"], // i.e. 'password'
             ],
 
             'patterns' => [
@@ -222,12 +222,12 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
                 'only' => [], // i.e. 'first_name'
-                'except' => [], // i.e. 'password'
+                'except' => ["admin/*"], // i.e. 'password'
             ],
 
             'patterns' => [
@@ -257,7 +257,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'blocked' => [],
@@ -276,7 +276,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
@@ -304,7 +304,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
@@ -331,7 +331,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
@@ -358,7 +358,7 @@ return [
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [
@@ -403,11 +403,11 @@ return [
         'xss' => [
             'enabled' => env('FIREWALL_MIDDLEWARE_XSS_ENABLED', env('FIREWALL_ENABLED', true)),
 
-            'methods' => ['post', 'put', 'patch'],
+            'methods' => ['post', 'put', 'patch',"option"],
 
             'routes' => [
                 'only' => [], // i.e. 'contact'
-                'except' => [], // i.e. 'admin/*'
+                'except' => ["admin/*"], // i.e. 'admin/*'
             ],
 
             'inputs' => [

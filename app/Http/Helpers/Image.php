@@ -19,31 +19,32 @@ class  Image {
 
     public function deleteImage(){
 
+        if ($this->image) {
+            $path = "images/";
+            $filename = $this->image;
+            if (Str::contains($this->image, '.')) {
+                $filename = explode(".", $this->image)[0];
+            }
 
-        $path = "images/";
-        $filename = $this->image;
-        if (Str::contains($this->image, '.')) {
-            $filename = explode(".",$this->image)[0];
-        }
+            if (self::isImageUsed($this->image) == false and $filename != "default") {
+                $arrayFiles = [$path . $this->image,
+                    $path . $filename . ".webp",
+                    $path . $filename . ".jpg",
+                    $path . $filename . ".jpeg",
+                    $path . $filename . ".png",
+                    $path . $filename . "_medium.webp",
+                    $path . $filename . "_small.webp",
+                    $path . $filename . "_medium.jpg",
+                    $path . $filename . "_small.jpg",
+                    $path . $filename . "_medium.jpeg",
+                    $path . $filename . "_small.jpeg",
+                    $path . $filename . ".avif",
+                    $path . $filename . "_medium.avif",
+                    $path . $filename . "_small.avif"];
 
-        if( self::isImageUsed($this->image) == false and $filename != "default") {
-            $arrayFiles= [$path . $this->image,
-                $path . $filename . ".webp",
-                $path . $filename . ".jpg",
-                $path . $filename . ".jpeg",
-                $path . $filename . ".png",
-                $path . $filename . "_medium.webp",
-                $path . $filename . "_small.webp",
-                $path . $filename . "_medium.jpg",
-                $path . $filename . "_small.jpg",
-                $path . $filename . "_medium.jpeg",
-                $path . $filename . "_small.jpeg",
-                $path . $filename . ".avif",
-                $path . $filename . "_medium.avif",
-                $path . $filename . "_small.avif"];
-
-            File::delete($arrayFiles);
-            return true;
+                File::delete($arrayFiles);
+                return true;
+            }
         }
         return false;
     }
