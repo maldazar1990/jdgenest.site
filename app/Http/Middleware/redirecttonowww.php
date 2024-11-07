@@ -18,10 +18,16 @@ class redirecttonowww
     public function handle(Request $request, Closure $next)
     {
         if (substr($request->header('host'), 0, 4) == 'www.') {
-            $request->headers->set('host', config("app.url"));
 
-            return Redirect::to($request->path(),301);
+            $request->headers->set('host', config("app.domain"));
+
+
+
+            return redirect()->to($request->path());
+
         }
+
+
 
         return $next($request);
     }
