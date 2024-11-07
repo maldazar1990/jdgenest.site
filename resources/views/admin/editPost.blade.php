@@ -33,7 +33,7 @@
                         <div class="col-md-12 col-sm-12 col-lg-9">
                             @if ( isset($image) )
                                 <h5>image actuel</h5><br>
-                                <img src='{{$image}}' id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
+                                @include("theme.blog.layout.image", ['image' => $image,"class" => "img-fluid mb-4","size"=>"medium"])
                             @else
                                 <h5>image actuel</h5><br>
                                 <img src="images/default.jpg" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
