@@ -46,4 +46,7 @@ class Infos extends Model
     public function tags() {
         return $this->belongsToMany('App\Tags', 'infos_tags', 'infos_id', 'tags_id');
     }
+
+
+
 }

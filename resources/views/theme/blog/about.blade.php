@@ -32,9 +32,9 @@
                                         </div>
                                         <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today())
-                                                <span class="float-right w-100 mb-1">{{$info->datestart}}  à {{$info->dateend}}</span>
+                                                <span class="float-right w-100 mb-1">{{$info->datestart->format("Y-m-d")}}  à {{$info->dateend->format("Y-m-d")}}</span>
                                             @else
-                                                <span class="float-right w-100 mb-1">Depuis {{$info->datestart}}</span>
+                                                <span class="float-right w-100 mb-1">Depuis {{$info->datestart->format("Y-m-d")}}</span>
                                             @endif
                                         </small>
                                         <div>
