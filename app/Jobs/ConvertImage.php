@@ -34,15 +34,20 @@ class ConvertImage implements ShouldQueue
     {
         Log::info("image convert start");
         Log::info($this->image);
-        $img = new ImageConverter($this->image);
-        Log::info("image convert convertion");
-        $img->convertAll();
-        Log::info("image convert convertion end");
         $filename = explode('.', $this->image);
-        $image = $filename[0].".webp";
-        Log::info($image);
-        $this->model->image = $image;
-        $this->model->save();
-        Log::info("image convert end");
+        if ($filename[1] != ".svg") {
+            $img = new ImageConverter($this->image);
+            Log::info("image convert convertion");
+            $img->convertAll();
+            Log::info("image convert convertion end");
+
+            $image = $filename[0] . ".webp";
+            Log::info($image);
+            $this->model->image = $image;
+            $this->model->save();
+            Log::info("image convert end");
+        } else {
+            LOG::info("image is svg");
+        }
     }
 }
