@@ -173,7 +173,7 @@ return [
             'service' => 'ipapi',
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
                 'period' => 30 * 60, // 30 minutes
             ],
@@ -199,7 +199,7 @@ return [
             ],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
                 'period' => 30 * 60, // 30 minutes
             ],
@@ -244,9 +244,9 @@ return [
             ],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
@@ -291,9 +291,9 @@ return [
             'exceptions' => [],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
@@ -318,9 +318,9 @@ return [
             ],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
@@ -345,9 +345,9 @@ return [
             ],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
@@ -369,9 +369,9 @@ return [
             'words' => [],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
@@ -428,9 +428,9 @@ return [
             ],
 
             'auto_block' => [
-                'attempts' => 3,
+                'attempts' => 1,
                 'frequency' => 5 * 60, // 5 minutes
-                'period' => 30 * 60, // 30 minutes
+                'period' => 60 * 60 * 24 * 365, // 30 minutes
             ],
         ],
 
