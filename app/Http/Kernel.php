@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\RedirectToNonWWWMiddleware;
+use App\Http\Middleware\redirecttonowww;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -21,6 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        redirecttonowww::class, // redirect to no www
 
     ];
 
