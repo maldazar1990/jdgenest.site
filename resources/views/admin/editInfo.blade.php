@@ -91,7 +91,7 @@
                                         <div style="color:red;">{{ $message }}</div>
                                     @enderror
                                     <label for="datestart" class="form-label  ">Date de début</label>
-                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{  old("datestart")??$info->datestart??"" }}" required>
+                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{  old("datestart")??substr($info->datestart,0,10)??"" }}" required>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -100,7 +100,7 @@
                                         <div style="color:red;">{{ $message }}</div>
                                     @enderror
                                     <label for="dateend" class="form-label  ">Date de fin</label>
-                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ old("dateend")??$info->dateend??"" }}">
+                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ old("dateend")??substr($info->dateend,0,10)??"" }}">
                                 </div>
                             </div>
                         </div>
