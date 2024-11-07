@@ -15,7 +15,7 @@ class redirecttonowww
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         if (substr($request->header('host'), 0, 4) == 'www.') {
             $request->headers->set('host', config("app.url"));
