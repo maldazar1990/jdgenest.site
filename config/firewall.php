@@ -15,7 +15,7 @@ return [
     ],
 
     'cron' => [
-        'enabled' => true,
+        'enabled' => false,
         'expression' => env('FIREWALL_CRON_EXPRESSION', '* * * * *'),
     ],
 
