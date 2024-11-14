@@ -43,13 +43,13 @@ class BanTableView extends TableView
 
     public function actionsByRow(){
         return [
-            new \App\Actions\deleteBanAction,
+            new \App\Actions\DeleteBanAction,
         ];
     }
 
     public function bulkActions(){
         return [
-            new \App\Actions\deleteBansAction,
+            new \App\Actions\DeleteBansAction,
         ];
     }
 }

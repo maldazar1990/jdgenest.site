@@ -9,13 +9,11 @@ use App\Tags as Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB as DB;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(Contact::query());
         return view('admin.index', [
 
             "title" => "Message",

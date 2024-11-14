@@ -74,7 +74,8 @@ class TestFuzzBlock
                 }
             }
 
-            return $next($request);
+
         }
+        return $next($request);
     }
 }
