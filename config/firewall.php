@@ -44,9 +44,9 @@ return [
 
     'all_middleware' => [
         'firewall.ip',
-        'firewall.agent',
-        //'firewall.bot',
-        //'firewall.geo',
+        //'firewall.agent',
+        'firewall.bot',
+        'firewall.geo',
         'firewall.lfi',
         'firewall.php',
         'firewall.referrer',
@@ -72,7 +72,7 @@ return [
         ],
 
         'agent' => [
-            'enabled' => env('FIREWALL_MIDDLEWARE_AGENT_ENABLED', env('FIREWALL_ENABLED', true)),
+            'enabled' => FALSE,
 
             'methods' => ['all'],
 
@@ -117,7 +117,7 @@ return [
         ],
 
         'bot' => [
-            'enabled' => false,
+            'enabled' => true,
 
             'methods' => ['all'],
 
@@ -140,7 +140,7 @@ return [
         ],
 
         'geo' => [
-            'enabled' => false,
+            'enabled' => TRUE,
 
             'methods' => ['all'],
 
@@ -151,7 +151,7 @@ return [
 
             'continents' => [
                 'allow' => [], // i.e. 'Africa'
-                'block' => [], // i.e. 'Europe'
+                'block' => ["africa"], // i.e. 'Europe'
             ],
 
             'regions' => [
@@ -161,7 +161,7 @@ return [
 
             'countries' => [
                 'allow' => [], // i.e. 'Albania'
-                'block' => [], // i.e. 'Madagascar'
+                'block' => ["russia","china","india"], // i.e. 'Madagascar'
             ],
 
             'cities' => [
