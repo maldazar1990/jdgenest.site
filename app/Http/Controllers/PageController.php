@@ -81,7 +81,9 @@ class PageController extends Controller
             })
                 ->where("post.status",0)
                 ->where("created_at","<=",now())
-                ->orderBy('post.id', 'desc')->paginate(config("app.maxblog"));
+                ->orderBy('post.id', 'desc')
+                ->orderBy('post.created_at', 'desc')
+                ->paginate(config("app.maxblog"));
            
 
         } else if ( $request->has('search') or $request->has('tags') ) {
@@ -100,18 +102,21 @@ class PageController extends Controller
 
             $posts = Post::where("title",'like',"%".$request->search."%")
             ->orWhere("post",'like',"%".$request->search."%")
-            ->orderBy('post.id', 'desc')
             ->where("post.status",0)
             ->where("created_at","<=",now())
-            ->paginate(10);
+                ->orderBy('post.id', 'desc')
+                ->orderBy('post.created_at', 'desc')
+                ->paginate(config("app.maxblog"));
         } else {
             $pageTag = 1;
             if ( $request->has('page') ) {
                 $pageTag = $request->page;
             }
             $posts =  Cache::rememberForever('allPosts'.$pageTag,function(){
-                return Post::orderBy('id', 'desc')->where("post.status",0)
+                return Post::where("post.status",0)
                     ->where("created_at","<=",now())
+                    ->orderBy('post.id', 'desc')
+                    ->orderBy('post.created_at', 'desc')
                     ->paginate(config("app.maxblog"));
             });
         }
