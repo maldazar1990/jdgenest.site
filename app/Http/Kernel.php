@@ -5,6 +5,8 @@ namespace App\Http;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\RedirectToNonWWWMiddleware;
 use App\Http\Middleware\redirecttonowww;
+use App\Http\Middleware\SearchBot;
+use App\Http\Middleware\TestFuzzBlock;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -17,6 +19,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        TestFuzzBlock::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -41,6 +44,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
+            SearchBot::class,
 
         ],
 
@@ -69,7 +73,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         "role"=> \App\Http\Middleware\Role::class,
-        //"searchbot"=> \App\Http\Middleware\SearchBot::class,
+        "searchbot"=> \App\Http\Middleware\SearchBot::class,
 
     ];
 

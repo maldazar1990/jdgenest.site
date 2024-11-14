@@ -128,7 +128,7 @@ Route::group(['middleware' => 'firewall.all'], function () {
     })->name("recupForm");
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user",'firewall.all']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot",'firewall.all']], function () {
 
         Route::post('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
         Route::delete('user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
