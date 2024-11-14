@@ -19,12 +19,7 @@ class PostForm extends Form
     {
         $modelImage = $this->model->image ?? "";
         
-        $this
-            ->add('title', 'text',[
-                "label" => "Titre",
-                "rules" => "required|string|max:255",
-            ]);
- 
+
 
             $this->add('image', 'file',[
                 

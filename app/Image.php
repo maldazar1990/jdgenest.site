@@ -31,5 +31,10 @@ class Image extends Model
     ];
     protected $table = 'image';
 
+    public function post()
+    {
+        return $this->hasOne(post::class,"image_id","id");
+    }
+
 
 }

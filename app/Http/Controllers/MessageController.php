@@ -38,7 +38,7 @@ class MessageController extends Controller
     {
         $contact = Contact::where( 'id', $id )->first();
         return view('admin.viewLivewire', [
-            "contact" => $contact,
+            "model" => $contact,
         ]);
     }
 

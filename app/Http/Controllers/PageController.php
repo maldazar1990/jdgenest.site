@@ -80,6 +80,7 @@ class PageController extends Controller
                     ->orWhere("post",'like',"%".$request->search."%");
             })
                 ->where("post.status",0)
+                ->where("created_at","<=",now())
                 ->orderBy('post.id', 'desc')->paginate(config("app.maxblog"));
            
 
@@ -101,6 +102,7 @@ class PageController extends Controller
             ->orWhere("post",'like',"%".$request->search."%")
             ->orderBy('post.id', 'desc')
             ->where("post.status",0)
+            ->where("created_at","<=",now())
             ->paginate(10);
         } else {
             $pageTag = 1;
@@ -108,7 +110,9 @@ class PageController extends Controller
                 $pageTag = $request->page;
             }
             $posts =  Cache::rememberForever('allPosts'.$pageTag,function(){
-                return Post::orderBy('id', 'desc')->where("post.status",0)->paginate(config("app.maxblog"));
+                return Post::orderBy('id', 'desc')->where("post.status",0)
+                    ->where("created_at","<=",now())
+                    ->paginate(config("app.maxblog"));
             });
         }
         $postsIds = $posts->pluck('id')->toArray();

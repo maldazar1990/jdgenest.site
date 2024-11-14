@@ -2,9 +2,29 @@
 
 @section("content")
 @php
+    if (old("title")){
+        $title = old("title");
+    } else if (isset($model)){
+        $title = $model->title;
+    } else {
+        $title = "";
+    }
 
-    
+    if (old("post")){
+        $post = old("post");
+    } else if (isset($model)){
+        $post = addslashes($model->post);
+    } else {
+        $post = "";
+    }
 
+    if (old("created_at")){
+        $created_at = old("created_at");
+    } else if (isset($model)){
+        $created_at = $model->created_at->format("Y-m-d");
+    } else {
+        $created_at = carbon()->now()->format("Y-m-d");
+    }
 @endphp
 
 
@@ -36,7 +56,7 @@
                                 @include("theme.blog.layout.image", ['image' => $image,"class" => "img-fluid mb-4","size"=>"medium"])
                             @else
                                 <h5>image actuel</h5><br>
-                                <img src="images/default.jpg" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3'>
+                                <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                             @endif
 
@@ -44,13 +64,13 @@
 
                             <div class="form-group">
                                 <label for="title" class="control-label">Titre</label>
-                                {!! form_widget($form->title) !!}
+                                <input type="text" class="form-control   " id="title" name="title" value="{{$title}}" required>
                             </div>
                             <div class="relative mt-4" wire:ignore>
                                 <script>
-                                    const valpost = "{!! isset($model)?addslashes($model->post):'' !!}";
+                                    const valpost = "{!! $post !!}";
                                 </script>
-                                <label for="default-search" class="class="control-label">Post</label>
+                                <label for="default-search" class="control-label">Post</label>
                                 <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
                                 <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
                             </div>
@@ -94,6 +114,11 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="category" class="control-label">Date de publication</label>
+                                <input type="date" class="form-control" name="created_at" value="{{ $created_at }}" required>
+                            </div>
+
                         </div>
                     </div>
                 @php

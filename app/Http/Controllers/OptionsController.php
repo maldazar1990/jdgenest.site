@@ -8,7 +8,6 @@ use Crivion\Options\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
-use Itstructure\GridView\DataProviders\EloquentDataProvider;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class OptionsController extends Controller
@@ -20,7 +19,6 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        $dataProvider = new EloquentDataProvider(options_table::query());
         return view('admin.index', [
 
             "title" => "Options",

@@ -84,8 +84,8 @@ class  Image {
         }
 
         $file = $request->file("image");
-        $nameWithoutExtension = explode(".",$file->getClientOriginalName())[0];
-        $name = $file->getClientOriginalName();
+        $nameWithoutExtension = HelperGeneral::removeAccent(explode(".",$file->getClientOriginalName())[0]);
+        $name = HelperGeneral::removeAccent($file->getClientOriginalName());
         $file->move(\public_path("images/"), $name);
 
         $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();

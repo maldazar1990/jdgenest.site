@@ -35,6 +35,7 @@ class PostController extends Controller
     public function create(Request $request, FormBuilder $formBuilder) {
         $form = $formBuilder->create(PostForm::class, [
             'method' => 'POST',
+            "model" => null,
             'url' => route("admin_posts_insert"),
         ]);
 
@@ -63,13 +64,14 @@ class PostController extends Controller
             "post" => "required",
             "tags" => "required",
             "status"=>"required|in:0,1,2",
+            "created_at" => "date|required",
 
         );
 
         if ($isUpdate){
-            $rules["images"] = config("app.rule_image");
+            $rules["image"] = config("app.rule_image");
         } else {
-            $rules["images"] = "required|".config("app.rule_image");
+            $rules["image"] = "required|".config("app.rule_image");
         }
 
         return $rules;
@@ -104,6 +106,7 @@ class PostController extends Controller
         $post->slug = Str::slug($post->title,"-");
         $post->status = $request->input("status");
         $post->user_id = Auth::user()->id;
+        $post->created_at = $request->input("created_at");
         $post->type = config("app.typePost.post");
         $post->save();
         $tagsIds = $request->input("tags");
@@ -229,6 +232,7 @@ class PostController extends Controller
         $post->post = $request->input("post");
         $post->status = $request->input("status");
         $post->slug = Str::slug($post->title,"-");
+        $post->created_at = $request->input("created_at");
         $post->save();
         $tagsIds = $request->input("tags");
         $post->tags()->detach();

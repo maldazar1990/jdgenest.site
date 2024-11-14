@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Feed\Feed;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
-use Watson\Rememberable\Rememberable;
 
 /**
  * App\post
@@ -59,7 +58,6 @@ use Watson\Rememberable\Rememberable;
  */
 class post extends Model  implements Feedable
 {
-    use Rememberable;
     protected $table = "post";
 
     public function toFeedItem(): FeedItem

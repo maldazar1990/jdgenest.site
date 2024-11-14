@@ -51,11 +51,17 @@ class ImageGridView extends GridView
                 "title"=>$model->name,
             ];
         }
-        
+        $title = substr($model->name,0,"15")."-".$model->created_at;
+        $selected = true;
+        if (isset($model->post->id)) {
+            $title = "<b style='color:red;'>".$title."</b>";
+            $selected = false;
+        }
 
         return [
             "image" => asset($model->file),
-            "title"=>substr($model->name,0,"15")."-".$model->created_at,
+            "title"=>$title,
+            "selected" => $selected,
         ];
     }
 

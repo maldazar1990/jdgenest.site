@@ -17,7 +17,7 @@
     @endphp
     @if($image)
 
-        @if(Str::contains($image, 'http'))
+        @if(Str::contains($image, 'http') or Str::contains($image, config('app.url')))
             <img decoding="async" loading="lazy" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php

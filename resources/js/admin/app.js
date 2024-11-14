@@ -205,7 +205,7 @@ $(function () {
     if (imageUpload) {
         imageUpload.addEventListener('change', function (e) {
                 let output = document.getElementById('previewImage');
-                console.log(e.target.files[0]);
+                output.classList.remove("d-none");
                 output.src = URL.createObjectURL(e.target.files[0]);
                 output.onload = function() {
                     URL.revokeObjectURL(output.src) // free memory
@@ -218,6 +218,7 @@ $(function () {
         imageUrl.on('change', function () {
             if( !$(this).is(':invalid') ){
                 let srcImage = imageUrl.val();
+                output.classList.remove("d-none");
                 previewImage.attr('src',srcImage);
             }
         });

@@ -45,8 +45,8 @@ return [
     'all_middleware' => [
         'firewall.ip',
         'firewall.agent',
-        'firewall.bot',
-        'firewall.geo',
+        //'firewall.bot',
+        //'firewall.geo',
         'firewall.lfi',
         'firewall.php',
         'firewall.referrer',
@@ -117,7 +117,7 @@ return [
         ],
 
         'bot' => [
-            'enabled' => env('FIREWALL_MIDDLEWARE_BOT_ENABLED', env('FIREWALL_ENABLED', true)),
+            'enabled' => false,
 
             'methods' => ['all'],
 
@@ -140,7 +140,7 @@ return [
         ],
 
         'geo' => [
-            'enabled' => env('FIREWALL_MIDDLEWARE_GEO_ENABLED', env('FIREWALL_ENABLED', true)),
+            'enabled' => false,
 
             'methods' => ['all'],
 

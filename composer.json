@@ -17,7 +17,6 @@
         "fakerphp/faker": "^1.23",
         "filp/whoops": "2.16",
         "inertiajs/inertia-laravel": "^1.3",
-        "itstructure/laravel-grid-view": "dev-master",
         "kris/laravel-form-builder": "^1.51",
         "laravel-validation-rules/phone": "^1.4",
         "laravel-views/laravel-views": "^2.4.1",
@@ -34,10 +33,8 @@
         "spatie/temporary-directory": "^2.2",
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/http-client": "^6.1",
-        "symfony/mailgun-mailer": "^6.1",
         "symfony/postmark-mailer": "^6.1",
-        "verschuur/laravel-robotstxt": "^5.1",
-        "watson/rememberable": "^6.2"
+        "verschuur/laravel-robotstxt": "^5.1"
     },
     "require-dev": {
         "mockery/mockery": "^1.3.1",

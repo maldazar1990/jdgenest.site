@@ -4,7 +4,12 @@
 
         <div class="col-12">
             <div class="card mb-4">
-                <livewire:message-detail-view :model="$contact" />
+                @if($model instanceof App\Contact)
+                <livewire:message-detail-view :model="$model" />
+                @endif
+                @if($model instanceof App\options_table)
+                <livewire:config-detail-view :model="$model" />
+                @endif
             </div>
         </div>
         

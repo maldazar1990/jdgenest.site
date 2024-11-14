@@ -40,4 +40,16 @@ class BanTableView extends TableView
             $model->created_at->format("d/m/Y"),
         ];
     }
+
+    public function actionsByRow(){
+        return [
+            new \App\Actions\deleteBanAction,
+        ];
+    }
+
+    public function bulkActions(){
+        return [
+            new \App\Actions\deleteBansAction,
+        ];
+    }
 }
