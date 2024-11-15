@@ -95,18 +95,21 @@ class  Image {
         $file = $request->file("image");
         $nameWithoutExtension = HelperGeneral::removeAccent(explode(".",$file->getClientOriginalName())[0]);
         $name = HelperGeneral::removeAccent($file->getClientOriginalName());
-        $file->move(\public_path("images/"), $name);
+        $file->move(\storage_path("images/"), $name);
 
-        $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
+        $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->orWhere("hash",md5_file(\storage_path("images/"). $name))->first();
         if ( $imageDb ){
+            File::delete(\storage_path("images/"). $name);
             $model->image_id = $imageDb->id;
         }else {
             $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
             $imageDb->file = "images/".$name;
+            File::move(\storage_path("images/"). $name, \public_path("images/").$name);
+            $imageDb->hash = md5_file(\public_path("images/").$name);
             $imageDb->save();
             dispatch(new ConvertImage($name,$model));
-            $model->ìmage_id = $imageDb->id;
+            $model->image_id = $imageDb->id;
         }
         return $imageDb;
     }
