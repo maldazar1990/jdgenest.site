@@ -137,6 +137,10 @@ class PostController extends Controller
     public function edit(Request $request, FormBuilder $formBuilder, $id)
     {
         $posts = post::where( 'id', $id )->first();
+
+        if ( !$posts )
+            abort(404);
+
         $form = $formBuilder->create(PostForm::class, [
             'method' => 'POST',
             'url' => route('admin_posts_update', $id),

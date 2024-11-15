@@ -46,7 +46,7 @@
                 </div>
             @endif
             <div class="card-block">
-                <h3 class="card-title">{{$title}}</h3>
+                <h3 class="card-title"><a href="{{route("post",$model->slug)}}">{{$title}}</a></h3>
                     {!! form_start($form) !!}
                     <div class="row">
                         

@@ -37,7 +37,7 @@
     @if($image)
 
         @if(Str::contains($image, 'http') or Str::contains($image, config('app.url')))
-            <img decoding="async" loading="lazy" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
+            <img decoding="async" loading="lazy" id="previewImage" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php
 
@@ -67,6 +67,7 @@
                 class="{{$class}}"
                 src="{{asset($image)}}"
                 alt="image non présent"
+                id="previewImage"
                 style="{{$css}}"
                 width="{{$width}}"
                 height="{{$height}}"
@@ -75,6 +76,6 @@
     @else
         <img
             class="{{$class}}" decoding="async" loading="lazy"
-            src="{{asset('images/default.jpg')}}" alt="bug"  width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
+            src="{{asset('images/default.jpg')}}" alt="bug" id="previewImage"  width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
     @endif
 </picture>
