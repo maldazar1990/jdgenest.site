@@ -27,14 +27,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|FirewallIp whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class FirewallIp extends Model
+class FirewallLog extends Model
 {
     use HasFactory;
-    protected $table='firewall_ips';
-    protected $fillable = ['ip'];
+    protected $table='firewall_logs';
+    protected $fillable = ['ip',"level","middleware"];
 
-    public function log(){
-        return $this->belongsTo(FirewallLog::class);
+    public function ips(){
+        return $this->hasMany(FirewallIp::class);
     }
-
 }

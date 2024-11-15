@@ -11,6 +11,7 @@ use App\Jobs\SendEmailBasicJob;
 use App\Mail\SendEmailBasic;
 use App\options_table;
 use App\post;
+use App\Repository\FireWallRepository;
 use App\Tags;
 use App\Users;
 use Illuminate\Http\Request;
@@ -253,9 +254,7 @@ class PageController extends Controller
 
     function send(Request $request){
         if ($request->email) {
-            FirewallIp::firstOrCreate([
-                "ip" => $request->ip()
-            ]);
+            FireWallRepository::createReport($request->ip(),2,"contact");
             abort(403);
         }
         $validator = Validator::make($request->all(), $this->rules(),[
@@ -286,9 +285,8 @@ class PageController extends Controller
     function comment(Request $request,$id){
 
         if ($request->email) {
-            FirewallIp::firstOrCreate([
-                "ip" => $request->ip()
-            ]);
+            FireWallRepository::createReport($request->ip(),2,"comment");
+
             abort(403);
         }
         $validator = Validator::make($request->all(), $this->commentRules(),[

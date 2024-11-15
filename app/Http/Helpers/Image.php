@@ -78,8 +78,17 @@ class  Image {
     }
 
     public static function saveNewImage(\Illuminate\Http\Request $request,Model $model):\App\Image {
-        if ($model->image) {
-            $img = new HelpersImage($model->image);
+
+        if ( !$model instanceof Users and !$model instanceof post and !$model instanceof Infos ){
+            throw new \Exception("Model not supported");
+        }
+
+
+        if ($model->imageClass or $model->image) {
+
+            $imageFile = $model->imageClass??$model->image;
+
+            $img = new HelpersImage($imageFile);
             $img->deleteImage();
         }
 
@@ -90,16 +99,14 @@ class  Image {
 
         $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
         if ( $imageDb ){
-            $model->image = $name;
-            $model->image_id = $imageDb->id;
+            $model->imageClass->attach($imageDb->id);
         }else {
             $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
             $imageDb->file = "images/".$name;
             $imageDb->save();
             dispatch(new ConvertImage($name,$model));
-            $model->image = $name;
-            $model->image_id = $imageDb->id;
+            $model->imageClass->attach($imageDb->id);
         }
         return $imageDb;
     }

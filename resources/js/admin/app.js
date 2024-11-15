@@ -7,17 +7,14 @@ import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
 
-console.log(1);
 class linkmentionBlot extends MentionBlot {
     static render(data) {
-        console.log(data);
         var element = document.createElement('span');
         element.classList.add('mention');
         var aelem =  document.createElement('a');
         aelem.setAttribute('href', data.link);
         aelem.setAttribute('target', '_blank');
         aelem.innerHTML = data.value;
-        element.appendChild(aelem);
         console.log(element);
         return element;
     }

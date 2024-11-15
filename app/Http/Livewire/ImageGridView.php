@@ -53,7 +53,7 @@ class ImageGridView extends GridView
         }
         $title = substr($model->name,0,"15")."-".$model->created_at;
         $selected = true;
-        if (isset($model->post->id) or isset($model->info->id) or isset($model->user->id)) {
+        if ($model->infos()->count() > 0 or $model->posts()->count() > 0 or $model->users()->count() > 0) {
             $title = "<b style='color:red;'>".$title."</b>";
             $selected = false;
         }

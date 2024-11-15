@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\FirewallIp;
+use App\Repository\FireWallRepository;
 use Closure;
 use http\Url;
 use Illuminate\Http\Request;
@@ -67,9 +68,7 @@ class TestFuzzBlock
                 return str_contains($request->path(),$value);
             }) ) {
                 if ( $this->detectFuzz($request) ) {
-                    FirewallIp::firstOrCreate([
-                        "ip" => $request->ip()
-                    ]);
+                    FireWallRepository::createReport($request->ip(),2,"fuzz");
                     abort(403);
                 }
             }

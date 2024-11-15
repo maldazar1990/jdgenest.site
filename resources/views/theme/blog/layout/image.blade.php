@@ -1,5 +1,24 @@
 <picture>
     @php
+
+        if ( isset($modelWithImage) ) {
+            if ($modelWithImage instanceof \App\users or $modelWithImage instanceof \App\post or $modelWithImage instanceof \App\Infos) {
+                if(isset($modelWithImage->imageClass->file)){
+                    $image = $modelWithImage->imageClass->file;
+                } else {
+                    if ( Str::isUrl($modelWithImage->image) ){
+                        $image = $modelWithImage->image;
+                    } elseif ($modelWithImage->image){
+                        $image = $modelWithImage->image;
+                        if ( !str_contains($image,"images/") )
+                            $image = "images/".$image;
+                    } else {
+                        $image = null;
+                    }
+                }
+            }
+        }
+
         if (!isset($class))
             $class = 'img-fluid';
 
@@ -21,13 +40,13 @@
             <img decoding="async" loading="lazy" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php
-                
-                if ( str_contains($image,".") and \File::exists(public_path("images/".$image)) )
+
+                if ( str_contains($image,".") and \File::exists(public_path($image)) )
 
                     $filename = explode('.', $image)[0];
                 else {
                     $filename = $image;
-                    $path = \public_path("images/");
+                    $path = \public_path();
                     if ( str_contains($image,".")) {
                         $image = explode(".",$image)[0];
                     }
@@ -40,13 +59,6 @@
                     }
                 }
 
-                if (Str::contains($image, 'images/')) {
-                    $image = $image;
-                } else {
-                    $image = 'images/' . $image;
-                }
-
-                $filename = "images/".$filename;
             @endphp
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
             @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])

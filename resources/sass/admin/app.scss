@@ -85,6 +85,11 @@ $headline-font: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 }
 
+input[type="radio"][id^="cb"] {
+    display: none;
+}
+
+
 @media (max-width: 768px) {
     .theme-switcher {
         display: none;

@@ -28,7 +28,7 @@
                                             <h5>{{$info->title}}</h5>
                                         </a>
                                         <div class="d-flex justify-content-start align-content-start">
-                                            @include("theme.blog.layout.image", ['image' => $info->image,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
+                                            @include("theme.blog.layout.image", ['modelWithImage' => $info,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
                                         </div>
                                         <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today())
@@ -84,7 +84,7 @@
                                     <div class="col" data-listclass="{{$tagClass}}">
                                         <div class="card">
                                             <div class="p-2">
-                                                @include("theme.blog.layout.image", ['image' => $info->image,"class" => "card-img-top"])
+                                                @include("theme.blog.layout.image", ['modelWithImage' => $info,"class" => "card-img-top"])
                                             </div>
                                             <span class="ms-3">
                                                 @foreach( $info->tags()->groupBy("tags.id")->get() as $tag)

@@ -24,7 +24,9 @@ class BanTableView extends TableView
     {
         return [
             Header::title("IP")->sortBy("ip"),
+            "Raison",
             Header::title("Date")->sortBy("created_at"),
+
         ];
     }
 
@@ -37,6 +39,7 @@ class BanTableView extends TableView
     {
         return [
             $model->ip,
+            isset($model->log->middleware)??"aucune",
             $model->created_at->format("d/m/Y"),
         ];
     }

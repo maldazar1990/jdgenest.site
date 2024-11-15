@@ -31,19 +31,19 @@ class Image extends Model
     ];
     protected $table = 'image';
 
-    public function post()
+    public function posts()
     {
-        return $this->hasOne(post::class,"image_id","id");
+        return $this->hasMany(post::class,"image_id","id");
     }
 
-    public function info()
+    public function infos()
     {
-        return $this->hasOne(Infos::class,"image_id","id");
+        return $this->hasMany(Infos::class,"image_id","id");
     }
 
-    public function user()
+    public function users()
     {
-        return $this->hasOne(Users::class,"image_id","id");
+        return $this->hasMany(Users::class,"image_id","id");
     }
 
 

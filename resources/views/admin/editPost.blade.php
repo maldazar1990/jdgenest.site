@@ -85,18 +85,18 @@
                                     @if($form instanceof App\Http\Forms\PostForm)
                                     @endif
                                     <button class="nav-link " id="nav-image-url" data-toggle="tab" data-target="#nav-url" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Image en ligne</button>
+
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
                                     {!! form_widget($form->image) !!}
                                 </div>
-                                @if($form instanceof App\Http\Forms\PostForm){{--
 
-                                --}}@endif
                                 <div class="tab-pane fade p-1 " id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">
                                     {!! form_widget($form->imageUrl) !!}
                                 </div>
+
                             </div>
                             <div class="form-group mt-4">
                                 <label for="status" class="control-label">Status</label>
@@ -129,4 +129,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection
