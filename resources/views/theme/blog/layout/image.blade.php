@@ -1,6 +1,5 @@
 <picture>
     @php
-
         if ( isset($modelWithImage) ) {
             if ($modelWithImage instanceof \App\users or $modelWithImage instanceof \App\post or $modelWithImage instanceof \App\Infos) {
                 if(isset($modelWithImage->imageClass->file)){

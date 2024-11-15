@@ -15,6 +15,7 @@
         <div class="container single-col-max-width ps-0 pe-0">
             <header class="blog-post-header">
                 <h2 class="title mb-2">{{$post->title}}</h2>
+
                 @include("theme.blog.layout.infopost", ['post' => $post])
                 <div class="d-flex col w-100 mb-2">
                     <div class="w-100">
@@ -25,11 +26,10 @@
 
             <div class="blog-post-body">
 
-                @if ($post->image)
                     <div class="mb-4 d-flex flex-column align-items-center">
-                        @include("theme.blog.layout.image", ['image' => $post->image])
+
+                        @include("theme.blog.layout.image", ['modelWithImage' => $post])
                     </div>
-                @endif
                 <div class="textcontent">
                     {!! trim($post->post) !!}
                 </div>
