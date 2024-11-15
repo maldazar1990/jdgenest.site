@@ -39,7 +39,7 @@ class BanTableView extends TableView
     {
         return [
             $model->ip,
-            isset($model->log->middleware)??"aucune",
+            isset($model->log->middleware)?$model->log->middleware:"aucune",
             $model->created_at->format("d/m/Y"),
         ];
     }
