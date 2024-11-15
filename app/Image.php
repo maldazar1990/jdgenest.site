@@ -36,5 +36,15 @@ class Image extends Model
         return $this->hasOne(post::class,"image_id","id");
     }
 
+    public function info()
+    {
+        return $this->hasOne(Infos::class,"image_id","id");
+    }
+
+    public function user()
+    {
+        return $this->hasOne(Users::class,"image_id","id");
+    }
+
 
 }
