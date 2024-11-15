@@ -99,14 +99,14 @@ class  Image {
 
         $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->first();
         if ( $imageDb ){
-            $model->imageClass->attach($imageDb->id);
+            $model->image_id = $imageDb->id;
         }else {
             $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
             $imageDb->file = "images/".$name;
             $imageDb->save();
             dispatch(new ConvertImage($name,$model));
-            $model->imageClass->attach($imageDb->id);
+            $model->ìmage_id = $imageDb->id;
         }
         return $imageDb;
     }

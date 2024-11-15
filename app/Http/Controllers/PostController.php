@@ -145,47 +145,25 @@ class PostController extends Controller
 
         $typeImage = 2;
         $image = "";
-        if ($posts->image) {
 
-            if (Str::contains($posts->image, 'http')) {
-
-                if (HelperGeneral::urlValide($posts->image)) {
-                    $image = $posts->image;
-                } 
-                
-                $typeImage = 0;
+        if ( $posts->imageClass() ) {
+            if (Str::contains($posts->imageClass->file, 'images/')) {
+                $image = asset($posts->imageClass->file);
             } else {
-                
-                if ($posts->image_id)  {
-                    $dbImage = Image::where("id",$posts->image_id)->first();
-                    if ($dbImage) {
-                        
-                        if (Str::contains($dbImage->file, 'images/')) {
-                            $image = asset($dbImage->file);
-                        } else {
-                            $image = asset("images/" . $dbImage->file);
-                        }
-
-                        $typeImage = 1;
-                    } else {
-                        $image = asset("images/" . $dbImage->file);
-                        $typeImage = 1;
-                    }
-                } else {
-                    if (Str::contains($posts->image, 'images/')) {
-                        $image = asset($posts->image);
-                    } else {
-                        $image = asset("images/" .$posts->image);
-                    }
-                    $typeImage = 2;
-                }
+                $image = asset("images/" . $posts->imageClass->file);
             }
-                
+
+            $typeImage = 1;
+        } else if ( Str::isUrl($posts->image) ) {
+            if (HelperGeneral::urlValide($posts->image)) {
+                $image = $posts->image;
+            }
+
+            $typeImage = 0;
         } else {
             $image = asset("images/" .$posts->image);
             $typeImage = 1;
         }
-        
 
         $tags = Tags::all();
         $selectedTags = [];
