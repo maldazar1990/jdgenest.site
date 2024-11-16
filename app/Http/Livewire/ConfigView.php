@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\options_table;
+use Illuminate\Support\Facades\Validator;
 use LaravelViews\Facades\Header;
 use LaravelViews\Facades\UI;
 use LaravelViews\Views\TableView;
@@ -48,7 +49,18 @@ class ConfigView extends TableView
             ];
         }
         public function update(options_table $model, $data){
-            $model->update($data);
-            $this->success("Mise à jour avec succès");
+
+            $validator = Validator::make($data, [
+                'option_name' => "required|max:255 ",
+                'option_value' => "required|max:255",
+            ]);
+
+            if ($validator->fails()) {
+                $this->error("Erreur de validation");
+            } else {
+
+                $model->update($data);
+                $this->success("Mise à jour avec succès");
+            }
         }
 }

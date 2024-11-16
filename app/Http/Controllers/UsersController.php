@@ -91,6 +91,11 @@ class UsersController extends Controller
     {
 
         $user = Users::where( 'id', $id )->first();
+
+        if (!$user) {
+            return redirect()->route('admin_user');
+        }
+
         $validator = Validator::make($request->all(), $this->rules($id));
 
         if ($validator->fails()) {

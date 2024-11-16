@@ -2,17 +2,14 @@ import Quill from "quill";
 import hljs from "highlight.js";
 import { MentionBlot, Mention } from "quill-mention";
 import QuillResizeImage from "quill-resize-image";
-console.log(1);
 class linkmentionBlot extends MentionBlot {
   static render(data) {
-    console.log(data);
     var element = document.createElement("span");
     element.classList.add("mention");
     var aelem = document.createElement("a");
     aelem.setAttribute("href", data.link);
     aelem.setAttribute("target", "_blank");
     aelem.innerHTML = data.value;
-    element.appendChild(aelem);
     console.log(element);
     return element;
   }
@@ -165,11 +162,22 @@ $(function() {
   let imageUpload = document.getElementById("imageUpload");
   if (imageUpload) {
     imageUpload.addEventListener("change", function(e) {
-      let output = document.getElementById("previewImage");
-      console.log(e.target.files[0]);
-      output.src = URL.createObjectURL(e.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src);
+      let output2 = document.getElementById("previewImage");
+      output2.classList.remove("d-none");
+      let file = e.target.files[0];
+      output2.src = URL.createObjectURL(file);
+      let img = new Image();
+      img.src = file;
+      let width = "";
+      img.onload = function() {
+        width = img.width;
+      };
+      if (width > 1280 && width < 768) {
+        alert("La taille de l'image doit être compris entre 768 et 1280 pixels");
+        $('input[type="submit"]').disable();
+      }
+      output2.onload = function() {
+        URL.revokeObjectURL(output2.src);
       };
     });
   }
@@ -177,6 +185,7 @@ $(function() {
     imageUrl.on("change", function() {
       if (!$(this).is(":invalid")) {
         let srcImage = imageUrl.val();
+        output.classList.remove("d-none");
         previewImage.attr("src", srcImage);
       }
     });

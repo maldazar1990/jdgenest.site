@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Actions\EditTagAction;
 use App\Infos;
 use App\Tags;
+use Illuminate\Support\Facades\Validator;
 use LaravelViews\Facades\Header;
 use LaravelViews\Facades\UI;
 use LaravelViews\Views\TableView;
@@ -53,7 +54,17 @@ class TagTableView extends TableView
     }
 
     public function update(Tags $model, $data){
-        $model->update($data);
-        $this->success("Mise à jour avec succès");
+
+        $validator = Validator::make($data, [
+            'term' => 'required|max:10',
+        ]);
+
+        if ($validator->fails()) {
+            $this->error("Erreur de validation");
+        } else {
+
+            $model->update($data);
+            $this->success("Mise à jour avec succès");
+        }
     }
 }

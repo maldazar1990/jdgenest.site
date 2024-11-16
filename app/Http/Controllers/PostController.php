@@ -139,7 +139,7 @@ class PostController extends Controller
         $posts = post::where( 'id', $id )->first();
 
         if ( !$posts )
-            abort(404);
+            return redirect()->route("admin_posts");
 
         $form = $formBuilder->create(PostForm::class, [
             'method' => 'POST',
@@ -201,6 +201,11 @@ class PostController extends Controller
     {
 
         $post = post::where( 'id', $id )->first();
+
+        if (!$post) {
+            return redirect()->route('admin_posts');
+        }
+
         $validator = Validator::make($request->all(), $this->rules(true));
         
         if ($validator->fails()) {
@@ -293,6 +298,9 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $posts = post::where( 'id', $id )->first();
+        if (!$posts) {
+            return redirect()->route('admin_posts');
+        }
         $posts->status = 2;
         if ( Cache::has('post_id_'.$posts->id) )
             Cache::forget('post_id_'.$posts->id);
@@ -300,7 +308,7 @@ class PostController extends Controller
             Cache::forget('post_slug_'.$posts->slug);
         Cache::forget('allPosts');
         $posts->save();
-	return redirect()->route('admin_posts');
+	    return redirect()->route('admin_posts');
 
     }
 }

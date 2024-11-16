@@ -106,6 +106,11 @@ class TagsController extends Controller
     public function edit(Request $request, FormBuilder $formBuilder, $id)
     {
         $tags = Tags::where( 'id', $id )->first();
+
+        if ( !$tags ) {
+            return redirect()->route('admin_tags');
+        }
+
         $form = $formBuilder->create(TagForm::class, [
             'method' => 'POST',
             'url' => route('admin_tags_update', $id),
@@ -129,6 +134,11 @@ class TagsController extends Controller
     {
 
         $tags = Tags::where( 'id', $id )->first();
+
+        if (!$tags) {
+            return redirect()->route('admin_tags');
+        }
+
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
@@ -156,6 +166,10 @@ class TagsController extends Controller
     public function destroy(Request $request, $id)
     {
         $tags = Tags::where( 'id', $id )->first();
+
+        if (!$tags) {
+            return redirect()->route('admin_tags');
+        }
 
         if ($tags->posts()->count() > 0 or $tags->infos()->count() > 0) {
             $request->session()->flash('error', 'Impossible de supprimer ce tag, il est utilisé');

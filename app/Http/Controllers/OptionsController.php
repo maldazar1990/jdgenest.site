@@ -104,6 +104,11 @@ class OptionsController extends Controller
     public function edit(Request $request, FormBuilder $formBuilder, $id)
     {
         $options = options_table::find($id);
+
+        if (!$options) {
+            return redirect()->route('admin_options');
+        }
+
         $form = $formBuilder->create(OptionForm::class, [
             'method' => 'POST',
             'url' => route('admin_options_update', $id),
@@ -125,6 +130,11 @@ class OptionsController extends Controller
     public function update(Request $request, $id)
     {
         $options = options_table::find($id);
+
+        if (!$options) {
+            return redirect()->route('admin_options');
+        }
+
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
@@ -147,18 +157,14 @@ class OptionsController extends Controller
     public function destroy(Request $request, $id)
     {
         $options = options_table::find($id);
+
+        if (!$options) {
+            return redirect()->route('admin_options');
+        }
+
         $options->delete();
         Cache::forget('optionsArray');
         return redirect()->route('admin_options')->with('message', 'Option supprimée avec succès');
-    }
-
-
-    public function modifyMenu(Request $request)
-    {
-        $menu = options_table::where("title","menu")->get();
-        return view('admin.indexMenu', [
-            "data" => $menu[0],
-        ]);
     }
 
 }

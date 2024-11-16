@@ -35,6 +35,9 @@ class deleteBanAction extends Action
     public function handle($model, View $view)
     {
         FirewallIp::where("id",$model->id)->delete();
+
+
+
         $this->success('ip supprimés avec succès');
         return true;
     }

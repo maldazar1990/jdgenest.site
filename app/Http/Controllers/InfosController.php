@@ -125,7 +125,11 @@ class InfosController extends Controller
     public function edit(Request $request, $id)
     {
         $info = Infos::where('id', $id)->first();
- 
+
+        if (!$info) {
+            return redirect()->route("admin_infos");
+        }
+
         return view("admin.editInfo", [
             "title" => "Modifier une information",
             "route" => route("admin_infos_update", $id),
@@ -147,6 +151,10 @@ class InfosController extends Controller
 
         $validator = Validator::make($request->all(), $this->rules());
         $infos = Infos::where('id', $id)->first();
+
+        if  ( !$infos ) {
+            return redirect()->route('admin_infos');
+        }
 
         if ($validator->fails()) {
             return redirect()->route("admin_infos_edit", $id)
@@ -191,6 +199,11 @@ class InfosController extends Controller
     {
 
         $infos = Infos::where('id', $id)->first();
+
+        if ( !$infos ) {
+            return redirect()->route('admin_infos');
+        }
+
         $img = new Image($infos->image);
         $img->deleteImage();
         $infos->tags()->detach();

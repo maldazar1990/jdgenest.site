@@ -203,7 +203,8 @@ $(function () {
         imageUpload.addEventListener('change', function (e) {
                 let output = document.getElementById('previewImage');
                 output.classList.remove("d-none");
-                output.src = URL.createObjectURL(e.target.files[0]);
+                let file = e.target.files[0];
+                output.src = URL.createObjectURL(file);
                 output.onload = function() {
                     URL.revokeObjectURL(output.src) // free memory
                 }
