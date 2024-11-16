@@ -166,16 +166,6 @@ $(function() {
       output2.classList.remove("d-none");
       let file = e.target.files[0];
       output2.src = URL.createObjectURL(file);
-      let img = new Image();
-      img.src = file;
-      let width = "";
-      img.onload = function() {
-        width = img.width;
-      };
-      if (width > 1280 && width < 768) {
-        alert("La taille de l'image doit être compris entre 768 et 1280 pixels");
-        $('input[type="submit"]').disable();
-      }
       output2.onload = function() {
         URL.revokeObjectURL(output2.src);
       };
