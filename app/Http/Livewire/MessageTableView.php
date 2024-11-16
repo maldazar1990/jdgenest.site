@@ -50,6 +50,7 @@ class MessageTableView extends TableView
     public function bulkActions() {
         return [
             new \App\Actions\DeleteMessageAction(),
+            new \App\Actions\BanContactAction(),
         ];
     }
 }

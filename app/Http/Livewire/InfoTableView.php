@@ -45,8 +45,15 @@ class InfoTableView extends TableView
     }
 
     public function update(Infos $model, $data){
-        $model->update($data);
-        $this->success("Mise à jour avec succès");
+
+        if (empty($data['title'])) {
+            $this->error("Le titre ne peut pas être vide");
+        } else {
+            $model->update($data);
+            $this->success("Mise à jour avec succès");
+        }
+
+
     }
 
     public function actionsByRow(){

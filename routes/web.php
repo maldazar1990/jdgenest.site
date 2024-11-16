@@ -194,25 +194,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
         Route::group(["prefix" => "message", "middleware" => "role:admin"], function () {
             Route::get('/', 'MessageController@index')->name('admin_msg');
             Route::get('/show/{id}', 'MessageController@show')->name('admin_msg_show')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'MessageController@destroy')->name('admin_msg_delete')->where("id", "[0-9A-Za-z\-]+");
-            Route::post('/deleteall', 'MessageController@deleteAll')->name('admin_msg_delete_all');
-            Route::get('/ban/{id}', 'MessageController@ban')->name('admin_msg_ban')->where("id", "[0-9A-Za-z\-]+");
 
         });
 
         Route::group(["prefix" => "comment", "middleware" => "role:admin"], function () {
             Route::get('/', 'CommentController@index')->name('admin_comment');
-            Route::get('/delete/{id}', 'CommentController@destroy')->name('admin_comment_delete')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/ban/{id}', 'CommentController@ban')->name('admin_comment_ban')->where("id", "[0-9A-Za-z\-]+");
-            Route::post('/deleteall', 'CommentController@deleteAll')->name('admin_comment_delete_all');
-
         });
 
         Route::group(["prefix" => "ipban", "middleware" => "role:admin"], function () {
             Route::get('/', 'IpBanController@index')->name('admin_ipban');
-            Route::get('/delete/{id}', 'IpBanController@destroy')->name('admin_ipban_delete')->where("id", "[0-9A-Za-z\-]+");
-            Route::post('/deleteall', 'IpBanController@deleteAll')->name('admin_ipban_delete_all');
-
         });
 
 

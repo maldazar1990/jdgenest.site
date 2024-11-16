@@ -22,21 +22,6 @@ class MessageController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, $id)
-    {
-
-        $contact = Contact::where( 'id', $id )->first();
-
-        if (!$contact){
-            return redirect()->route('admin_msg');
-        }
-
-        $contact->delete();
-
-        $request->session()->flash('message', "Enregistrer avec succès");
-        return redirect()->route('admin_msg');
-    }
-
     public function show(Request $request, $id)
     {
         $contact = Contact::where( 'id', $id )->first();
@@ -50,21 +35,5 @@ class MessageController extends Controller
         ]);
     }
 
-    public function ban(Request $request, $id)
-    {
-
-        $contact = Contact::where( 'id', $id )->first();
-
-        if (!$contact){
-            return redirect()->route('admin_msg');
-        }
-
-        if(!empty(trim($contact->ip))) {
-            FireWallRepository::createReport($contact->ip, 2, "Bannie par l'administrateur");
-        }
-
-        $request->session()->flash('message', "ban");
-        return redirect()->route('admin_msg');
-    }
 
 }

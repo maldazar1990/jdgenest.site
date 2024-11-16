@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+use App\Actions\BanContactAction;
 use LaravelViews\Facades\Header;
 use App\Comment;
 use App\post;
@@ -49,6 +50,7 @@ class CommentTableView extends TableView
     public function bulkActions() {
         return [
             new \App\Actions\DeleteCommentsAction(),
+            new BanContactAction(),
         ];
     }
 }
