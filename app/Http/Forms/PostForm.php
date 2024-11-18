@@ -45,9 +45,8 @@ class PostForm extends Form
             ->add('status', 'select',[
                 "label" => "Statut",
                 "class" => "form-control  mw-25",
-                "choices"=>array_filter(config("app.status"),function($val){
-                    return $val != 2;
-                },ARRAY_FILTER_USE_KEY),
+                "choices"=>config("app.status"),
+                "default_value" => 1,
             ]);
        
         $this->add("submit", "submit", [
