@@ -40,15 +40,17 @@ class ConvertImage extends Command
                     if (!$img->convertAll()) {
                         Log::info("image convert convertion failed");
                         return ;
-                    }
-                    Log::info("image convert convertion end");
+                    } else {
+                        Log::info("image convert convertion end");
 
-                    $image = $filename[0] . ".webp";
-                    Log::info($image);
-                    $imageRecord->file = $image;
-                    $imageRecord->migrated = true;
-                    $imageRecord->save();
-                    Log::info("image convert end");
+                        $image = $filename[0] . ".webp";
+                        Log::info($image);
+                        $imageRecord->file = $image;
+                        $imageRecord->migrated = true;
+                        $imageRecord->save();
+                        Log::info("image convert end");
+                    }
+
                 } else {
                     Log::info("image not exist");
                 }

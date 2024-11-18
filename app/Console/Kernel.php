@@ -40,6 +40,7 @@ class Kernel extends ConsoleKernel
     {
         // or run this command for daily routine
         $schedule->command('app:delete-post')->weekly();
+        $schedule->command('app:convert-image')->weekly();
 
     }
 }

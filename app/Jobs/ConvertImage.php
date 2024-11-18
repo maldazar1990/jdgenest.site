@@ -42,16 +42,18 @@ class ConvertImage implements ShouldQueue
                 if (!$img->convertAll()) {
                     Log::info("image convert convertion failed");
                     return ;
+                } else {
+                    Log::info("image convert convertion end");
+
+                    $image = $filename[0] . ".webp";
+                    Log::info($image);
+                    $this->model->file = $image;
+                    $this->model->migrated = true;
+                    $this->model->save();
+                    Log::info("image convert end");
                 }
 
-                Log::info("image convert convertion end");
 
-                $image = $filename[0] . ".webp";
-                Log::info($image);
-                $this->model->file = $image;
-                $this->model->migrated = true;
-                $this->model->save();
-                Log::info("image convert end");
             } else {
                 Log::info("image not exist");
             }
