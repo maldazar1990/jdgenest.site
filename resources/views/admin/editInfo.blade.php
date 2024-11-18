@@ -2,9 +2,24 @@
 
 @section("content")
 
-    
+@php
+    if (old("datestart")){
+        $datestart = old("datestart");
+    } else if (isset($info)){
+        $datestart = substr($info->datestart,0,10);
+    } else {
+       $datestart = "";
+    }
 
+    if (old("dateend")){
+       $dateend = old("dateend");
+    } else if (isset($info)){
+        $dateend = substr($info->dateend,0,10);
+    } else {
+       $dateend = "";
+    }
 
+@endphp
     <div class="col-12">
         <div class="card mb-4">
             @if(Session::has('message'))
@@ -91,7 +106,7 @@
                                         <div style="color:red;">{{ $message }}</div>
                                     @enderror
                                     <label for="datestart" class="form-label  ">Date de début</label>
-                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{  old("datestart")??substr($info->datestart,0,10)??"" }}" required>
+                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{ $datestart }}" required>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -100,7 +115,7 @@
                                         <div style="color:red;">{{ $message }}</div>
                                     @enderror
                                     <label for="dateend" class="form-label  ">Date de fin</label>
-                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ old("dateend")??substr($info->dateend,0,10)??"" }}">
+                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ $dateend }}">
                                 </div>
                             </div>
                         </div>

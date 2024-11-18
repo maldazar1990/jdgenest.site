@@ -31,7 +31,7 @@
                                             @include("theme.blog.layout.image", ['modelWithImage' => $info,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
                                         </div>
                                         <small>
-                                            @if($info->dateend < \Illuminate\Support\Facades\Date::today())
+                                            @if($info->dateend < \Illuminate\Support\Facades\Date::today() or $info->dateend == null)
                                                 <span class="float-right w-100 mb-1">{{substr($info->datestart,0,10)}}  à {{substr($info->dateend,0,10)}}</span>
                                             @else
                                                 <span class="float-right w-100 mb-1">Depuis {{substr($info->datestart,0,10)}}</span>

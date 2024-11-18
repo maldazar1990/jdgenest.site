@@ -47,8 +47,12 @@ class InfosController extends Controller
     }
 
 
-    public function rules()
+    public function rules( $haveDateEnd = false )
     {
+
+        if ( $haveDateEnd )
+            $rules["dateend"] = "date|after:datestart";
+
 
         $rules = [
 
@@ -57,7 +61,7 @@ class InfosController extends Controller
             'link' => "required|max:255|url",
             "datestart" => "date",
             "duree" => "min:0 | max:40",
-            "dateend" => "date|after:datestart",
+
             "image" => "mimes:jpeg,png,jpg,webp,svg,avif|max:4096",
             "type" => "required|in:exp,job,school",
 
@@ -75,7 +79,7 @@ class InfosController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), $this->rules());
+        $validator = Validator::make($request->all(), $this->rules($request->exists("dateend")));
 
         if ($validator->fails()) {
             return redirect()->route("admin_infos_create")
@@ -84,6 +88,7 @@ class InfosController extends Controller
         }
 
         $infos = new Infos();
+
         Image::saveNewImage($request, $infos);
         $infos->title = $request->input("title");
         $infos->description = $request->input("description");
@@ -149,7 +154,7 @@ class InfosController extends Controller
     public function update(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), $this->rules());
+        $validator = Validator::make($request->all(), $this->rules($request->exists("dateend")));
         $infos = Infos::where('id', $id)->first();
 
         if  ( !$infos ) {
