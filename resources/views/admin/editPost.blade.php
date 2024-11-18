@@ -72,7 +72,8 @@
                             </div>
                             <div class="relative mt-4" wire:ignore>
                                 <script>
-                                    const valpost = "{!! $post !!}";
+                                    const valpost = `{!! $post !!}`;
+                                    console.log(valpost);
                                 </script>
                                 <label for="default-search" class="control-label">Post</label>
                                 <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
