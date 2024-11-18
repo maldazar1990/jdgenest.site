@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\options_table;
+use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -34,6 +35,7 @@ class DeleteConfigAction extends Action
     public function handle($selectedModels, View $view)
     {
         options_table::whereKey($selectedModels)->delete();
+        Cache::forget('optionsArray');
         $this->success('Option supprimé avec succès');
         return true;
     }

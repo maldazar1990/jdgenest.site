@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\HelperGeneral;
 use App\Http\Helpers\Image;
+use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -34,11 +35,13 @@ class DeleteInfoAction extends Action
      */
     public function handle($model, View $view)
     {
-        $img = new Image($model->image);
+        $img = new Image($infos->image);
         $img->deleteImage();
-        $model->tags()->detach();
-        $model->delete();
-
+        $infos->tags()->detach();
+        $infos->delete();
+        Cache::forget("exps");
+        Cache::forget("otherExp");
+        Cache::forget("infos");
         $this->success("Supprimé avec succès");
         return true;
     }

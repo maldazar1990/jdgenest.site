@@ -161,7 +161,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::post('/insert', 'PostController@store')->name('admin_posts_insert');
             Route::get('/{id}', 'PostController@edit')->name('admin_posts_edit');
             Route::post('/update/{id}', 'PostController@update')->name('admin_posts_update')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'PostController@destroy')->name('admin_posts_delete')->where("id", "[0-9A-Za-z\-]+");
         });
         Route::group(["prefix" => "infos", "middleware" => "role:admin"], function () {
             Route::get('/', 'InfosController@index')->name('admin_infos');
@@ -169,7 +168,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::post('/insert', 'InfosController@store')->name('admin_infos_insert');
             Route::get('/{id}', 'InfosController@edit')->name('admin_infos_edit');
             Route::post('/update/{id}', 'InfosController@update')->name('admin_infos_update')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'InfosController@destroy')->name('admin_infos_delete')->where("id", "[0-9A-Za-z\-]+");
         });
 
         Route::group(["prefix" => "options", "middleware" => "role:admin"], function () {
@@ -178,14 +176,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::post('/insert', 'OptionsController@store')->name('admin_options_insert');
             Route::get('/{id}', 'OptionsController@edit')->name('admin_options_edit')->where("id", "[0-9A-Za-z\-]+");
             Route::post('/update/{id}', 'OptionsController@update')->name('admin_options_update')->where("id", "[0-9A-Za-z\-]+");
-            Route::get('/delete/{id}', 'OptionsController@destroy')->name('admin_options_delete')->where("id", "[0-9A-Za-z\-]+");
-            Route::post('/insertMenu', 'OptionsController@menu')->name('admin_options_menu');
-            Route::get('/modifyMenu', 'OptionsController@modifyMenu')->name('admin_options_menu_index');
         });
         Route::group(["prefix" => "files"], function () {
             Route::get('/', 'FileController@index')->name('admin_files');
             Route::get('/ajax', 'FileController@ajax')->name('admin_files_ajax');
-            Route::get('/delete', 'FileController@delete')->name('admin_files_delete');
             Route::get('/create', 'FileController@create')->name('admin_files_create');
             Route::post('/store', 'FileController@store')->name('admin_files_store');
 

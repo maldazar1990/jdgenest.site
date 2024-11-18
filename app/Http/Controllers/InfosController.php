@@ -194,30 +194,5 @@ class InfosController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Groups $groups
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
-    {
 
-        $infos = Infos::where('id', $id)->first();
-
-        if ( !$infos ) {
-            return redirect()->route('admin_infos');
-        }
-
-        $img = new Image($infos->image);
-        $img->deleteImage();
-        $infos->tags()->detach();
-        $infos->delete();
-        Cache::forget("exps");
-        Cache::forget("otherExp");
-        Cache::forget("infos");
-
-        $request->session()->flash('message', 'Supprimé avec succès');
-        return redirect()->route("admin_infos");
-    }
 }

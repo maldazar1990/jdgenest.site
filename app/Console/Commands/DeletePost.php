@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\post;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class DeletePost extends Command
 {
@@ -30,8 +31,15 @@ class DeletePost extends Command
         $posts = post::where("status", "2")->get();
         foreach($posts as $post){
             \Log::info("Suppression du post ".$post->title);
+            if ( Cache::has('post_id_'.$post->id) )
+                Cache::forget('post_id_'.$post->id);
+            if ( Cache::has('post_slug_'.$post->id) )
+                Cache::forget('post_slug_'.$post->id);
+
+            Cache::forget('allPosts');
             $post->delete();
         }
+
         \Log::info("Suppression des posts terminée");
     }
 }

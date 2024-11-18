@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -31,6 +32,12 @@ class DeletePostAction extends Action
     public function handle($model, View $view)
     {
         $model->status = 2;
+        if ( Cache::has('post_id_'.$model->id) )
+            Cache::forget('post_id_'.$model->id);
+        if ( Cache::has('post_slug_'.$model->slug) )
+            Cache::forget('post_slug_'.$model->slug);
+
+        Cache::forget('allPosts');
         $model->save();
         $this->success("Supprimé avec succès");
     }

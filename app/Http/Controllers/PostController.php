@@ -288,27 +288,5 @@ class PostController extends Controller
             abort(404);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Groups  $groups
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
-    {
-        $posts = post::where( 'id', $id )->first();
-        if (!$posts) {
-            return redirect()->route('admin_posts');
-        }
-        $posts->status = 2;
-        if ( Cache::has('post_id_'.$posts->id) )
-            Cache::forget('post_id_'.$posts->id);
-        if ( Cache::has('post_slug_'.$posts->slug) )
-            Cache::forget('post_slug_'.$posts->slug);
-        Cache::forget('allPosts');
-        $posts->save();
-	    return redirect()->route('admin_posts');
-
-    }
+    
 }

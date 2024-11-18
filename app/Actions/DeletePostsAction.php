@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\post;
+use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -35,6 +36,13 @@ class DeletePostsAction extends Action
             'status' => '2'
         ]);
 
+        foreach ($selectedModels as $id) {
+            if ( Cache::has('post_id_'.$id) )
+                Cache::forget('post_id_'.$id);
+            if ( Cache::has('post_slug_'.$id) )
+                Cache::forget('post_slug_'.$id);
+        }
+        Cache::forget('allPosts');
         $this->success("Supprimés avec succès");
     }
 }
