@@ -1,9 +1,15 @@
 <picture>
     @php
+        $imageConverted = 0;
         if ( isset($modelWithImage) ) {
             if ($modelWithImage instanceof \App\users or $modelWithImage instanceof \App\post or $modelWithImage instanceof \App\Infos) {
                 if(isset($modelWithImage->imageClass->file)){
                     $image = $modelWithImage->imageClass->file;
+                    if ( $modelWithImage->imageClass->migrated ){
+                        $imageConverted = 1;
+                    } else {
+                        $imageConverted = 2;
+                    }
                 } else {
                     if ( Str::isUrl($modelWithImage->image) ){
                         $image = $modelWithImage->image;
@@ -59,9 +65,11 @@
                 }
 
             @endphp
-            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
-            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
-            @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'jpeg',"size"=>$size])
+            @if($imageConverted != 2)
+                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
+                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
+                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'jpeg',"size"=>$size])
+            @endif
             <img
                 class="{{$class}}"
                 src="{{asset($image)}}"
