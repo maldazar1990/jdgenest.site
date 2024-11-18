@@ -93,7 +93,7 @@ class  Image {
         }
 
         $file = $request->file("image");
-        $nameWithoutExtension = Str::slug(explode(".",$file->getClientOriginalName(),"_")[0]);
+        $nameWithoutExtension = Str::slug(explode(".",$file->getClientOriginalName())[0],"_");
         $name = Str::slug($file->getClientOriginalName(),"_");
         $file->move(\storage_path("images/"), $name);
 
