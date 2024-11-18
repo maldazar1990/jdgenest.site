@@ -93,8 +93,8 @@ class  Image {
         }
 
         $file = $request->file("image");
-        $nameWithoutExtension = HelperGeneral::removeAccent(explode(".",$file->getClientOriginalName())[0]);
-        $name = HelperGeneral::removeAccent($file->getClientOriginalName());
+        $nameWithoutExtension = Str::slug(explode(".",$file->getClientOriginalName(),"_")[0]);
+        $name = Str::slug($file->getClientOriginalName(),"_");
         $file->move(\storage_path("images/"), $name);
 
         $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->orWhere("hash",md5_file(\storage_path("images/"). $name))->first();
