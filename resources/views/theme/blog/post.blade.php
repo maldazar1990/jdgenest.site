@@ -28,7 +28,7 @@
 
                     <div class="mb-4 d-flex flex-column align-items-center">
 
-                        @include("theme.blog.layout.image", ['modelWithImage' => $post])
+                        @include("toolbox.image", ['modelWithImage' => $post])
                     </div>
                 <div class="textcontent">
                     {!! trim($post->post) !!}

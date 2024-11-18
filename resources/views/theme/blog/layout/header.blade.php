@@ -21,7 +21,7 @@
         
         <div id="navigation" class="collapse navbar-collapse flex-column" >
             <div class="profile-section pt-3 pt-lg-0">
-                @include("theme.blog.layout.image", ['modelWithImage' => $userInfo,"class" => "profile-image mb-3 rounded-circle mx-auto img-cover","size"=>"small"])
+                @include("toolbox.image", ['modelWithImage' => $userInfo,"class" => "profile-image mb-3 rounded-circle mx-auto img-cover","size"=>"small"])
 
                 <div class="bio mb-3">{{$options["simple_presentation"]}}</div><!--//bio-->
                 <ul class="social-list list-inline py-3 mx-auto">

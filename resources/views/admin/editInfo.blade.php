@@ -56,13 +56,7 @@
                             <img src="{{ $image }}" class="img-fluid" alt="">
                         @endif
                     </div>
-                    <div class="mb-3">
-                        @error('title')
-                            <div style="color:red;">{{ $message }}</div>
-                        @enderror
-                        <label for="title" class="form-label   ">Titre</label>
-                        <input type="text" class="form-control   " id="title" name="title" value="{{ old("title")??$info->title??"" }}" required>
-                    </div>
+                    @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required"]])
                     <div class="relative mb-5" wire:ignore>
                         <script>
                             const valpost = "{!! isset($info)?addslashes($info->description):'' !!}";
@@ -73,63 +67,23 @@
                         <label for="quill-editor" class="control-label   ">Post</label>
                         <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
                     </div>
-                    <input type="hidden" name="description" id="quill-value" value="{{old("description")??""}}">
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Type d'expérience:</label>
-  
-                        @php
-                        $currentType = old("type")??$info->type??"";
-                        @endphp
-
-                        <select class="form-select" id="type" name="type">
-                            @foreach( config("app.typeInfos") as $key => $type)
-                                
-                            
-                                <option value="{{ $key }}" @if($currentType == $key) selected @endif>{{ $type }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        @error('link')
-                            <div style="color:red;">{{ $message }}</div>
-                        @enderror
-                        <label for="link" class="form-label ">Lien</label>
-                        <input type="url" class="form-control" id="link" name="link" value="{{ old("link")??$info->link??"" }}" required>
-                    </div>
+                    @include("toolbox.input",["inputName"=>"description","inputId"=>"quill-value", "inputType"=>"hidden","inputClass"=>"","model"=>$info)
+                    @include("toolbox.SelectInput",["inputName"=>"type","inputFieldName"=>"Type d'expérience:","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required"] ,"inputAllValues"=>config("app.typeInfos")])
+                    @include("toolbox.input",["inputName"=>"link","inputFieldName"=>"Liens","inputType"=>"url","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required"]])
 
                     <fieldset class="mb-3">
                         <legend>Temps</legend>
                         <div class="row">
                             <div class="col-6">
-                                <div class="mb-3">
-                                    @error('datestart')
-                                        <div style="color:red;">{{ $message }}</div>
-                                    @enderror
-                                    <label for="datestart" class="form-label  ">Date de début</label>
-                                    <input type="date" class="form-control  " id="datestart" name="datestart" value="{{ $datestart }}" required>
-                                </div>
+                                @include("toolbox.input",["inputName"=>"datestart","inputFieldName"=>"Date de début","inputType"=>"date","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required"]])
                             </div>
                             <div class="col-6">
-                                <div class="mb-3">
-                                    @error('dateend')
-                                        <div style="color:red;">{{ $message }}</div>
-                                    @enderror
-                                    <label for="dateend" class="form-label  ">Date de fin</label>
-                                    <input type="date" class="form-control  " id="dateend" name="dateend" value="{{ $dateend }}">
-                                </div>
+                                @include("toolbox.input",["inputName"=>"dateend","inputFieldName"=>"Date de fin","inputType"=>"date","inputClass"=>"","model"=>$info])
                             </div>
                         </div>
                     </fieldset>
 
-
-                    <div class="mb-3">
-                        @error('file')
-                            
-                            <div style="color:red;">{{ $message }}</div>
-                        @enderror
-                        <label for="image" class="form-label">Image</label>
-                        <input type="file" class="form-control" id="image" name="image"  @if(!$info) required @endif>
-                    </div>
+                    @include("toolbox.input",["inputName"=>"file","inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required","accept"=>"image/*"]])
                     <div class="mb-3">
                         <label for="tags" class="form-label">Tags</label>
                         <select class="form-select select2" id="tags" name="tags[]" multiple required>

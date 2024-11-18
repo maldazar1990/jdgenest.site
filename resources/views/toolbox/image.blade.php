@@ -66,9 +66,9 @@
 
             @endphp
             @if($imageConverted != 2)
-                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
-                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
-                @include("theme.blog.layout.source", ['filename' => $filename, 'ext' => 'jpeg',"size"=>$size])
+                @include("toolbox.source", ['filename' => $filename, 'ext' => 'avif',"size"=>$size])
+                @include("toolbox.source", ['filename' => $filename, 'ext' => 'webp',"size"=>$size])
+                @include("toolbox.source", ['filename' => $filename, 'ext' => 'jpeg',"size"=>$size])
             @endif
             <img
                 class="{{$class}}"

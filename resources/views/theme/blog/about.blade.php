@@ -18,17 +18,17 @@
                             <ul class="timeline">
                                 @foreach($otherExps as $info)
                                     @php
-                                    $tagClass = "";
-                                    foreach ($info->tags()->get() as $tag){
-                                        $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
-                                    }
+                                        $tagClass = "";
+                                        foreach ($info->tags()->get() as $tag){
+                                            $tagClass .= " ".\Illuminate\Support\Str::slug($tag->title);
+                                        }
                                     @endphp
                                     <li class="d-flex flex-column about-me-general" data-listclass="{{$tagClass}}">
                                         <a target="_blank" class="link-secondary mb-1 " href="{{$info->link}}">
                                             <h5>{{$info->title}}</h5>
                                         </a>
                                         <div class="d-flex justify-content-start align-content-start">
-                                            @include("theme.blog.layout.image", ['modelWithImage' => $info,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
+                                            @include("toolbox.image", ['modelWithImage' => $info,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
                                         </div>
                                         <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today() or $info->dateend == null)
@@ -46,9 +46,11 @@
                                            class="nav-link collapsed"
                                            href="#{{\Illuminate\Support\Str::slug($info->title,"_")}}"
                                            role="button">
-                                            <small class="more-text">Pour plus de détails cliquez ici.<span class="active" >▲</span></small>
+                                            <small class="more-text">Pour plus de détails cliquez ici.<span
+                                                        class="active">▲</span></small>
                                         </a>
-                                        <div class="panel-collapse collapse in" aria-expanded="false"  id="{{\Illuminate\Support\Str::slug($info->title,"_")}}">
+                                        <div class="panel-collapse collapse in" aria-expanded="false"
+                                             id="{{\Illuminate\Support\Str::slug($info->title,"_")}}">
                                             <p>{!!trim($info->description)!!}</p>
                                         </div>
                                     </li>
@@ -84,7 +86,7 @@
                                     <div class="col" data-listclass="{{$tagClass}}">
                                         <div class="card">
                                             <div class="p-2">
-                                                @include("theme.blog.layout.image", ['modelWithImage' => $info,"class" => "card-img-top"])
+                                                @include("toolbox.image", ['modelWithImage' => $info,"class" => "card-img-top"])
                                             </div>
                                             <span class="ms-3">
                                                 @foreach( $info->tags()->groupBy("tags.id")->get() as $tag)
@@ -103,26 +105,36 @@
                                                     @endif
                                                 </small>
                                                 <br>
-                                                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#{{\Illuminate\Support\Str::slug($info->title)}}">
+                                                <button type="button" class="btn btn-primary mt-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#{{\Illuminate\Support\Str::slug($info->title)}}">
                                                     Détails
                                                 </button>
                                             </div>
                                         </div>
 
                                         <!--modal-->
-                                        <div class="modal fade" id="{{\Illuminate\Support\Str::slug($info->title)}}" tabindex="-1" aria-labelledby="{{\Illuminate\Support\Str::slug($info->title)}}label" aria-hidden="true">
+                                        <div class="modal fade" id="{{\Illuminate\Support\Str::slug($info->title)}}"
+                                             tabindex="-1"
+                                             aria-labelledby="{{\Illuminate\Support\Str::slug($info->title)}}label"
+                                             aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="{{\Illuminate\Support\Str::slug($info->title)}}label">{{$info->title}}</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <h5 class="modal-title"
+                                                            id="{{\Illuminate\Support\Str::slug($info->title)}}label">{{$info->title}}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         {!! $info->description !!}
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                                        <a href="{{$info->link}}" target="_blank" class="btn btn-primary center-btn">Aller sur le site</a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Fermer
+                                                        </button>
+                                                        <a href="{{$info->link}}" target="_blank"
+                                                           class="btn btn-primary center-btn">Aller sur le site</a>
                                                     </div>
                                                 </div>
                                             </div>
