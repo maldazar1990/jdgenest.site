@@ -38,6 +38,9 @@ class  ImageConverter
         if ( file_exists($this->imageWithPath) ) {
             $this->format = exif_imagetype($this->imageWithPath);
             $this->data = getimagesize($this->imageWithPath);
+            if ( $this->data = false ) {
+                $this->exist = false;
+            }
             $this->width = $this->data[0];
             $this->height = $this->data[1];
             $this->exist = true;
