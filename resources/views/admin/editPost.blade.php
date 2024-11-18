@@ -46,6 +46,8 @@
                 </div>
             @endif
             <div class="card-block">
+
+
                 @if ( isset($model) )
                 <h3 class="card-title"><a href="{{route("post",$model->slug)}}">{{$title}}</a></h3>
                 @endif
