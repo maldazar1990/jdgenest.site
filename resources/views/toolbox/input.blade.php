@@ -52,7 +52,7 @@
         if ( isset($model)){
             if ( isset($model->{$inputName}) ){
                 if ( $inputType == "date" )
-                    $value = $model->{$inputName}->format("Y-m-d");
+                    $value = substr($model->{$inputName}->format("Y-m-d"),0,10);
                 else
                     $value = $model->{$inputName};
             } else {
