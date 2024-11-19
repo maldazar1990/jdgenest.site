@@ -5,21 +5,7 @@
         dd("manque le nom du champ");
     }
 
-    if(old($inputName)){
-        $value = old($inputName);
-    } else {
-        if ( isset($model)){
-            if ( isset($model->{$inputName}) ){
-                $value = $model->{$inputName};
-            } else {
-                $value = "";
-            }
-        } else {
-            if ( !isset($value) ) {
-                $value = "";
-            }
-        }
-    }
+
 
 
     if(!isset($inputClass)){
@@ -57,6 +43,25 @@
             }
 
 
+        }
+    }
+
+    if(old($inputName)){
+        $value = old($inputName);
+    } else {
+        if ( isset($model)){
+            if ( isset($model->{$inputName}) ){
+                if ( $inputType == "date" )
+                    $value = $model->{$inputName}->format("Y-m-d");
+                else
+                    $value = $model->{$inputName};
+            } else {
+                $value = "";
+            }
+        } else {
+            if ( !isset($value) ) {
+                $value = "";
+            }
         }
     }
 
