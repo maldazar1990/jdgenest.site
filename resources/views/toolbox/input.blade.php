@@ -52,7 +52,7 @@
         if ( isset($model)){
             if ( isset($model->{$inputName}) ){
                 if ( $inputType == "date" )
-                    $value = \Carbon\Carbon::parse($model->{$inputName})->format('d/m/Y');
+                    $value = \Carbon\Carbon::parse($model->{$inputName})->format('Y-m-d');
                 else
                     $value = $model->{$inputName};
             } else {
