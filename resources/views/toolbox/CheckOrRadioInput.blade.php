@@ -23,9 +23,7 @@
                 $value = "";
             }
         } else {
-            if ( isset($value) ){
-                $value = $value;
-            } else {
+            if ( isset($value) ) {
                 $value = "";
             }
         }
@@ -43,9 +41,7 @@
     if(!isset($inputType)){
         $inputClass = "text";
     } else {
-        if (in_array($inputType, ["radio","checkbox"])){
-            $inputType = $inputType;
-        } else {
+        if (!in_array($inputType, ["radio","checkbox"])) {
             dd("mauvais type");
         }
     }
@@ -56,29 +52,24 @@
         foreach( $attributes as $key => $content){
             $inputAttributes .= $key.'="'.$content.'" ';
         }
-    } else {
-        $inputAttributes = "";
     }
-
-
-
 @endphp
 
 <div class="mb-3">
-    @error($inputName)
-    <div style="color:red;">{{ $errors->first($inputName) }}</div>
-    @enderror
     <fieldset class="mb-3">
         <legend>{{$inputFieldName}}</legend>
         @foreach($inputAllValues as $key => $inputValue)
             <div class="form-check">
-                <input class="form-check" type="{{$inputType}}" {{$inputAttributes}}  class="form-check" id="{{$inputName}}_{{$key}}" name="{{$inputName}}" value="{{ $key }}" @if($value == $key) checked @endif>
+                <input class="form-check @error($inputName) is-invalid @enderror" type="{{$inputType}}" {{$inputAttributes}}  class="form-check" id="{{$inputName}}_{{$key}}" name="{{$inputName}}" value="{{ $key }}" @if($value == $key) checked @endif>
                 <label class="form-check   " for="{{$inputName}}_{{$key}}">
                     {{$inputValue}}
                 </label>
             </div>
         @endforeach
     </fieldset>
+    @error($inputName)
+    <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
+    @enderror
 </div>
 
 @php

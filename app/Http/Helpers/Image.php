@@ -77,10 +77,14 @@ class  Image {
         return $images;
     }
 
-    public static function saveNewImage(\Illuminate\Http\Request $request,Model $model):\App\Image {
+    public static function saveNewImage(\Illuminate\Http\Request $request,Model $model):\App\Image|null {
 
         if ( !$model instanceof Users and !$model instanceof post and !$model instanceof Infos ){
             throw new \Exception("Model not supported");
+        }
+
+        if ( !$request->hasFile("image") ){
+            return null;
         }
 
 

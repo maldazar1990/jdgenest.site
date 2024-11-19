@@ -11,26 +11,6 @@
     if ( !isset($inputAllValues) ) {
         dd("manque les valeurs");
     }
-
-    if(old($inputName)){
-        $value = old($inputName);
-    } else {
-        if ( isset($model)){
-            if ( isset($model->{$inputName}) ){
-                $value = $model->{$inputName};
-            } else {
-                $value = "";
-            }
-        } else {
-            if ( isset($value) ){
-                $value = $value;
-            } else {
-                $value = "";
-            }
-        }
-    }
-
-
     if(!isset($inputClass)){
         $inputClass = "";
     }
@@ -47,25 +27,63 @@
         foreach( $attributes as $key => $content){
             $inputAttributes .= $key.'="'.$content.'" ';
         }
-    } else {
-        $inputAttributes = "";
+    }
+
+    $isMultiple = false;
+    $addName="";
+    if ( array_key_exists("multiple",$attributes) ){
+        $isMultiple = true;
+        $addName = "[]";
     }
 
 
+    if(old($inputName)){
+        $value = old($inputName);
+    } else {
+        if ( isset($model)){
+            if ( isset($model->{$inputName}) ){
+                if($isMultiple)
+                    $value = $model->{$inputName}->pluck("id")->toArray();
+                else
+                    $value = $model->{$inputName};
 
+            } else {
+                $value = "";
+            }
+        } else {
+            if ( !isset($value) ) {
+                $value = "";
+            }
+        }
+    }
 @endphp
 
 <div class="mb-3">
-    @error($inputName)
-    <div style="color:red;">{{ $errors->first($inputName) }}</div>
-    @enderror
-
     <label for="{{$inputName}}" class="form-label ">{{$inputFieldName}}</label>
-    <select class="form-select {{$inputClass}}" id="{{$id}}" name="{{$inputName}}" {{$inputAttributes}}>
-        @foreach($inputAllValues as $key => $inputValue)
-            <option value="{{ $key }}" @if($value == $key) selected @endif>{{ $inputValue }}</option>
+    <select class="form-select {{$inputClass}} @error($inputName) is-invalid @enderror" id="{{$id}}" name="{{$inputName.$addName}}" {{$inputAttributes}}>
+        @foreach( $inputAllValues as $key => $content )
+            <option value="{{ $key }}"
+            <?php
+
+                if (isset($model)) {
+                    if ($isMultiple) {
+                        if (in_array($key, $value)) {
+                            echo "selected";
+                        }
+                    } else {
+                        if ($value == $key) {
+                            echo "selected";
+                        }
+                    }
+                }
+
+            ?>
+            >{{ $content }}</option>
         @endforeach
     </select>
+    @error($inputName)
+    <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
+    @enderror
 </div>
 
 @php
@@ -76,5 +94,7 @@
     unset($inputAllValues);
     unset($inputFieldName);
     unset($inputId);
+    unset($isMultiple);
+    unset($addName);
 @endphp
 
