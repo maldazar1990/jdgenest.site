@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    @include("toolbox.input",["inputName"=>"image","inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required","accept"=>"image/*"]])
+                    @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$info,"attributes"=>["required"=>"required","accept"=>"image/*"]])
                     @include("toolbox.SelectInput",["inputName"=>"tags","inputFieldName"=>"Tags","inputClass"=>"select2","model"=>$info,"attributes"=>["required"=>"required","multiple"=>"multiple"] ,"inputAllValues"=>$tags->pluck("title","id")])
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
