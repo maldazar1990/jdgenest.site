@@ -72,7 +72,7 @@ class Infos extends Model
 
     public function imageClass():BelongsTo
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Image::class,"image_id","id");
     }
 
 
