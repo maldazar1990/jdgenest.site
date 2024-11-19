@@ -53,8 +53,7 @@ class Infos extends Model
     public function datestart ()  {
         return \Attribute::make(
             get: function($value) {
-                $date = Carbon::parse($value);
-                return $date->format('Y-m-d');
+                return substr($value,0,10);
             },
             set: fn ($value) => $value,
         );
@@ -63,8 +62,7 @@ class Infos extends Model
     public function dateend ()  {
         return \Attribute::make(
             get: function($value) {
-                $date = Carbon::parse($value);
-                return $date->format('Y-m-d');
+                return substr($value,0,10);
             },
             set: fn ($value) => $value,
         );
