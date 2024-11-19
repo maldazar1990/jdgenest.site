@@ -160,7 +160,9 @@ $(function() {
   let previewImage = $("#previewImage");
   let imageUrl = $("#imageUrl");
   let imageUpload = document.getElementById("imageUpload");
+  console.log(imageUpload);
   if (imageUpload) {
+    console.log(imageUpload);
     imageUpload.addEventListener("change", function(e) {
       let output2 = document.getElementById("previewImage");
       output2.classList.remove("d-none");

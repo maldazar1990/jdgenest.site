@@ -197,6 +197,7 @@ $(function () {
     }
     
     let previewImage = $("#previewImage");
+
     let imageUrl = $("#imageUrl");
     let imageUpload = document.getElementById('imageUpload');
     if (imageUpload) {
