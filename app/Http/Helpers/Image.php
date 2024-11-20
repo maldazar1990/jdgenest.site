@@ -8,6 +8,7 @@ use App\post;
 use App\Users;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 class  Image {
     private $image;
@@ -61,7 +62,7 @@ class  Image {
 
     public static function getImages():array {
         $images = [];
-        
+
         $exts = ["*.jpeg","*.jpg","*.webp","*.png","*.avif"];
         foreach( $exts as $ext) {
             foreach (glob(\public_path("images/").$ext) as $filename) {
@@ -100,7 +101,6 @@ class  Image {
         $nameWithoutExtension = Str::slug(explode(".",$file->getClientOriginalName())[0],"_");
         $name = $nameWithoutExtension.".".$file->getClientOriginalExtension();
         $file->move(\storage_path("images/"), $name);
-
         $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->orWhere("hash",md5_file(\storage_path("images/"). $name))->first();
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $name);
@@ -112,7 +112,8 @@ class  Image {
             File::move(\storage_path("images/"). $name, \public_path("images/").$name);
             $imageDb->hash = md5_file(\public_path("images/").$name);
             $imageDb->save();
-            dispatch(new ConvertImage($name,$model));
+
+            dispatch(new ConvertImage($name,$imageDb));
             $model->image_id = $imageDb->id;
         }
         return $imageDb;

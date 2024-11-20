@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\HelperGeneral;
 use App\Http\Helpers\ImageConverter;
+use App\Image;
 use App\post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,7 +22,7 @@ class ConvertImage implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct( string $image,Model $model)
+    public function __construct( string $image,Image $model)
     {
         Log::info("instanciation convertion");
         $this->image = $image;
@@ -44,6 +45,7 @@ class ConvertImage implements ShouldQueue
                     return ;
                 } else {
                     Log::info("image convert convertion end");
+
 
                     $image = $filename[0] . ".webp";
                     Log::info($image);
