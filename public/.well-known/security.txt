@@ -1,0 +1,5 @@
+Contact: mailto:jdgenest19@gmail.com
+Expires: 2026-01-01T05:00:00.000Z
+Acknowledgments: https://jdgenest.site/contact
+Preferred-Languages: fr
+Canonical: https://jdgenest.site/.well-known/security.txt

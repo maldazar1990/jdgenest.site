@@ -1,0 +1,16 @@
+/*!
+ * DevBlog - Bootstrap 5 Blog Template For Developers
+ * Version: Bootstrap 5 v2.0
+ * Author: Xiaoying Riley
+ * Copyright: 3rd Wave Media Ltd.
+ * Website: http://themes.3rdwavemedia.com/
+ * Twitter: @3rdwave_themes
+*/
+@import "../../../node_modules/bootstrap-5/scss/bootstrap";
+@import "../../../node_modules/bootstrap-5/scss/functions";
+@import "mixins";
+@import "base";
+@import "blog";
+@import "about";
+@import "responsive";
+

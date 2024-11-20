@@ -1,0 +1,84 @@
+*.yaml
+regexes-*.php
+/vendor/
+/node_modules/
+_runtime_components.json
+SCRATCH.md
+COMMIT_MSG.aim.txt
+.phpunit.cache/
+.phpunit.result.cache
+/public/images/
+/public_html/images/
+_ide_helper_models.php
+npm-debug.log.*
+.idea
+phpunit.xml
+/database/homestead.sqlite
+identifier.sqlite
+package-lock.json
+# Files used to upload zips for early access folks
+upload-bin.sh
+main.zip
+.npmignore
+# OS generated files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.phpstorm.meta.php
+resources/sitemap.xml
+_ide_helper.php
+# Obsidian files for documentation editin
+docs/.obsidian/workspace.json
+.env
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+*.avif
+*.webp
+*.webm
+npm-debug.log.*
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+
+# Laravel 5 & Lumen specific with changed public path
+public/storage
+public/hot
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+/.npm
+/ressources/images/
+/storage/
+
+*.save
+*.save.*
+_ide_helper.*
+_ide_helper_models.*
+.phpstorm.meta.*
+.vscode
+identifier.sqlite
+.cache.json
