@@ -81,6 +81,7 @@ class ConvertImage extends Command
                         $imageRecord->save();
                         $extension = ".svg";
                         break;
+
                     default:
                         Log::info("image format not supported");
                         break;

@@ -112,6 +112,7 @@ class  Image {
             File::move(\storage_path("images/"). $name, \public_path("images/").$name);
             $imageDb->hash = md5_file(\public_path("images/").$name);
             $imageDb->save();
+
             dispatch(new ConvertImage($name,$imageDb));
             $model->image_id = $imageDb->id;
         }

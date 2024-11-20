@@ -46,6 +46,7 @@ class ConvertImage implements ShouldQueue
                 } else {
                     Log::info("image convert convertion end");
 
+
                     $image = $filename[0] . ".webp";
                     Log::info($image);
                     $this->model->file = $image;
