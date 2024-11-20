@@ -88,7 +88,7 @@ class ConvertImage extends Command
                 }
 
                 if ($extension)
-                    File::move($imageWithPath, $path . $filename[0] . $extension);
+                    File::move($imageWithPath, $imageWithPath . $extension);
 
             } else {
                 $extension = "." . $filename[1];
