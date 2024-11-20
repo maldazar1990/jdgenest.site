@@ -49,7 +49,6 @@ class ConvertImage implements ShouldQueue
 
                     $image = $filename[0] . ".webp";
                     Log::info($image);
-                    $this->model->file = $image;
                     $this->model->migrated = true;
                     $this->model->save();
                     Log::info("image convert end");
