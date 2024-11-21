@@ -162,7 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -175,7 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         shweshi\OpenGraph\Providers\OpenGraphProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -239,7 +237,6 @@ return [
         'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'FormBuilder' => Collective\Html\FormBuilderFacade::class,
 	'Input' => Illuminate\Support\Facades\Request::class,
 
 

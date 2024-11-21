@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Str;
 
 class PostController extends Controller

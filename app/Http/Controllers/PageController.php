@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Kris\LaravelFormBuilder\FormBuilder;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Mail;
 

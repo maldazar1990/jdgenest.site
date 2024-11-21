@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class TagsController extends Controller
 {
@@ -32,14 +31,11 @@ class TagsController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create_tags(Request $request, FormBuilder $formBuilder) {
-        $form = $formBuilder->create(TagForm::class, [
-            'method' => 'POST',
-            'url' => "/admin/tags/insert",
-        ]);
 
-        return view("admin.edit",[
+        return view("admin.editTag",[
             "title" => "Créer un tag",
-            "form"  => $form,
+            "model"  => null,
+            "route"=>"/admin/tags/insert"
         ]);
     }
 
@@ -111,14 +107,11 @@ class TagsController extends Controller
             return redirect()->route('admin_tags');
         }
 
-        $form = $formBuilder->create(TagForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_tags_update', $id),
-            'model' => $tags,
-        ]);
-        return view("admin.edit",[
+
+        return view("admin.editTag",[
             "title" => "Modifier un tag",
-            "form" => $form,
+            'model' => $tags,
+            "route"=>route('admin_tags_update', $id)
         ]);
 
     }

@@ -201,15 +201,14 @@ $(function () {
     let imageUrl = $("#imageUrl");
     let imageUpload = document.getElementById('imageUpload');
     if (imageUpload) {
+        console.log(imageUpload);
         imageUpload.addEventListener('change', function (e) {
-                let output = document.getElementById('previewImage');
-                output.classList.remove("d-none");
+                let output = $('#previewImage');
+                console.log(output);
+                output.removeClass("d-none");
                 let file = e.target.files[0];
-                output.src = URL.createObjectURL(file);
-                output.onload = function() {
-                    URL.revokeObjectURL(output.src) // free memory
-                }
-            
+                console.log(file);
+                output.attr("src",URL.createObjectURL(file));
         });
     }
 

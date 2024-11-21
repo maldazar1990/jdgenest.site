@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class InfosController extends Controller
 {   

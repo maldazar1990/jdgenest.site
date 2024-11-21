@@ -8,7 +8,6 @@ use Crivion\Options\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class OptionsController extends Controller
 {
@@ -41,14 +40,12 @@ class OptionsController extends Controller
      */
     public function create(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(OptionForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_options_insert'),
-        ]);
 
-        return view('admin.edit', [
+
+        return view('admin.editOption', [
             'title' => 'Ajouter une option',
-            'form' => $form,
+            "route"=>route('admin_options_insert'),
+            "model"  => null,
         ]);
 
     }
@@ -109,14 +106,10 @@ class OptionsController extends Controller
             return redirect()->route('admin_options');
         }
 
-        $form = $formBuilder->create(OptionForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_options_update', $id),
-            'model' => $options,
-        ]);
         return view('admin.edit', [
             'title' => 'Modifier une option',
-            'form' => $form,
+            'model' => $options,
+            'route' => route('admin_options_update', $id),
         ]);
     }
 
@@ -146,25 +139,6 @@ class OptionsController extends Controller
         $options->save();
 
         return redirect()->route('admin_options')->with('message', 'Option modifiée avec succès');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\options_table  $options_table
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
-    {
-        $options = options_table::find($id);
-
-        if (!$options) {
-            return redirect()->route('admin_options');
-        }
-
-        $options->delete();
-        Cache::forget('optionsArray');
-        return redirect()->route('admin_options')->with('message', 'Option supprimée avec succès');
     }
 
 }

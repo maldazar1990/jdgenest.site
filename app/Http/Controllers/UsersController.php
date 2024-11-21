@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Cache as FacadesCache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Kris\LaravelFormBuilder\FormBuilder;
 use Laravel\Fortify\TwoFactorAuthenticationProvider;
 
 class UsersController extends Controller

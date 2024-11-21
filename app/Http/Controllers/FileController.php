@@ -7,7 +7,6 @@ use App\Http\Forms\FileForm;
 use App\Http\Helpers\ImageConverter;
 use App\Image;
 use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
