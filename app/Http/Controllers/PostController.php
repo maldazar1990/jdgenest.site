@@ -33,14 +33,6 @@ class PostController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request, FormBuilder $formBuilder) {
-        $form = $formBuilder->create(PostForm::class, [
-            'method' => 'POST',
-            "model" => null,
-            'url' => route("admin_posts_insert"),
-        ]);
-
-        
-        
 
         $tags = Tags::all();
         $selectedTags = [];
@@ -50,7 +42,8 @@ class PostController extends Controller
 
         return view("admin.editPost",[
             "title" => "Publier un article",
-            "form"  => $form,
+            "model"=> null,
+            "route" => route("admin_posts_insert"),
             "selectedTags" => $selectedTags,
             "tags" => $tags,
         ]);
@@ -141,12 +134,6 @@ class PostController extends Controller
         if ( !$posts )
             return redirect()->route("admin_posts");
 
-        $form = $formBuilder->create(PostForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_posts_update', $id),
-            'model' => $posts,
-        ]);
-
         $typeImage = 2;
         $image = "";
 
@@ -180,10 +167,10 @@ class PostController extends Controller
 
         return view("admin.editPost",[
             "title" => "Modifier une publication",
-            "form" => $form,
             "model" => $posts,
             "selectedTags" => $selectedTags,
             "typeImage" => $typeImage,
+            "route" => route("admin_posts_update", $id),
             "image" => $image,
             "tags" => $tags,
         ]);

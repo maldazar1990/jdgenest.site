@@ -5,7 +5,9 @@
         dd("manque le nom du champ");
     }
 
-
+    if(!isset($haveLabel)) {
+        $haveLabel = true;
+    }
 
 
     if(!isset($inputClass)){
@@ -63,15 +65,23 @@
                 $value = "";
             }
         }
+
+        if ($value == "") {
+            if ( isset($inputDefaultValue) ){
+                $value = $inputDefaultValue;
+            }
+        }
     }
 
 @endphp
 @if( $inputType != "hidden")
 <div class="mb-3">
-    <label for="{{$inputName}}" class="form-label ">{{$inputFieldName}}</label>
+    @if($haveLabel)
+        <label for="{{$inputName}}" class="form-label ">{{$inputFieldName}}</label>
+    @endif
     <input type="{{$inputType}}" {{$inputAttributes}}  class="form-control {{$inputClass}} @error($inputName) is-invalid @enderror" id="{{$id}}" name="{{$inputName}}" value="{{ $value }}">
     @error($inputName)
-    <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
+        <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
     @enderror
 </div>
 @else
@@ -85,4 +95,5 @@
     unset($value);
     unset($inputFieldName);
     unset($inputId);
+    unset($haveLabel);
 @endphp

@@ -1,86 +1,28 @@
 @extends('admin.layouts.app')
-
 @section("content")
-@php
-    if (old("title")){
-        $title = old("title");
-    } else if (isset($model)){
-        $title = $model->title;
-    } else {
-        $title = "";
-    }
-
-    if (old("post")){
-        $post = old("post");
-    } else if (isset($model)){
-        $post = addslashes($model->post);
-    } else {
-        $post = "";
-    }
-
-    if (old("created_at")){
-        $created_at = old("created_at");
-    } else if (isset($model)){
-        $created_at = $model->created_at->format("Y-m-d");
-    } else {
-        $created_at = carbon()->now()->format("Y-m-d");
-    }
-@endphp
-
-
     <div class="col-12">
         <div class="card mb-4">
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{ Session::get('message') }}
-                </div>
-            @endif
-
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include("toolbox.error")
             <div class="card-block">
-
-
                 @if ( isset($model) )
                 <h3 class="card-title"><a href="{{route("post",$model->slug)}}">{{$title}}</a></h3>
                 @endif
-                    {!! form_start($form) !!}
+                <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
-                        
+
                         <div class="col-md-12 col-sm-12 col-lg-9">
-                            @if ( isset($image) )
+                            @if ( isset($model) )
                                 <h5>image actuel</h5><br>
-                                @include("toolbox.image", ['image' => $image,"class" => "img-fluid mb-4","size"=>"medium"])
+                                @include("toolbox.image", ['modelWithImage' => $model,"class" => "img-fluid mb-4","size"=>"medium"])
                             @else
                                 <h5>image actuel</h5><br>
                                 <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                             @endif
-
-                            
-
-                            <div class="form-group">
-                                <label for="title" class="control-label">Titre</label>
-                                <input type="text" class="form-control   " id="title" name="title" value="{{$title}}" required>
-                            </div>
-                            <div class="relative mt-4" wire:ignore>
-                                <script>
-                                    const valpost = `{!! $post !!}`;
-                                    console.log(valpost);
-                                </script>
-                                <label for="default-search" class="control-label">Post</label>
-                                <div id="quill-editor" class="mb-3 @error('post')error   @enderror" style="height: 700px;"></div>
-                                <textarea rows="15" class="mb-3 d-none"  id="quill-editor-area"></textarea>                    
-                            </div>
-                            <input type="hidden" name="post" id="quill-value" value="">
-
+                            @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
+                            @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Description","model"=>$model])
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12">
 
@@ -94,41 +36,43 @@
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
-                                    {!! form_widget($form->image) !!}
+                                    @php
+                                        $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>["accept"=>"image/*"]];
+                                        if( !isset($model) ){
+                                            $inputImageParam["attributes"]["required"] = "required";
+
+                                        } else {
+                                            if(!empty($model->image)){
+                                                $inputImageParam["attributes"]["required"] = "required";
+                                            }
+                                        }
+                                    @endphp
+                                    @include("toolbox.input",$inputImageParam)
                                 </div>
 
                                 <div class="tab-pane fade p-1 " id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">
-                                    {!! form_widget($form->imageUrl) !!}
+                                    @php
+                                        $inputImageParam = [ "haveLabel"=>false,"inputName"=>"imageUrl","inputFieldName"=>"Images","inputType"=>"url","inputClass"=>"","model"=>$model,"attributes"=>[]];
+                                         if( !isset($model) ){
+                                            $inputImageParam["attributes"]["required"] = "required";
+
+                                        } else {
+                                            if(!empty($model->imageUrl)){
+                                                $inputImageParam["attributes"]["required"] = "required";
+                                            }
+                                        }
+                                    @endphp
+                                    @include("toolbox.input",$inputImageParam)
+
                                 </div>
 
                             </div>
-                            <div class="form-group mt-4">
-                                <label for="status" class="control-label">Status</label>
-                                {!!  form_widget($form->status) !!}
-                            </div>
-                            <div class="mb-3">
-                                 @php
-                                    
-                                @endphp
-                                <label for="tags" class="form-label">Tags</label>
-                                <select class="form-select select2" id="tags" name="tags[]" multiple required>
-                                   
-                                    @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" @if(in_array($tag->id,$selectedTags)) selected @endif>{{ $tag->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="category" class="control-label">Date de publication</label>
-                                <input type="date" class="form-control" name="created_at" value="{{ $created_at }}" required>
-                            </div>
-
+                            @include("toolbox.SelectInput",["inputName"=>"status","inputFieldName"=>"Status","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"] ,"inputAllValues"=>config("app.status")])
+                            @include("toolbox.SelectInput",["inputName"=>"tags","inputFieldName"=>"Tags","inputClass"=>"select2","model"=>$model,"attributes"=>["required"=>"required","multiple"=>"multiple"] ,"inputAllValues"=>$tags->pluck("title","id")])
+                            @include("toolbox.input",["inputName"=>"created_at","inputFieldName"=>"Date de publication","inputType"=>"date","inputClass"=>"","inputDefaultValue"=>\Carbon\Carbon::now()->format("Y-m-d"),"model"=>$model,"attributes"=>["required"=>"required"]])
                         </div>
                     </div>
-                @php
-                    echo form_rest($form);
-                    echo form_end($form);
-                @endphp
+                </form>
 
             </div>
         </div>

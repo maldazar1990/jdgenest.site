@@ -146,9 +146,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
 
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', 'UsersController@current')->name('admin_user');
-            Route::get('/index', 'UsersController@index')->name('admin_user_list');
-            Route::get('/create', 'UsersController@create')->name('admin_user_create');
-            Route::post('/store', 'UsersController@store')->name('admin_user_store');
             Route::get('/delete/{id}', 'UsersController@delete')->name('admin_user_delete')->where("id", "[0-9A-Za-z\-]+");
             Route::get('/edit/{id}', 'UsersController@edit')->name('admin_user_edit')->where("id", "[0-9A-Za-z\-]+");
             Route::post('/{id}', 'UsersController@update')->name('admin_user_update')->where("id", "[0-9A-Za-z\-]+");

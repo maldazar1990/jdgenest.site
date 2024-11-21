@@ -31,17 +31,9 @@ class UsersController extends Controller
     {
         $user =  auth()->user();
 
-        $form = $formBuilder->create(($user->roles()->where("name","admin")->count() > 0)?UserForm::class:NewUserForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_user_update', $user->id),
-            'model' => $user,
-        ]);
-
-
-
-        return view( "admin.edit", [
+        return view( "admin.editUser", [
             "title"=>"Gestion du profil",
-            "form" => $form,
+            "model" => $user,
         ] );
     }
 

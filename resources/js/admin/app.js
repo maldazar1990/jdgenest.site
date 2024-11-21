@@ -223,6 +223,11 @@ $(function () {
         });
     }
 
+    $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+        $($(event.target).attr("data-target")).find("input").prop("required",true);
+        $($(event.relatedTarget).attr("data-target")).find("input").prop("required",false);
+    })
+
         
     
    

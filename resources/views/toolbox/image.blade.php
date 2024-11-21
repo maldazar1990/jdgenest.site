@@ -12,8 +12,6 @@
                         $imageConverted = 2;
                     }
 
-                    $path = public_path("images/");
-
                     if ( !str_contains($image,"images/") ) {
                         $imageWithPath = "images/". $image;
                     }
