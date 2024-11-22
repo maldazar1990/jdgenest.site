@@ -2,6 +2,7 @@
     @php
         $imageConverted = 0;
         $imageUrl = null;
+        $image = null;
         if ( isset($modelWithImage) ) {
             if ($modelWithImage instanceof \App\Users or $modelWithImage instanceof \App\post or $modelWithImage instanceof \App\Infos) {
                 $id = $modelWithImage->image_id;
