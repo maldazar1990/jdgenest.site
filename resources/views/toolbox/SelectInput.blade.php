@@ -59,6 +59,7 @@
             }
         }
     }
+
 @endphp
 
 <div class="mb-3">
@@ -68,7 +69,7 @@
             <option value="{{ $key }}"
             <?php
 
-                if (isset($model)) {
+                if ($value) {
                     if ($isMultiple) {
                         if (in_array($key, $value)) {
                             echo "selected";

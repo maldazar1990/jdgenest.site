@@ -1,12 +1,9 @@
 <header class="page-header row justify-center">
     @php
-        if (Auth::user()->image)
-            $image = asset("images/".Auth::user()->image);
-        else
-            $image = asset("images/default.png");
+        $image = auth()->user()->getImages()["avif"]["small"];
     @endphp
     <div class="dropdown user-dropdown col-md-12 col-lg-12 text-right text-md-right"><a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="{{$image}}" alt="profile photo" class="circle float-left profile-photo" width="50" height="auto">
+            <img src="{{asset($image)}}" alt="profile photo" class="circle float-left profile-photo" width="50" height="auto">
             <div class="username mt-1">
                 <h4 class="mb-1">{{Auth::user()->name}}</h4>
 

@@ -224,7 +224,7 @@ $(function () {
 
     let form = $("#editForm");
     if( form.length > 0 ) {
-        form.validate({
+        /*form.validate({
             rules:{
                 title:{
                     required:true,
@@ -244,7 +244,7 @@ $(function () {
                     required:true
                 }
             }
-        });
+        });*/
     }
 
 });

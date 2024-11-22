@@ -37,13 +37,15 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
                                     @php
+                                        $alreadyRequired = false;
                                         $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>["accept"=>"image/*"]];
                                         if( !isset($model) ){
                                             $inputImageParam["attributes"]["required"] = "required";
-
+                                            $alreadyRequired = true;
                                         } else {
                                             if(!empty($model->image)){
                                                 $inputImageParam["attributes"]["required"] = "required";
+                                                $alreadyRequired = true;
                                             }
                                         }
                                     @endphp
@@ -53,12 +55,14 @@
                                 <div class="tab-pane fade p-1 " id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">
                                     @php
                                         $inputImageParam = [ "haveLabel"=>false,"inputName"=>"imageUrl","inputFieldName"=>"Images","inputType"=>"url","inputClass"=>"","model"=>$model,"attributes"=>[]];
-                                         if( !isset($model) ){
+                                        if($alreadyRequired == false) {
+                                            if( !isset($model) ){
                                             $inputImageParam["attributes"]["required"] = "required";
 
-                                        } else {
-                                            if(!empty($model->imageUrl)){
-                                                $inputImageParam["attributes"]["required"] = "required";
+                                            } else {
+                                                if(!empty($model->imageUrl)){
+                                                    $inputImageParam["attributes"]["required"] = "required";
+                                                }
                                             }
                                         }
                                     @endphp

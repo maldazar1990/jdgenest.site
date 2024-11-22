@@ -12,7 +12,6 @@
             @if(isset($array["small"]))
                 <source media="(max-width: 766px)" srcSet="{{asset($array["small"])}}" type="image/{{$ext}}"/>
             @endif
-
             <source srcSet="{{asset($array["large"])}}" type="image/{{$ext}}"/>
         @endif
     @endif
