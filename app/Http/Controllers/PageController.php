@@ -241,9 +241,8 @@ class PageController extends Controller
     public function rules (  ) {
         return [
 
-            'savon' => "required|email:strict,dns|max:255 ",
-            "text"=> "required | min:10",
-            "name" => "required | min:3",
+            'savon' => "required|email:strict,dns|max:255|min:15",
+            "text"=> "required | min:10|max:255",
 
         ];
     }
@@ -255,7 +254,7 @@ class PageController extends Controller
     }
 
     function send(Request $request){
-        if ($request->email) {
+        if ($request->email or $request->name) {
             FireWallRepository::createReport($request->ip(),2,"contact");
             abort(403);
         }
@@ -265,8 +264,6 @@ class PageController extends Controller
             'savon.max' => 'Le champ email doit être inférieur à 255 caractères',
             'text.required' => 'Le champ message est requis',
             'text.min' => 'Le champ message doit être supérieur à 10 caractères',
-            'name.required' => 'Le champ nom est requis',
-            'name.min' => 'Le champ nom doit être supérieur à 3 caractères',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();

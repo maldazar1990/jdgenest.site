@@ -25,7 +25,7 @@
                     @include("toolbox.input",["inputName"=>"email","inputFieldName"=>"Email","inputType"=>"email","leurre"=>true,"model"=>null,"attributes"=>["required"=>"required","maxlength"=>"255","minlength"=>"5","autocomplete"=>"on"]])
 
                     @include("toolbox.input",["inputName"=>"name","inputFieldName"=>"Nom","inputType"=>"text","leurre"=>true,"model"=>null,"attributes"=>["required"=>"required","maxlength"=>"255"]])
-                    @include("toolbox.input",["inputName"=>"savon","inputFieldName"=>"Votre nom","inputType"=>"text","inputClass"=>"","model"=>null,"attributes"=>["required"=>"required","maxlength"=>"255"]])
+                    @include("toolbox.input",["inputName"=>"savon","inputFieldName"=>"Votre Email","inputType"=>"email","inputClass"=>"","model"=>null,"attributes"=>["required"=>"required","maxlength"=>"255","minlength"=>"15","autocomplete"=>"on"]])
                     @include("toolbox.basictextarea",["inputName"=>"text","inputFieldName"=>"Message","model"=>null ,"attributes"=>["required"=>"required","maxlength"=>"1024","rows"=>"5","minlength"=>"10"]])
 
                     <button  type="submit"
