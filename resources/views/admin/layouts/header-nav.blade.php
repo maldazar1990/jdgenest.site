@@ -1,6 +1,6 @@
 <header class="page-header row justify-center">
     @php
-    if(is_array(auth()->user()->getImages())){
+    if(auth()->user()->getImages()){
         $image = auth()->user()->getImages()["avif"]["small"];
     } else {
         $image = "images/default.webp";
