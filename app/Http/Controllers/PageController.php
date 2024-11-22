@@ -170,25 +170,18 @@ class PageController extends Controller
         }
 
         $image = "";
-        if ( $post->image != null ) { 
-            $image = $post->image;
-            if ( !\str_contains($image,'.') ) {
-                
-                $path = \public_path("images/");
-                $files = File::glob($path."*".$image.".*");
-                $ext = File::extension($files[0]);
-                $image = $image.".".$ext;
-                
-            }
-            $image = asset("images/".$image);
-
-            
+        if ($post->image_id != null) {
+            $post->getImages();
+            $images = $post->getImages();
+            $images = end($images);
+            $image = current($images);
+            $image = asset("/".$image);
         } else {
-            if ($post->image_id != null) {
-                $image =  Image::where("id",$post->image_id)->first()->file;
-                asset("/images/".$image);
+            if(Str::isUrl($post->image_url)){
+                $image = $post->image_url;
             }
         }
+
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
@@ -196,7 +189,6 @@ class PageController extends Controller
             'options' => $this->options,
             'userInfo' => $this->userInfo,
             'post' => $post,
-            'image' => $image,
             "comments" => $comments,
             'SEOData' => new SEOData(
                 title: $post->title,

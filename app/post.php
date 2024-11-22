@@ -59,7 +59,7 @@ use Spatie\Feed\FeedItem;
 class post extends Model  implements Feedable
 {
     protected $table = "post";
-
+    use GetImage;
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([

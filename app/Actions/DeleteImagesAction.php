@@ -6,6 +6,7 @@ use App\HelperGeneral;
 use App\Http\Helpers\Image as HelpersImage;
 use App\Image;
 use App\post;
+use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
 
@@ -41,6 +42,8 @@ class DeleteImagesAction extends Action
                 $post = post::where("image_od",$idModel)->first();
                 $img = new HelpersImage($model->file);
                 if (HelpersImage::isImageUsed($model->name) or $post) {
+                    Cache::delete('image_' . $model->id);
+                    Cache::delete('modelImage_' . $model->id);
                     $img->deleteImage();
                     $model->delete();
                 } else {

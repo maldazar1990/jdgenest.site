@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Crypt;
  */
 class Infos extends Model
 {
+    use GetImage;
     protected $fillable = [
         'title', 'description', 'image', 'status', 'user_id',"datestart","dateend"
     ];

@@ -65,6 +65,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  */
 class Users extends Authenticatable
 {
+    use GetImage;
     use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
