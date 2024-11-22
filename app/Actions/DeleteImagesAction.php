@@ -42,7 +42,7 @@ class DeleteImagesAction extends Action
                 $post = post::where("image_od",$idModel)->first();
                 $img = new HelpersImage($model->file);
                 if (HelpersImage::isImageUsed($model->name) or $post) {
-                    Cache::delete('image_' . $model->id);
+                    Cache::delete('images_' . $model->id);
                     Cache::delete('modelImage_' . $model->id);
                     $img->deleteImage();
                     $model->delete();

@@ -11,6 +11,9 @@ trait GetImage
     public function GetImages():array|null
     {
         if( isset($this->image_id) ) {
+            if (Cache::has('images_' . $this->image_id)) {
+                return Cache::get('images_' . $this->image_id);
+            }
             $id = $this->image_id;
             $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
                 return Image::where('id', $id)->first();
@@ -22,18 +25,14 @@ trait GetImage
                     return null;
                 }
 
-                if (Cache::has('image_' . $this->image_id)) {
-                    return Cache::get('image_' . $this->image_id);
-                }
-
                 $images = [];
                 foreach ($files as $file) {
                     $justName = explode('/', $file);
                     $extension = File::extension($file);
                     if ($extension) {
-                        if (Str::contains($justName[1], 'medium')) {
+                        if (Str::contains(end($justName), 'medium')) {
                             $size = "medium";
-                        } else if (Str::contains($justName[1], 'small')) {
+                        } else if (Str::contains(end($justName), 'small')) {
                             $size = "small";
                         } else {
                             $size = "large";
@@ -41,7 +40,7 @@ trait GetImage
                         $images[$extension][$size] = "images/" . end($justName);
                     }
                 }
-                Cache::rememberForever('image_' . $this->image_id, function () use ($images) {
+                Cache::rememberForever('images_' . $this->image_id, function () use ($images) {
                     return $images;
                 });
                 return $images;

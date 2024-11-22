@@ -9,6 +9,7 @@
                 $imageModel = Cache::rememberForever("modelImage_" . $id, function () use ($id) {
                     return \App\Image::where('id', $id)->first();
                 });
+
                 if(isset($imageModel->file)){
                     $image = $imageModel->file;
                     if ( $imageModel->migrated ){
