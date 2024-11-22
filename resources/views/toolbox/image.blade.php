@@ -17,13 +17,11 @@
                     } else {
                         $imageConverted = 2;
                     }
-                } else {
-                    if ( Str::isUrl($modelWithImage->image) ){
-                        $imageUrl = $modelWithImage->image;
-                    } else {
-                        $image = null;
-                    }
                 }
+                if ( Str::isUrl($modelWithImage->image) ){
+                    $imageUrl = $modelWithImage->image;
+                }
+
             }
         }
 

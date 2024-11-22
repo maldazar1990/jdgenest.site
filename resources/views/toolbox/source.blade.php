@@ -1,7 +1,9 @@
 @if($ext and $array)
     @if(isset($array))
         @if($size)
-            <source srcset="{{asset($array[$size])}}" type="image/{{$ext}}">
+            @if(isset($array[$size]))
+                <source srcset="{{asset($array[$size])}}" type="image/{{$ext}}">
+            @endif
         @else
             @if(isset($array["large"]))
                 <source media="(min-width: 1280px)" srcSet="{{asset($array["large"])}}" type="image/{{$ext}}"/>
