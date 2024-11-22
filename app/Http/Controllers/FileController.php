@@ -83,15 +83,17 @@ class FileController extends Controller
 
         $image = $request->file('image');
         $nameWithoutExtension = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-        $existImage = Image::where("file","like","%".$nameWithoutExtension."%")->first(); 
 
-        if ($existImage) {
-            return redirect()->route("admin_files_create")
-                ->with('error','L\'image existe déjà.');
+        $name = $request->name;
+        if ( Image::where("name",$request->name)->exists() ) {
+            $name = Str::slug($request->name."-".time(),"_");
         }
 
         $new_name = str::slug( $nameWithoutExtension, "_").'.'.$image->getClientOriginalExtension();
         $image->move(\storage_path("images/"), $new_name);
+
+
+
         $imageDb = \App\Image::where("hash",md5_file(\storage_path("images/"). $new_name))->first();
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $new_name);
@@ -100,7 +102,7 @@ class FileController extends Controller
         }
         File::move(\storage_path("images/"). $new_name, \public_path("images/").$new_name);
         $modelImage = new Image();
-        $modelImage->name = $request->name;
+        $modelImage->name = $name;
         $modelImage->file = "images/".$new_name;
         $modelImage->hash = md5_file(\public_path("images/").$new_name);
         $modelImage->save();

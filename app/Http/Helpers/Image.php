@@ -100,8 +100,14 @@ class  Image {
         $file = $request->file("image");
         $nameWithoutExtension = Str::slug(explode(".",$file->getClientOriginalName())[0],"_");
         $name = $nameWithoutExtension.".".$file->getClientOriginalExtension();
+
+        if ( \App\Image::where("name",$nameWithoutExtension)->orWhere("file","like","%".$nameWithoutExtension."%")->exists() ) {
+            $nameWithoutExtension = Str::slug($nameWithoutExtension."-".time(),"_");
+        }
+        
         $file->move(\storage_path("images/"), $name);
-        $imageDb = \App\Image::where("name",'like',"%".$nameWithoutExtension)->orWhere("file",'like',"%".$nameWithoutExtension."%")->orWhere("hash",md5_file(\storage_path("images/"). $name))->first();
+
+        $imageDb = \App\Image::where("hash",md5_file(\storage_path("images/"). $name))->first();
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $name);
             $model->image_id = $imageDb->id;

@@ -2,6 +2,7 @@ import Quill from "quill";
 import hljs from "highlight.js";
 import { MentionBlot, Mention } from "quill-mention";
 import QuillResizeImage from "quill-resize-image";
+import "jquery-validation";
 class linkmentionBlot extends MentionBlot {
   static render(data) {
     var element = document.createElement("span");
@@ -159,18 +160,14 @@ $(function() {
   if (document.querySelector("#editor")) ;
   let previewImage = $("#previewImage");
   let imageUrl = $("#imageUrl");
-  let imageUpload = document.getElementById("imageUpload");
-  console.log(imageUpload);
+  let imageUpload = $("#imageUpload");
   if (imageUpload) {
-    console.log(imageUpload);
-    imageUpload.addEventListener("change", function(e) {
-      let output2 = document.getElementById("previewImage");
-      output2.classList.remove("d-none");
+    imageUpload.on("change", function(e) {
+      let output2 = $("#previewImage");
+      output2.removeClass("d-none");
       let file = e.target.files[0];
-      output2.src = URL.createObjectURL(file);
-      output2.onload = function() {
-        URL.revokeObjectURL(output2.src);
-      };
+      output2.attr("src", URL.createObjectURL(file));
+      output2.parent().find("source").remove();
     });
   }
   if (imageUrl.length > 0) {
@@ -179,6 +176,34 @@ $(function() {
         let srcImage = imageUrl.val();
         output.classList.remove("d-none");
         previewImage.attr("src", srcImage);
+        output.parent().find("source").remove();
+      }
+    });
+  }
+  $('button[data-toggle="tab"]').on("shown.bs.tab", function(event) {
+    $($(event.target).attr("data-target")).find("input").prop("required", true);
+    $($(event.relatedTarget).attr("data-target")).find("input").prop("required", false);
+  });
+  let form = $("#editForm");
+  if (form.length > 0) {
+    form.validate({
+      rules: {
+        title: {
+          required: true,
+          minlength: 5,
+          maxLength: 255,
+          remote: window.appurl + "/admin/posts/title/".$("#title").val()
+        },
+        post: {
+          required: true,
+          minlength: 10
+        },
+        image: {
+          required: true
+        },
+        tags: {
+          required: true
+        }
       }
     });
   }

@@ -33,17 +33,19 @@ class ConvertImage extends Command
         foreach(Image::where("migrated",false)->get() as $imageRecord) {
             $image = $imageRecord->file;
             Log::info($image);
-            $filename = explode('.', $image);
 
             $path = public_path("images/");
 
             if ( !str_contains($image,"images/") ) {
                 $imageWithPath = $path. $image;
+                $image = "images/".$image;
             }
 
             else {
                 $imageWithPath = public_path()."/".$image;
             }
+
+            $filename = explode('.', $image);
 
             $extension = "";
             if (!isset($filename[1])) {
