@@ -38,7 +38,7 @@ if (isset($attributes)){
 @endphp
 <div class="relative mb-5">
     <label for="quill-editor" class="control-label @error($inputName) is-invalid @enderror  ">{{$inputFieldName}}</label>
-    <textarea id="{{$inputName}}" class="form-control" {{$inputAttributes}} style="height: 200px;">{{$value}}</textarea>
+    <textarea id="{{$inputName}}" name="{{$inputName}}" class="form-control" {{$inputAttributes}} style="height: 200px;">{{$value}}</textarea>
     @error($inputName)
     <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
     @enderror
