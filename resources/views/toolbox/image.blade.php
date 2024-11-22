@@ -41,7 +41,7 @@
          if (!isset($size))
             $size = '';
     @endphp
-    @if($image)
+    @if($image or $imageUrl)
 
         @if($imageUrl)
             <img decoding="async" loading="lazy" id="previewImage" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
