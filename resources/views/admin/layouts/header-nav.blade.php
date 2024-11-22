@@ -2,7 +2,8 @@
     @php
     $images = auth()->user()->getImages();
     if($images != null){
-        $image = auth()->user()->getImages()["avif"]["small"];
+        $image = end($images);
+        $image = current($image);
     } else {
         $image = "images/default.webp";
 
