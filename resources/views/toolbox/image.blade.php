@@ -51,7 +51,9 @@
                 $files = $modelWithImage->getImages();
 
             @endphp
+            @dump($files);
             @if($imageConverted != 2 and $files )
+
                 @if(isset($files['avif']))
                     @include("toolbox.source", ['array' => $files['avif'], 'ext' => 'avif',"size"=>$size])
                 @endif

@@ -12,7 +12,7 @@ trait GetImage
     {
         if( isset($this->image_id) ) {
             $id = $this->image_id;
-            Cache::rememberForever('images_' . $this->image_id, function () use ($id) {
+            return Cache::rememberForever('images_' . $this->image_id, function () use ($id) {
                 $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
                     return Image::where('id', $id)->first();
                 });
