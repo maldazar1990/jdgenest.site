@@ -30,7 +30,7 @@ class TagsController extends Controller
      * @param FormBuilder $formBuilder
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create_tags(Request $request, FormBuilder $formBuilder) {
+    public function create_tags(Request $request) {
 
         return view("admin.editTag",[
             "title" => "Créer un tag",
@@ -99,7 +99,7 @@ class TagsController extends Controller
      * @param  \App\Groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder, $id)
+    public function edit(Request $request, $id)
     {
         $tags = Tags::where( 'id', $id )->first();
 

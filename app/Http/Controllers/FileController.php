@@ -6,7 +6,9 @@ use App\Http\Helpers\HelperGeneral;
 use App\Http\Forms\FileForm;
 use App\Http\Helpers\ImageConverter;
 use App\Image;
+use App\Jobs\ConvertImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -26,15 +28,13 @@ class FileController extends Controller
      * @param FormBuilder $formBuilder
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(Request $request, FormBuilder $formBuilder) {
-        $form = $formBuilder->create(FileForm::class, [
-            'method' => 'POST',
-            'url' => route('admin_files_store'),
-        ]);
+    public function create(Request $request) {
 
-        return view("admin.edit",[
+
+        return view("admin.editImage",[
             "title" => "Ajouter une image",
-            "form"  => $form,
+            "model"  => null,
+            'route' => route('admin_files_store'),
         ]);
     }
 
@@ -90,14 +90,21 @@ class FileController extends Controller
                 ->with('error','L\'image existe déjà.');
         }
 
-        $new_name = $image->getClientOriginalName();
-        $image->move(public_path('images'), $new_name);
-        $img = new ImageConverter($new_name);
-        $img->convertAll();
+        $new_name = str::slug( $nameWithoutExtension, "_").'.'.$image->getClientOriginalExtension();
+        $image->move(\storage_path("images/"), $new_name);
+        $imageDb = \App\Image::where("hash",md5_file(\storage_path("images/"). $new_name))->first();
+        if ( $imageDb ){
+            File::delete(\storage_path("images/"). $new_name);
+            return redirect()->route("admin_files_create")
+                ->with('error','L\'image existe déjà.');
+        }
+        File::move(\storage_path("images/"). $new_name, \public_path("images/").$new_name);
         $modelImage = new Image();
         $modelImage->name = $request->name;
         $modelImage->file = "images/".$new_name;
+        $modelImage->hash = md5_file(\public_path("images/").$new_name);
         $modelImage->save();
+        dispatch(new ConvertImage($new_name,$imageDb));
         return redirect()->route("admin_files")
             ->with('message','Nouvelle image téléchargée.');
     }

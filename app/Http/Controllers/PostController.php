@@ -31,7 +31,7 @@ class PostController extends Controller
      * @param FormBuilder $formBuilder
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(Request $request, FormBuilder $formBuilder) {
+    public function create(Request $request) {
 
         $tags = Tags::all();
         $selectedTags = [];
@@ -126,7 +126,7 @@ class PostController extends Controller
      * @param  \App\Groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder, $id)
+    public function edit(Request $request, $id)
     {
         $posts = post::where( 'id', $id )->first();
 

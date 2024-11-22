@@ -26,7 +26,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function current( Request $request, FormBuilder $formBuilder )
+    public function current( Request $request )
     {
         $user =  auth()->user();
 

@@ -38,7 +38,7 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, FormBuilder $formBuilder)
+    public function create(Request $request)
     {
 
 
@@ -98,7 +98,7 @@ class OptionsController extends Controller
      * @param  \App\options_table  $options_table
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, FormBuilder $formBuilder, $id)
+    public function edit(Request $request,$formBuilder, $id)
     {
         $options = options_table::find($id);
 
