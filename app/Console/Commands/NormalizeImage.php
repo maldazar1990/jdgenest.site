@@ -189,7 +189,7 @@ class NormalizeImage extends Command
         foreach(Infos::all() as $info) {
             if ( !$info->image_id and $info->image ) {
 
-                if ( Str::isUrl($this->image) ) {
+                if ( Str::isUrl($info->image) ) {
                     Log::info("info ".$info->title." image is url");
                     continue;
                 }
