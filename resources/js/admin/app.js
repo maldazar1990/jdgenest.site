@@ -199,16 +199,15 @@ $(function () {
     let previewImage = $("#previewImage");
 
     let imageUrl = $("#imageUrl");
-    let imageUpload = document.getElementById('imageUpload');
+    let imageUpload = $('#imageUpload');
     if (imageUpload) {
         console.log(imageUpload);
-        imageUpload.addEventListener('change', function (e) {
+        imageUpload.on('change', function (e) {
                 let output = $('#previewImage');
-                console.log(output);
                 output.removeClass("d-none");
                 let file = e.target.files[0];
-                console.log(file);
                 output.attr("src",URL.createObjectURL(file));
+                output.parent().find("source").remove();
         });
     }
 
@@ -218,6 +217,8 @@ $(function () {
                 let srcImage = imageUrl.val();
                 output.classList.remove("d-none");
                 previewImage.attr('src',srcImage);
+                output.parent().find("source").remove();
+
             }
         });
     }
