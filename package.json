@@ -21,6 +21,7 @@
         "bootstrap-5": "npm:bootstrap@^5.3.3",
         "font-awesome": "^4.7.0",
         "highlight.js": "^11.10.0",
+        "jquery-validation": "^1.21.0",
         "mini-css-extract-plugin": "^2.9.1",
         "mix": "^0.0.1",
         "ngx-quill": "^26.0.8",

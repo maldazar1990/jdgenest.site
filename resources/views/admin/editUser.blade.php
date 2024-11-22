@@ -6,13 +6,12 @@
             @include("toolbox.error")
             <div class="card-block">
 
-                <form method="POST" action="{{ route("admin_user_update",$model) }}" enctype="multipart/form-data">
+                <form id="adminForm" method="POST" action="{{ route("admin_user_update",$model) }}" enctype="multipart/form-data">
                     @csrf
                     @if ( isset($model) )
                         <h5>image actuel</h5><br>
                         @include("toolbox.image", ['modelWithImage' => $model,"class" => "img-fluid mb-4","size"=>"medium"])
                     @else
-                        <h5>image actuel</h5><br>
                         <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                     @endif

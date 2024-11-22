@@ -7,7 +7,7 @@
             @include("toolbox.error")
             <div class="card-block">
                 <h3 class="card-title">{{$title}}</h3>
-                <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
+                <form id="adminForm" method="POST" action="{{ $route }}" enctype="multipart/form-data">
                     @csrf
 
 
@@ -15,7 +15,6 @@
                         <h5>image actuel</h5><br>
                         @include("toolbox.image", ['modelWithImage' => $info,"class" => "img-fluid mb-4","size"=>"medium"])
                     @else
-                        <h5>image actuel</h5><br>
                         <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                     @endif

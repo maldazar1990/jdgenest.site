@@ -7,21 +7,21 @@
                 @if ( isset($model) )
                 <h3 class="card-title"><a href="{{route("post",$model->slug)}}">{{$title}}</a></h3>
                 @endif
-                <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
+                <form id="adminForm" method="POST" action="{{ $route }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
 
                         <div class="col-md-12 col-sm-12 col-lg-9">
                             @if ( isset($model) )
-                                <h5>image actuel</h5><br>
+
                                 @include("toolbox.image", ['modelWithImage' => $model,"class" => "img-fluid mb-4","size"=>"medium"])
+
                             @else
-                                <h5>image actuel</h5><br>
                                 <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                             @endif
                             @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
-                            @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Description","model"=>$model])
+                            @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Publication","model"=>$model])
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12">

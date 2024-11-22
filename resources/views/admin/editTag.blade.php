@@ -5,7 +5,7 @@
             @include("toolbox.error")
             <div class="card-block">
 
-                <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
+                <form id="adminForm" method="POST" action="{{ $route }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
 

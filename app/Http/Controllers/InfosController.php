@@ -33,6 +33,27 @@ class InfosController extends Controller
         ]);
     }
 
+    public function isUnique(Request $request,$value) {
+
+        if ($request->ajax()) {
+
+            $model = Tags::distinct()
+                ->select("post.id as id","post.slug","post.title")
+                ->where("title","LIKE","%".HelperGeneral::clean($value)."%")
+                ->offset(0)->limit(1)
+                ->get()->toArray();
+
+            if($model->count() == 0) {
+                return response()->json(["true"]);
+            } else {
+                return response()->json(["false"]);
+            }
+
+        } else {
+            abort(404);
+        }
+    }
+
     public function create(Request $request, FormBuilder $formBuilder)
     {
 

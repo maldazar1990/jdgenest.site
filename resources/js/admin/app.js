@@ -6,6 +6,7 @@ import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
+import jquerValidate from 'jquery-validation';
 
 class linkmentionBlot extends MentionBlot {
     static render(data) {
@@ -20,9 +21,6 @@ class linkmentionBlot extends MentionBlot {
     }
 }
 linkmentionBlot.blotName = "link-mention";
-
-
-
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
 });
@@ -134,8 +132,6 @@ $(function () {
         window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
         window.addEventListener('mention-clicked', (event) => {console.log('hovered: ', event)}, false);
 
-        
-
         if ( quillValue.value != "" ) {
             editor.root.querySelectorAll("blockquote").forEach(function(blockquote) {
                 blockquote.classList.add("blockquote");
@@ -152,10 +148,6 @@ $(function () {
         };
         editor.setHTML(valpost);
     }
-
-
-    
-
 
     let menu = document.getElementById("menu");
     let sidebar = $(".sidebar span.icon");
@@ -201,7 +193,6 @@ $(function () {
     let imageUrl = $("#imageUrl");
     let imageUpload = $('#imageUpload');
     if (imageUpload) {
-        console.log(imageUpload);
         imageUpload.on('change', function (e) {
                 let output = $('#previewImage');
                 output.removeClass("d-none");
@@ -226,9 +217,34 @@ $(function () {
     $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
         $($(event.target).attr("data-target")).find("input").prop("required",true);
         $($(event.relatedTarget).attr("data-target")).find("input").prop("required",false);
-    })
+    });
+    function encodeHTML(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
 
-        
-    
-   
+    let form = $("#editForm");
+    if( form.length > 0 ) {
+        form.validate({
+            rules:{
+                title:{
+                    required:true,
+                    minlength:5,
+                    maxLength:255,
+                    remote:window.appurl + "/admin/posts/title/".$("#title").val()
+                },
+                post:{
+                    required:true,
+                    minlength:10
+                },
+                image:{
+                    required:true,
+
+                },
+                tags:{
+                    required:true
+                }
+            }
+        });
+    }
+
 });

@@ -274,5 +274,26 @@ class PostController extends Controller
             abort(404);
         }
     }
+
+    public function isUnique(Request $request,$value) {
+
+        if ($request->ajax()) {
+
+            $posts = post::distinct()
+                ->select("post.id as id","post.slug","post.title")
+                ->where("title","LIKE","%".HelperGeneral::clean($value)."%")
+                ->offset(0)->limit(1)
+                ->get()->toArray();
+
+            if($posts->count() == 0) {
+                return response()->json(["true"]);
+            } else {
+                return response()->json(["false"]);
+            }
+
+        } else {
+            abort(404);
+        }
+    }
     
 }
