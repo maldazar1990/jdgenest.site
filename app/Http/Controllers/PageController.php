@@ -173,9 +173,13 @@ class PageController extends Controller
         if ($post->image_id != null) {
             $post->getImages();
             $images = $post->getImages();
-            $images = end($images);
-            $image = current($images);
-            $image = asset("/".$image);
+            if($images != null){
+                $images = end($images);
+                $image = current($images);
+                $image = asset("/".$image);
+            } else {
+                $image = asset("images/default.webp");
+            }
         } else {
             if(Str::isUrl($post->image_url)){
                 $image = $post->image_url;
