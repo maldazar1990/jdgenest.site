@@ -1,6 +1,11 @@
 <header class="page-header row justify-center">
     @php
+    if(is_array(auth()->user()->getImages())){
         $image = auth()->user()->getImages()["avif"]["small"];
+    } else {
+        $image = "images/default.webp";
+
+    }
     @endphp
     <div class="dropdown user-dropdown col-md-12 col-lg-12 text-right text-md-right"><a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="{{asset($image)}}" alt="profile photo" class="circle float-left profile-photo" width="50" height="auto">
