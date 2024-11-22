@@ -4,6 +4,9 @@
         dd("manque le nom du champ");
     }
 
+    if(!isset($model)) {
+        $model = null;
+    }
     if (!isset($inputName)){
         dd("manque le nom du champ");
     }

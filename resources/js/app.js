@@ -91,6 +91,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
   
+    let savon = document.querySelector("#savon");
+    if(savon != null) {
+        savon.addEventListener("click",function(e){
+            let falseField = document.querySelectorAll(".fieldFormClass");
+            falseField.forEach(function(e){
+                e.removeAttribute("required");
+            });
+        });
+    }
 
 });
 

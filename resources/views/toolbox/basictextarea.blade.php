@@ -13,7 +13,7 @@ if(old($inputName)){
 } else {
     if ( isset($model)){
         if ( isset($model->{$inputName}) ){
-            $value = addslashes($model->{$inputName});
+            $value = $model->{$inputName};
         } else {
             $value = "";
         }
@@ -28,17 +28,25 @@ if (!isset($inputFieldName)){
     dd("manque le nom du champ");
 }
 
+$inputAttributes = "";
+if (isset($attributes)){
+    foreach( $attributes as $key => $content){
+        $inputAttributes .= $key.'="'.$content.'" ';
+    }
+}
 
 @endphp
 <div class="relative mb-5">
-    <script>
-        const valpost = `{!! $value !!}`;
-    </script>
-
     <label for="quill-editor" class="control-label @error($inputName) is-invalid @enderror  ">{{$inputFieldName}}</label>
-    <div id="quill-editor" class="mb-3 @error($inputName) is-invalid @enderror" style="height: 700px;"></div>
+    <textarea id="{{$inputName}}" class="form-control" {{$inputAttributes}} style="height: 200px;">{{$value}}</textarea>
     @error($inputName)
     <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
     @enderror
 </div>
-@include("toolbox.input",["inputName"=>$inputName,"inputId"=>"quill-value", "inputType"=>"hidden","inputClass"=>"","model"=>$model])
+@php
+    unset($inputAttributes);
+    unset($inputName);
+    unset($inputFieldName);
+    unset($value);
+
+@endphp

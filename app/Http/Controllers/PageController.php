@@ -45,16 +45,12 @@ class PageController extends Controller
         setlocale(LC_TIME,'fr_FR');
     }
 
-    function contact(Request $request,FormBuilder $formBuilder){
-        $form = $formBuilder->create(ContactForm::class, [
-            'method' => 'POST',
-            'url' => route('send'),
+    function contact(Request $request){
 
-        ]);
         return view('theme.blog.contact',[
-            "form" => $form,
             'options' => $this->options,
             'userInfo' => $this->userInfo,
+            "route" => route('send'),
             "title" => "Vous voulez me contacter ?",
             'message'=> "J'aime ma job mais si je peux vous répondre à des questions ou vous aider, je le ferai avec plaisir.",
             'SEOData' => new SEOData(

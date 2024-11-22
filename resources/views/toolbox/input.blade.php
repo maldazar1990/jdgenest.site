@@ -9,6 +9,11 @@
         $haveLabel = true;
     }
 
+    if(!isset($model)) {
+        $model = null;
+    }
+
+
 
     if(!isset($inputClass)){
         $inputClass = "";
@@ -73,13 +78,35 @@
         }
     }
 
+
+    $leurreClass = "";
+    $leurreFieldClass = "";
+    $leurreInputClass = "";
+    if ( isset($leurre)){
+        if ($leurre) {
+            $leurreClass = "fieldForm";
+            $leurreInputClass = "fieldInput";
+            $leurreFieldClass = "fieldFormClass";
+        }
+    }
+
 @endphp
 @if( $inputType != "hidden")
-<div class="mb-3">
+@if($leurreClass)
+<style>
+    .{{$leurreClass}} {
+        position: absolute; top: -9999px; left: -9999px;
+    }
+    .{{$leurreInputClass}} {
+        position: absolute; top: -9999px; left: -9999px;
+    }
+</style>
+@endif
+<div class="mb-3 {{$leurreClass}}">
     @if($haveLabel)
-        <label for="{{$inputName}}" class="form-label ">{{$inputFieldName}}</label>
+        <label for="{{$inputName}}" class="form-label {{$leurreInputClass}}">{{$inputFieldName}}</label>
     @endif
-    <input type="{{$inputType}}" {{$inputAttributes}}  class="form-control {{$inputClass}} @error($inputName) is-invalid @enderror" id="{{$id}}" name="{{$inputName}}" value="{{ $value }}">
+    <input type="{{$inputType}}" {{$inputAttributes}}  class="form-control {{$inputClass}} @error($inputName) is-invalid @enderror {{$leurreFieldClass}} {{$leurreInputClass}}" id="{{$id}}" name="{{$inputName}}" value="{{ $value }}">
     @error($inputName)
         <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
     @enderror
@@ -96,4 +123,8 @@
     unset($inputFieldName);
     unset($inputId);
     unset($haveLabel);
+    unset($leurre);
+    unset($leurreClass);
+    unset($leurreFieldClass);
+    unset($leurreInputClass);
 @endphp
