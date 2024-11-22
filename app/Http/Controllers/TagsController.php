@@ -186,8 +186,8 @@ class TagsController extends Controller
         if ($request->ajax()) {
 
             $model = Tags::distinct()
-                ->select("post.id as id","post.slug","post.title")
-                ->where("title","LIKE","%".HelperGeneral::clean($value)."%")
+                ->select("id")
+                ->where("title","LIKE","%".$request->input("title")."%")
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 

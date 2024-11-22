@@ -275,13 +275,15 @@ class PostController extends Controller
         }
     }
 
-    public function isUnique(Request $request,$value) {
+    public function isUnique(Request $request) {
 
         if ($request->ajax()) {
 
+            $value = $request->input("title");
+
             $posts = post::distinct()
-                ->select("post.id as id","post.slug","post.title")
-                ->where("title","LIKE","%".HelperGeneral::clean($value)."%")
+                ->select("post.id as id")
+                ->where("title","LIKE","%".$value."%")
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 

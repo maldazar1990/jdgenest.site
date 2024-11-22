@@ -6,7 +6,7 @@ import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-import jquerValidate from 'jquery-validation';
+
 
 class linkmentionBlot extends MentionBlot {
     static render(data) {
@@ -20,6 +20,7 @@ class linkmentionBlot extends MentionBlot {
         return element;
     }
 }
+
 linkmentionBlot.blotName = "link-mention";
 $(document).on("click","ul.nav li.parent > a ", function(){
     $(this).find('i').toggleClass("fa-minus");
@@ -222,29 +223,168 @@ $(function () {
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     }
 
-    let form = $("#editForm");
+    $.validator.addMethod( "maxsize", function( value, element, param ) {
+        if ( this.optional( element ) ) {
+            return true;
+        }
+        let size = param*1024;
+        if ( $( element ).attr( "type" ) === "file" ) {
+            if ( element.files && element.files.length ) {
+                for ( var i = 0; i < element.files.length; i++ ) {
+                    if ( element.files[ i ].size > size ) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }, $.validator.format( "File size must not exceed {0} kBytes each." ) );
+
+    $.validator.addMethod( "maxWidth", function( value, element, param ) {
+        if ( this.optional( element ) ) {
+            return true;
+        }
+
+        if ( $( element ).attr( "type" ) === "file" ) {
+            if ( element.files && element.files.length ) {
+                for ( var i = 0; i < element.files.length; i++ ) {
+                    if( element.files[ i ].type.match('image.*') ) {
+                        let img = new Image();
+                        img.src = URL.createObjectURL(element.files[ i ]);
+                        img.onload = function() {
+                            if (img.width > param) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }, $.validator.format( "Le fichier est trop large" ) );
+
+    $.validator.addMethod( "maxHeight", function( value, element, param ) {
+        if ( this.optional( element ) ) {
+            return true;
+        }
+
+        if ( $( element ).attr( "type" ) === "file" ) {
+            if ( element.files && element.files.length ) {
+                for ( var i = 0; i < element.files.length; i++ ) {
+                    if( element.files[ i ].type.match('image.*') ) {
+                        let img = new Image();
+                        img.src = URL.createObjectURL(element.files[ i ]);
+                        img.onload = function() {
+                            if (img.height > param) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }, $.validator.format( "Le fichier est trop large" ) );
+
+    $.validator.addMethod( "dateLessThan", function( value, element, param ) {
+
+
+        if ( this.optional( element ) ) {
+            return true;
+        }
+
+        if ( $( element ).attr( "type" ) === "date" ) {
+            let date = new Date(value);
+            let dateEnd = new Date(param);
+            if ( date < dateEnd ) {
+                return false;
+            }
+        }
+
+        return true;
+    }, $.validator.format( "La date doit être plus petite." ) );
+
+
+
+    $.validator.addMethod( "dateGreaterThan", function( value, element, param ) {
+        if ( this.optional( element ) ) {
+            return true;
+        }
+
+        if ( $( element ).attr( "type" ) === "date" ) {
+            let date = new Date(value);
+            let dateEnd = new Date(param);
+            if ( date > dateEnd ) {
+                return false;
+            }
+        }
+
+        return true;
+    }, $.validator.format( "La date doit être plus petite." ) );
+
+
+
+    let form = $("#adminForm");
     if( form.length > 0 ) {
-        /*form.validate({
+        console.log(form);
+        form.validate({
             rules:{
                 title:{
                     required:true,
                     minlength:5,
-                    maxLength:255,
-                    remote:window.appurl + "/admin/posts/title/".$("#title").val()
+                    maxlength:255,
+                    remote:window.appurl + "/admin/posts/title/"
                 },
-                post:{
-                    required:true,
-                    minlength:10
+                image: {
+                    required: true,
+                    maxlength:255,
+                    maxWidth:1280,
+                    maxHeight:720,
+                    maxsize: 4096,
+                    extension: "jpg|jpeg|png|avif|webp"
                 },
-                image:{
+                imageUrl: {
+                    required: function(){
+                        return $("imageUrl").attr("required");
+                    },
+                    url: true
+                },
+                created_at:{
                     required:true,
+                    date:true,
+                    dateGreaterThan: new Date(),
 
                 },
+                email:{
+                    required:true,
+                    email:true,
+                    minlength:15,
+                    maxlength:255,
+                },
+
+                datestart:{
+                    required:true,
+                    date:true,
+                },
+
+                status:{
+                    required:true,
+                },
+
+                dateend:{
+                    required:true,
+                    date:true,
+                },
+
                 tags:{
                     required:true
+
                 }
-            }
-        });*/
+            },
+        });
     }
 
 });
