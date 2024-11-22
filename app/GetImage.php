@@ -49,6 +49,7 @@ trait GetImage
                 return null;
             }
         }
+        return null;
     }
 
 }
