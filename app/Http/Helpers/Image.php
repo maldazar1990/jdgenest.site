@@ -111,6 +111,8 @@ class  Image {
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $name);
             $model->image_id = $imageDb->id;
+            $model->image = null;
+            $model->save();
         }else {
             $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
@@ -121,6 +123,8 @@ class  Image {
 
             dispatch(new ConvertImage($name,$imageDb));
             $model->image_id = $imageDb->id;
+            $model->image = null;
+            $model->save();
         }
         return $imageDb;
     }
