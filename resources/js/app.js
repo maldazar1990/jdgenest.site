@@ -99,6 +99,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 e.removeAttribute("required");
             });
         });
+
+        savon.addEventListener("focus",function(e){
+            let falseField = document.querySelectorAll(".fieldFormClass");
+            falseField.forEach(function(e){
+                e.removeAttribute("required");
+            });
+        });
     }
 
 });

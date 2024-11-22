@@ -5119,4 +5119,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
       title.style.top = "10px";
     });
   }
+  let savon = document.querySelector("#savon");
+  if (savon != null) {
+    savon.addEventListener("click", function(e) {
+      let falseField = document.querySelectorAll(".fieldFormClass");
+      falseField.forEach(function(e2) {
+        e2.removeAttribute("required");
+      });
+    });
+    savon.addEventListener("focus", function(e) {
+      let falseField = document.querySelectorAll(".fieldFormClass");
+      falseField.forEach(function(e2) {
+        e2.removeAttribute("required");
+      });
+    });
+  }
 });
