@@ -43,7 +43,7 @@
     @if($image or $imageUrl)
 
         @if($imageUrl)
-            <img decoding="async" loading="lazy" id="previewImage" class="{{$class}}" src="{{asset($image)}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
+            <img decoding="async" loading="lazy" id="previewImage" class="{{$class}}" src="{{$imageUrl}}" alt="image" width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
         @else
             @php
 
