@@ -223,7 +223,7 @@ $(function () {
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     }
 
-    $.validator.addMethod( "maxsize", function( value, element, param ) {
+    /*$.validator.addMethod( "maxsize", function( value, element, param ) {
         if ( this.optional( element ) ) {
             return true;
         }
@@ -385,6 +385,6 @@ $(function () {
                 }
             },
         });
-    }
+    }*/
 
 });
