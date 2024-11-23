@@ -2,7 +2,6 @@ import Quill from "quill";
 import hljs from "highlight.js";
 import { MentionBlot, Mention } from "quill-mention";
 import QuillResizeImage from "quill-resize-image";
-import "jquery-validation";
 class linkmentionBlot extends MentionBlot {
   static render(data) {
     var element = document.createElement("span");
@@ -184,27 +183,4 @@ $(function() {
     $($(event.target).attr("data-target")).find("input").prop("required", true);
     $($(event.relatedTarget).attr("data-target")).find("input").prop("required", false);
   });
-  let form = $("#editForm");
-  if (form.length > 0) {
-    form.validate({
-      rules: {
-        title: {
-          required: true,
-          minlength: 5,
-          maxLength: 255,
-          remote: window.appurl + "/admin/posts/title/".$("#title").val()
-        },
-        post: {
-          required: true,
-          minlength: 10
-        },
-        image: {
-          required: true
-        },
-        tags: {
-          required: true
-        }
-      }
-    });
-  }
 });
