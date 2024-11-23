@@ -156,7 +156,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::get('/', 'PostController@index')->name('admin_posts');
             Route::get('/create', 'PostController@create')->name('admin_posts_create');
             Route::get('/ajax/{title}', 'PostController@ajax')->name('admin_posts_ajax')->where("title", "[0-9A-Za-z\-]+");
-            Route::get('/title/{value}', 'PostController@isUnique')->name('admin_posts_unique')->where("value", "[0-9A-Za-z\-]+");
+            Route::get('/title', 'PostController@isUnique')->name('admin_posts_unique');
             Route::post('/insert', 'PostController@store')->name('admin_posts_insert');
             Route::get('/{id}', 'PostController@edit')->name('admin_posts_edit');
             Route::post('/update/{id}', 'PostController@update')->name('admin_posts_update')->where("id", "[0-9A-Za-z\-]+");
@@ -164,7 +164,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
         Route::group(["prefix" => "infos", "middleware" => "role:admin"], function () {
             Route::get('/', 'InfosController@index')->name('admin_infos');
             Route::get('/create', 'InfosController@create')->name('admin_infos_create');
-            Route::get('/title/{value}', 'InfosController@isUnique')->name('admin_info_unique')->where("value", "[0-9A-Za-z\-]+");
+            Route::get('/title', 'InfosController@isUnique')->name('admin_info_unique');
             Route::post('/insert', 'InfosController@store')->name('admin_infos_insert');
             Route::get('/{id}', 'InfosController@edit')->name('admin_infos_edit');
             Route::post('/update/{id}', 'InfosController@update')->name('admin_infos_update')->where("id", "[0-9A-Za-z\-]+");
@@ -180,7 +180,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
         Route::group(["prefix" => "files"], function () {
             Route::get('/', 'FileController@index')->name('admin_files');
             Route::get('/ajax', 'FileController@ajax')->name('admin_files_ajax');
-            Route::get('/title/{value}', 'FileController@isUnique')->name('admin_files_unique')->where("value", "[0-9A-Za-z\-]+");
+            Route::get('/title', 'FileController@isUnique')->name('admin_files_unique');
             Route::get('/create', 'FileController@create')->name('admin_files_create');
             Route::post('/store', 'FileController@store')->name('admin_files_store');
 

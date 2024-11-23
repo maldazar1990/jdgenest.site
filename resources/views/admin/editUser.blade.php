@@ -15,12 +15,38 @@
                         <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                     @endif
-                    @include("toolbox.input",["inputName"=>"name","inputFieldName"=>"Nom","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
-                    @include("toolbox.input",["inputName"=>"email","inputFieldName"=>"Courriel","inputType"=>"email","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
-                    @include("toolbox.input",["inputName"=>"password","inputFieldName"=>"Mot de passe","inputType"=>"password","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
-                    @include("toolbox.input",["inputName"=>"jobTitle","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
+                    @include("toolbox.input",["inputName"=>"name","inputFieldName"=>"Nom","inputType"=>"text","inputClass"=>"","model"=>$model,
+                        "attributes"=>[
+                            "required"=>"required",
+                            "minlength"=>5,
+                            "maxlength"=>config("custom.maxlength"),
+                        ]
+                    ])
+                    @include("toolbox.input",["inputName"=>"email","inputFieldName"=>"Courriel","inputType"=>"email","inputClass"=>"","model"=>$model,
+                        "attributes"=>[
+                            "required"=>"required",
+                            "minlength"=>15,
+                            "maxlength"=>config("custom.maxlength"),
+                        ]
+                    ])
+                    @include("toolbox.input",["inputName"=>"password","inputFieldName"=>"Mot de passe","inputType"=>"password","inputClass"=>"","model"=>$model,
+                        "attributes"=>[
+                            "required"=>"required",
+                            "minlength"=>6,
+                            "maxlength"=>config("custom.maxlength"),
+                        ]
+                    ])
+                    @include("toolbox.input",["inputName"=>"jobTitle","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,
+                        "attributes"=>[
+                            "required"=>"required",
+                            "minlength"=>5,
+                            "maxlength"=>config("custom.maxlength"),
+                        ]
+                    ])
                     @include("toolbox.textarea",["inputName"=>"presentation","inputFieldName"=>"Présentation","model"=>$model])
-                    @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required","accept"=>"image/*"]])
+                    @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,
+                        "attributes"=>config("custom.defaultHtmlFile")
+                    ])
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
             </div>

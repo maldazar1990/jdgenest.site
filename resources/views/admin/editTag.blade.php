@@ -11,7 +11,14 @@
 
                         <div class="col-md-12 col-sm-12 col-lg-9">
 
-                            @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
+                            @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,
+                                "attributes"=>[
+                                    "required"=>"required",
+                                    "minlength"=>5,
+                                    "maxlength"=>config("custom.maxlength"),
+                                    "data-model"=>"tags",
+                                ]
+                            ])
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                     </div>

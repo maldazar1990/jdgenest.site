@@ -46,7 +46,7 @@
             if ($inputType == "file" and $key == "required" and isset($model->{$inputName})){
                 continue;
             } else {
-                $inputAttributes .= $key.'="'.$content.'" ';
+                $inputAttributes .= $key."=".$content." ";
             }
 
 

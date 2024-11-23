@@ -20,7 +20,13 @@
                                 <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                             @endif
-                            @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"]])
+                            @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,
+                                "attributes"=>[
+                                    "minlength"=>5,
+                                    "maxlength"=>config("custom.maxlength"),
+                                    "required"=>"required",
+                                    "data-model"=>"posts",
+                            ]])
                             @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Publication","model"=>$model])
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
@@ -38,7 +44,10 @@
                                 <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
                                     @php
                                         $alreadyRequired = false;
-                                        $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>["accept"=>"image/*"]];
+                                        $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file",
+                                        "inputClass"=>"",
+                                        "model"=>$model,
+                                        "attributes"=>config("custom.defaultHtmlFile")];
                                         if( !isset($model) ){
                                             $inputImageParam["attributes"]["required"] = "required";
                                             $alreadyRequired = true;
@@ -73,7 +82,11 @@
                             </div>
                             @include("toolbox.SelectInput",["inputName"=>"status","inputFieldName"=>"Status","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"] ,"inputAllValues"=>config("app.status")])
                             @include("toolbox.SelectInput",["inputName"=>"tags","inputFieldName"=>"Tags","inputClass"=>"select2","model"=>$model,"attributes"=>["required"=>"required","multiple"=>"multiple"] ,"inputAllValues"=>$tags->pluck("title","id")])
-                            @include("toolbox.input",["inputName"=>"created_at","inputFieldName"=>"Date de publication","inputType"=>"date","inputClass"=>"","inputDefaultValue"=>\Carbon\Carbon::now()->format("Y-m-d"),"model"=>$model,"attributes"=>["required"=>"required"]])
+                            @include("toolbox.input",["inputName"=>"created_at","inputFieldName"=>"Date de publication","inputType"=>"date","inputClass"=>"","inputDefaultValue"=>\Carbon\Carbon::now()->format("Y-m-d"),"model"=>$model,
+                                "attributes"=>[
+                                    "required"=>"required",
+                                    "min"=>\Carbon\Carbon::now()->format("Y-m-d"),
+                            ]])
                         </div>
                     </div>
                 </form>

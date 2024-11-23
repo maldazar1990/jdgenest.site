@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\HelperGeneral;
 use App\Http\Forms\PostForm;
-use App\Http\Helpers\Image as HelpersImage;
+use App\Http\Helpers\HelperGeneral;
 use App\Image;
 use App\Jobs\ConvertImage;
 use App\post;
@@ -63,7 +62,7 @@ class PostController extends Controller
         if ($isUpdate){
             $rules["image"] = config("app.rule_image");
         } else {
-            $rules["image"] = "required|".config("app.rule_image");
+            $rules["image"] = "required|".config("custom.rulesImage");
         }
 
         return $rules;
@@ -287,10 +286,10 @@ class PostController extends Controller
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 
-            if($posts->count() == 0) {
-                return response()->json(["true"]);
+            if(count($posts) == 0) {
+                return response()->json(["response"=>"true"]);
             } else {
-                return response()->json(["false"]);
+                return response()->json(["response"=>"false"]);
             }
 
         } else {

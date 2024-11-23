@@ -181,7 +181,7 @@ class TagsController extends Controller
 
     }
 
-    public function isUnique(Request $request,$value) {
+    public function isUnique(Request $request) {
 
         if ($request->ajax()) {
 
@@ -191,10 +191,10 @@ class TagsController extends Controller
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 
-            if($model->count() == 0) {
-                return response()->json(["true"]);
+            if(count($model) == 0) {
+                return response()->json(["response"=>"true"]);
             } else {
-                return response()->json(["false"]);
+                return response()->json(["response"=>"false"]);
             }
 
         } else {

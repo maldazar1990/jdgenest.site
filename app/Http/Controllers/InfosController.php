@@ -33,7 +33,7 @@ class InfosController extends Controller
         ]);
     }
 
-    public function isUnique(Request $request,$value) {
+    public function isUnique(Request $request) {
 
         if ($request->ajax()) {
 
@@ -43,10 +43,10 @@ class InfosController extends Controller
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 
-            if($model->count() == 0) {
-                return response()->json(["true"]);
+            if(count($model) == 0) {
+                return response()->json(["response"=>"true"]);
             } else {
-                return response()->json(["false"]);
+                return response()->json(["response"=>"false"]);
             }
 
         } else {
@@ -54,7 +54,7 @@ class InfosController extends Controller
         }
     }
 
-    public function create(Request $request, FormBuilder $formBuilder)
+    public function create(Request $request)
     {
 
 
@@ -82,7 +82,7 @@ class InfosController extends Controller
             "datestart" => "date",
             "duree" => "min:0 | max:40",
 
-            "image" => "mimes:jpeg,png,jpg,webp,svg,avif|max:4096",
+            "image" => "required|".config("custom.rulesImage"),
             "type" => "required|in:exp,job,school",
 
         ];

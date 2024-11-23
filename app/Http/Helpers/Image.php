@@ -78,7 +78,7 @@ class  Image {
         return $images;
     }
 
-    public static function saveNewImage(\Illuminate\Http\Request $request,Model $model):\App\Image|null {
+    public static function saveNewImage(\Illuminate\Http\Request $request,Model &$model):\App\Image|null {
 
         if ( !$model instanceof Users and !$model instanceof post and !$model instanceof Infos ){
             throw new \Exception("Model not supported");
@@ -111,8 +111,6 @@ class  Image {
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $name);
             $model->image_id = $imageDb->id;
-            $model->image = null;
-            $model->save();
         }else {
             $imageDb = new \App\Image();
             $imageDb->name = $nameWithoutExtension;
@@ -123,8 +121,6 @@ class  Image {
 
             dispatch(new ConvertImage($name,$imageDb));
             $model->image_id = $imageDb->id;
-            $model->image = null;
-            $model->save();
         }
         return $imageDb;
     }

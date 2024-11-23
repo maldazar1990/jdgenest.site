@@ -54,7 +54,7 @@ class UsersController extends Controller
 
             ],
             'jobTitle' => "max:255",
-            "image" => config("app.rule_image"),
+            "image" => "required|".config("custom.rulesImage"),
 
         ];
     }
