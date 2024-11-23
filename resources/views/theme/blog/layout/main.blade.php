@@ -1,4 +1,4 @@
-<div class="main-wrapper min-vh-100 d-flex flex-column ">
+<div class="main-wrapper min-vh-100 d-flex flex-column dark-theme ">
 
     @if(Route::currentRouteName() != "post")
         <section class="cta-section theme-bg-light py-5">

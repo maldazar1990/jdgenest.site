@@ -221,6 +221,11 @@ a.text-link {
 	.container {
 		max-width: $single-col-max-width;
 	}
+
+	.dark-theme {
+		background: $theme-bg-dark;
+		color: $theme-text-color-light;
+	}
 }
 
 .cta-section {
