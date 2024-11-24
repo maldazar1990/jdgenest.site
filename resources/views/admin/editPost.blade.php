@@ -70,6 +70,7 @@
                                                     $inputImageParam["attributes"]["required"] = "required";
                                                 }
                                             }
+                                        }
 
                                     @endphp
                                     @include("toolbox.input",$inputImageParam)
