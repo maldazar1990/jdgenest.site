@@ -54,8 +54,8 @@ class FileController extends Controller
                 ]);
                 $tags["results"] = Image::distinct()
                     ->select("id as id","file as text", "name")
-                    ->where("title","LIKE","%".HelperGeneral::clean($request->term)."%")
-                    ->orWhere("file","LIKE","%".HelperGeneral::clean($request->term)."%")
+                    ->where("title","LIKE","%".HelperGeneral::sanitize($request->term)."%")
+                    ->orWhere("file","LIKE","%".HelperGeneral::sanitize($request->term)."%")
                     ->get()->toArray();
                 foreach ($tags["results"] as $key => $tag){
                     $imageFile = $tag["text"];
@@ -125,7 +125,7 @@ class FileController extends Controller
 
             $model = Image::distinct()
                 ->select("id")
-                ->where("hash","LIKE","%".HelperGeneral::clean($request->input("hash"))."%")
+                ->where("hash","LIKE","%".HelperGeneral::sanitize($request->input("hash"))."%")
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Helpers\HelperGeneral;
 use App\post;
+use Illuminate\Support\Str;
 use LaravelViews\Facades\Header;
 use LaravelViews\Views\TableView;
 class PostTableView extends TableView
@@ -27,6 +29,7 @@ class PostTableView extends TableView
             Header::title("Titre")->sortBy("title"),
             Header::title("Date de création")->sortBy("created_at"),
             "Article",
+            "Nb de commentaires",
             "Status",
         ];
     }
@@ -52,9 +55,10 @@ class PostTableView extends TableView
     public function row($model): array
     {
         return [
-            "<a href='".route('admin_posts_edit', $model->id)."'>".$model->title."</a>",
+            "<a href='".route('admin_posts_edit', $model->id)."'>".Str::substr($model->title,0,20)."</a>",
             $model->created_at->format("d/m/Y"),
-            "<a href='".route('post', $model->slug)."' target='_blank' rel='noopener noreferrer'>".$model->title."</a>",
+            "<a href='".route('post', $model->slug)."' target='_blank' rel='noopener noreferrer'>".Str::substr($model->title,0,20)."</a>",
+            $model->comments->count(),
             config("app.status")[$model->status],
         ];
     }

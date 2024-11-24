@@ -15,6 +15,13 @@ class HelperGeneral {
         $smartpost =  Str::words($smartpost, $length);
         return $smartpost;
     }
+
+    public static function sanitize(string $string): string{
+        $string = trim(strip_tags($string));
+
+        return $string;
+    }
+
     static function clean($string) {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.

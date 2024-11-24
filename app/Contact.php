@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Helpers\HelperGeneral;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
@@ -35,15 +36,22 @@ class Contact extends Model
 
     public function email ()  {
         return \Attribute::make(
-            get: fn ($value) => Crypt::decryptString($value),
-            set: fn ($value) => Crypt::encryptString($value),
+            get: fn ($value) => Crypt::decryptString(HelperGeneral::sanitize($value)),
+            set: fn ($value) => Crypt::encryptString(HelperGeneral::sanitize($value)),
         );
     }
 
     public function name ()  {
         return \Attribute::make(
-            get: fn ($value) => Crypt::decryptString($value),
-            set: fn ($value) => Crypt::encryptString($value),
+            get: fn ($value) => Crypt::decryptString(HelperGeneral::sanitize($value)),
+            set: fn ($value) => Crypt::encryptString(HelperGeneral::sanitize($value)),
+        );
+    }
+
+    public function text ()  {
+        return \Attribute::make(
+            get: fn ($value) => Crypt::decryptString(HelperGeneral::sanitize($value)),
+            set: fn ($value) => Crypt::encryptString(HelperGeneral::sanitize($value)),
         );
     }
 

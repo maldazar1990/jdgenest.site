@@ -52,7 +52,7 @@ class TagsController extends Controller
             } else {
                 $tags["results"] = DB::table("tags")->distinct()
                     ->select("tags.id as id","tags.title as text")
-                    ->where("title","LIKE","%".\App\Http\Helpers\HelperGeneral::clean($request->term)."%")
+                    ->where("title","LIKE","%".\App\Http\Helpers\HelperGeneral::sanitize($request->term)."%")
                     ->get()->toArray();
                 return response()->json($tags);
             }

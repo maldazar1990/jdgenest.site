@@ -42,7 +42,7 @@ class CommentTableView extends TableView
         $post = post::find($model->post_id);
         return [
             substr($model->post,0,20)."...",
-            $post->title,
+            "<a href='".route("admin_posts_edit",$post)."'>".$post->title."</a>",
             $model->created_at->format("d/m/Y"),
         ];
     }
