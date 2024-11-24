@@ -36,7 +36,10 @@ class InfosController extends Controller
 
     public function isUnique(Request $request) {
 
-        return $this->isUnique($request, Infos::class);
+        if($request->ajax()){
+            return response()->json($this->isTitleUnique($request,new Infos()));
+        }
+        abort(404);
     }
 
     public function create(Request $request)

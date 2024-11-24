@@ -8,25 +8,22 @@ use Illuminate\Http\Request;
 trait TitleIsUnique
 {
 
-    public function isUnique(Request $request,Model $model) {
+    public function isTitleUnique(Request $request,$model):array
+    {
 
-        if ($request->ajax()) {
-            $objs = $model::distinct()
-                ->select("post.id as id")
-                ->where("title","LIKE","%".HelperGeneral::clean($request->get("title"))."%")
-                ->offset(0)->limit(1)
-                ->get()->toArray();
+        $objs = $model::distinct()
+            ->select("post.id as id")
+            ->where("title", "LIKE", "%" . HelperGeneral::clean($request->get("title")) . "%")
+            ->offset(0)->limit(1)
+            ->get()->toArray();
 
-            if(count($objs) == 0) {
-                return response()->json(["response"=>"true"]);
-            } else {
-                return response()->json(["response"=>"false"]);
-            }
-
+        if (count($objs) == 0) {
+            return ["response" => "true"];
         } else {
-            abort(404);
-            return null;
+            return ["response" => "false"];
         }
+
+
     }
 
 }

@@ -276,8 +276,11 @@ class PostController extends Controller
     }
 
     public function isUnique(Request $request) {
-        return $this->isUnique($request,post::class);
 
+        if($request->ajax()){
+            return response()->json($this->isTitleUnique($request,new post()));
+        }
+        abort(404);
     }
     
 }

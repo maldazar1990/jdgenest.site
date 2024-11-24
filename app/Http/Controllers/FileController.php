@@ -113,7 +113,10 @@ class FileController extends Controller
 
     public function isUnique(Request $request) {
 
-        return $this->isUnique($request,Image::class);
+        if($request->ajax()){
+            return response()->json($this->isTitleUnique($request,new Image()));
+        }
+        abort(404);
     }
 
     public function md5Exist(Request $request) {

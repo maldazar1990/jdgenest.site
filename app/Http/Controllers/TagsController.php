@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Forms\TagForm;
-use App\Tags as Tags;
+use App\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -184,7 +184,10 @@ class TagsController extends Controller
 
     public function isUnique(Request $request) {
 
-       return $this->isUniqueModel($request, Tags::class);
+        if($request->ajax()){
+            return response()->json($this->isTitleUnique($request,new Tags()));
+        }
+        abort(404);
     }
 }
 
