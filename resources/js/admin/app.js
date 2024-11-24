@@ -6,8 +6,6 @@ import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-import * as http from "node:http";
-
 
 class linkmentionBlot extends MentionBlot {
     static render(data) {
@@ -426,8 +424,6 @@ $(function () {
                     return false;
                 }
             }
-            console.log(valid);
-
             if(valid===true){
                 form.submit();
             }

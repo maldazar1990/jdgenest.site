@@ -238,14 +238,14 @@ class PageController extends Controller
         return [
 
             'savon' => "required|email:strict,dns|max:255|min:15",
-            "text"=> "required | min:10|max:255",
+            "text"=> "required | min:10|max:1024",
 
         ];
     }
 
     public function commentRules (  ) {
         return [
-            "patate"=> "required | min:10| max:255",
+            "patate"=> "required | min:10| max:1024",
         ];
     }
 
@@ -268,7 +268,7 @@ class PageController extends Controller
         $contact = new Contact();
         $contact->name = Crypt::encryptString($request->name);
         $contact->email = Crypt::encryptString($request->savon);
-        $contact->text = $request->text;
+        $contact->text = strip_tags($request->text);
         $contact->ip = $request->ip();
         $contact->save();
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un message","mail.notif",''));
@@ -287,14 +287,14 @@ class PageController extends Controller
         $validator = Validator::make($request->all(), $this->commentRules(),[
             'patate.required' => 'Le champ est requis',
             'patate.min' => 'Le champ doit être supérieur à 3 caractères',
-            'patate.max' => 'Le champ doit être inférieur à 255 caractères',
+            'patate.max' => 'Le champ doit être inférieur à 1024 caractères',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $comment = new Comment();
-        $comment->post = $request->patate;
+        $comment->post = strip_tags($request->patate);
         $comment->user_id = 1;
         $comment->post_id = $id;
         $comment->ip = $request->ip();

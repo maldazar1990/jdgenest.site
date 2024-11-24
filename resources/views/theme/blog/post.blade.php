@@ -78,7 +78,7 @@
 
 
                         <div class="input-group " style="height:100px">
-                            <textarea class="form-control custom-control h-100" rows="3"  id="patate" name="patate"  style="resize:none" placeholder="Commentaire" minlength="10" maxlength="255" required autocomplete="off"></textarea>     
+                            <textarea class="form-control custom-control h-100" rows="3"  id="patate" name="patate"  style="resize:none" placeholder="Commentaire" minlength="10" maxlength="1024" required autocomplete="off"></textarea>
                             <button  type="submit"
                                 class="input-group-addon btn btn-primary h-100">
                                 Envoyer
