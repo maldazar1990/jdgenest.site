@@ -108,6 +108,9 @@ function validateTitleInput(element) {
       case "tags":
         url = new URL(httpValue + window.appurl + `/admin/tags/title`);
         break;
+      case "files":
+        url = new URL(httpValue + window.appurl + `/admin/files/title`);
+        break;
     }
     if (url != "") {
       let params = { title: element.value };
@@ -131,6 +134,12 @@ function validateTitleInput(element) {
             element.reportValidity();
           }
         });
+      } else {
+        if (element.classList.contains("is-invalid")) {
+          element.classList.remove("is-invalid");
+          element.setCustomValidity("");
+          element.reportValidity();
+        }
       }
       return valid;
     }
@@ -309,6 +318,13 @@ $(function() {
           });
         }
       }
+      if (input.id === "name") {
+        if (input.hasAttribute("data-model")) {
+          input.addEventListener("input", function(e) {
+            validateTitleInput(input);
+          });
+        }
+      }
       if (input.id === "datestart") {
         if (input.hasAttribute("data-dateend")) {
           input.addEventListener("input", function(e) {
@@ -352,17 +368,14 @@ $(function() {
     });
     form.addEventListener("submit", function(e) {
       e.preventDefault();
-      let valid = true;
       if (editor) {
         if (isDeltaEmptyOrWhitespace(editor.getContents())) {
-          editor.focus;
+          editor.focus();
           editor.insertText(0, "MANQUE UN TEXTE!!!!!!!!", "bold", true);
-          valid = false;
           return false;
         }
       }
-      console.log(valid);
-      if (valid === true) {
+      {
         form.submit();
       }
     });

@@ -9,7 +9,8 @@ return [
     "maxlength" => 255,
     "rulesImage" =>"mimes:jpeg,png,jpg,webp,avif|max:4096|dimensions:min_width=480,max_width=1280,min_height=320,max_height=720",
     "defaultHtmlFile" => [
-        "required"=>"required","accept"=>"image/*",
+        "required"=>"required"
+        ,"accept"=>"image/*",
         "data-extension"=>"jpg,jpeg,png,avif,webp",
         "size"=>4094*1024,
         "data-minwidth"=>480,

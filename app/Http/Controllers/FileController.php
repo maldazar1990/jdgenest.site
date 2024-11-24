@@ -111,20 +111,20 @@ class FileController extends Controller
             ->with('message','Nouvelle image téléchargée.');
     }
 
-    public function isUnique(Request $request,$value) {
+    public function isUnique(Request $request) {
 
         if ($request->ajax()) {
 
-            $model = Tags::distinct()
-                ->select("post.id as id","post.slug","post.title")
-                ->where("title","LIKE","%".HelperGeneral::clean($value)."%")
+            $model = Image::distinct()
+                ->select("id")
+                ->where("title","LIKE","%".HelperGeneral::clean($request->input("title"))."%")
                 ->offset(0)->limit(1)
                 ->get()->toArray();
 
-            if($model->count() == 0) {
-                return response()->json(["true"]);
+            if(count($model) == 0) {
+                return response()->json(["response"=>"true"]);
             } else {
-                return response()->json(["false"]);
+                return response()->json(["response"=>"false"]);
             }
 
         } else {

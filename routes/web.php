@@ -136,7 +136,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
         Route::group(['prefix' => 'tags'], function () {
             Route::get('/', 'TagsController@index')->name('admin_tags');
             Route::get('/ajax', 'TagsController@ajax')->name('admin_tags_ajax');
-            Route::get('/title/{value}', 'TagsController@isUnique')->name('admin_tags_isUnique')->where("value", "[0-9A-Za-z\-]+");
+            Route::get('/title', 'TagsController@isUnique')->name('admin_tags_isUnique');
             Route::post('/insert', 'TagsController@store')->name('admin_tags_insert');
             Route::post('/update/{id}', 'TagsController@update')->name('admin_tags_update')->where("id", "[0-9A-Za-z\-]+");
             Route::get('/delete/{id}', 'TagsController@destroy')->name('admin_tags_delete')->where("id", "[0-9A-Za-z\-]+");

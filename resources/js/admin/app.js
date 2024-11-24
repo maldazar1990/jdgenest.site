@@ -124,6 +124,9 @@ function validateTitleInput(element) {
             case "tags":
                 url = new URL(httpValue+window.appurl+`/admin/tags/title`);
                 break;
+            case "files":
+                url = new URL(httpValue+window.appurl+`/admin/files/title`);
+                break;
             default:
                 break;
         }
@@ -153,6 +156,12 @@ function validateTitleInput(element) {
                         }
 
                     });
+            } else {
+                if (element.classList.contains("is-invalid")) {
+                    element.classList.remove("is-invalid");
+                    element.setCustomValidity("");
+                    element.reportValidity();
+                }
             }
             return valid;
         }
@@ -304,15 +313,15 @@ $(function () {
     let imageUpload = $('#imageUpload');
     if (imageUpload) {
         imageUpload.on('change', function (e) {
-                let output = $('#previewImage');
-                output.removeClass("d-none");
-                if(e.target.files.length > 0) {
-                    let file = e.target.files[0];
-                    output.attr("src", URL.createObjectURL(file));
-                    output.parent().find("source").remove();
-                } else {
-                    previewImage.attr('src',window.appurl+'/images/default.webp');
-                }
+            let output = $('#previewImage');
+            output.removeClass("d-none");
+            if(e.target.files.length > 0) {
+                let file = e.target.files[0];
+                output.attr("src", URL.createObjectURL(file));
+                output.parent().find("source").remove();
+            } else {
+                previewImage.attr('src',window.appurl+'/images/default.webp');
+            }
         });
     }
 
@@ -359,7 +368,16 @@ $(function () {
                     }
                 });
             }
+
             if(input.id === "title") {
+                if(input.hasAttribute("data-model")) {
+                    input.addEventListener("input",function(e) {
+                        validateTitleInput(input);
+                    });
+                }
+            }
+
+            if (input.id === "name") {
                 if(input.hasAttribute("data-model")) {
                     input.addEventListener("input",function(e) {
                         validateTitleInput(input);
@@ -412,15 +430,13 @@ $(function () {
         });
 
         form.addEventListener("submit",function(e){
-
             e.preventDefault();
             let valid = true;
             if (editor) {
 
                 if(isDeltaEmptyOrWhitespace(editor.getContents())) {
-                    editor.focus
+                    editor.focus();
                     editor.insertText(0, 'MANQUE UN TEXTE!!!!!!!!', 'bold', true);
-                    valid = false;
                     return false;
                 }
             }
