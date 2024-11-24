@@ -31,10 +31,9 @@ if (!isset($inputFieldName)){
 $inputAttributes = "";
 if (isset($attributes)){
     foreach( $attributes as $key => $content){
-        $inputAttributes .= $key.'="'.$content.'" ';
+        $inputAttributes .= $key."=".$content." ";
     }
 }
-
 @endphp
 <div class="relative mb-3">
     <label for="quill-editor" class="control-label @error($inputName) is-invalid @enderror  ">{{$inputFieldName}}</label>

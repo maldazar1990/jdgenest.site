@@ -181,9 +181,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user","searchbot
             Route::get('/', 'FileController@index')->name('admin_files');
             Route::get('/ajax', 'FileController@ajax')->name('admin_files_ajax');
             Route::get('/title', 'FileController@isUnique')->name('admin_files_unique');
+            Route::get('/hash', 'FileController@md5Exist')->name('admin_files_unique');
             Route::get('/create', 'FileController@create')->name('admin_files_create');
             Route::post('/store', 'FileController@store')->name('admin_files_store');
-
         });
 
         Route::group(["prefix" => "message", "middleware" => "role:admin"], function () {

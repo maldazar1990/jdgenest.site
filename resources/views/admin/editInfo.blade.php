@@ -58,8 +58,15 @@
                             </div>
                         </div>
                     </fieldset>
+                    @php
+                        $attributes = config("custom.defaultHtmlFile");
+
+                        if( isset($model) ){
+                            unset($attributes["required"]);
+                        }
+                    @endphp
                     @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$info,
-                        "attributes"=>config("custom.defaultHtmlFile")
+                        "attributes"=>$attributes
                     ])
                     @include("toolbox.SelectInput",["inputName"=>"tags","inputFieldName"=>"Tags","inputClass"=>"select2","model"=>$info,"attributes"=>["required"=>"required","multiple"=>"multiple"] ,"inputAllValues"=>$tags->pluck("title","id")])
                     <button type="submit" class="btn btn-primary">Enregistrer</button>

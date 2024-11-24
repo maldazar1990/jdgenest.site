@@ -44,8 +44,15 @@
                         ]
                     ])
                     @include("toolbox.textarea",["inputName"=>"presentation","inputFieldName"=>"Présentation","model"=>$model])
+                    @php
+                        $attributes = config("custom.defaultHtmlFile");
+
+                        if( isset($model) ){
+                            unset($attributes["required"]);
+                        }
+                    @endphp
                     @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,
-                        "attributes"=>config("custom.defaultHtmlFile")
+                        "attributes"=>$attributes
                     ])
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>

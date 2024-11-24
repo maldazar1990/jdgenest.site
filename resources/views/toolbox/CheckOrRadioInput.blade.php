@@ -47,10 +47,9 @@
     }
 
     $inputAttributes = "";
-
     if (isset($attributes)){
         foreach( $attributes as $key => $content){
-            $inputAttributes .= $key.'="'.$content.'" ';
+            $inputAttributes .= $key."=".$content." ";
         }
     }
 @endphp

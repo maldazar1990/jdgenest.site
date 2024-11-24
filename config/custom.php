@@ -1,21 +1,34 @@
 <?php
+$sizeinKo = 4094;
+$maxsize = $sizeinKo*1024;
+$maxwidth = 1280;
+$maxheight = 720;
+$minwidth = 480;
+$minheight = 320;
+$extensions = "jpg,jpeg,png,avif,webp";
+
+$extensionsArray = explode(",",$extensions);
+foreach($extensionsArray as $key => $extension){
+    $extensionsArray[$key] = ".".$extension;
+}
+$extensionInputValidation = implode(",",$extensionsArray);
+
 return [
-    "maxsize" => 4094*1024,
-    "maxwidth" => 1280,
-    "maxheight" => 720,
-    "minwidth" => 480,
-    "minheight" => 320,
-    "extensions" => "jpg,jpeg,png,avif,webp",
+    "maxsize" => $maxsize,
+    "maxwidth" => $maxwidth,
+    "maxheight" => $maxheight,
+    "minwidth" => $minwidth,
+    "minheight" => $minheight,
+    "extensions" => $extensions,
     "maxlength" => 255,
-    "rulesImage" =>"mimes:jpeg,png,jpg,webp,avif|max:4096|dimensions:min_width=480,max_width=1280,min_height=320,max_height=720",
+    "rulesImage" =>"mimes:".$extensions."|max:".$sizeinKo."|dimensions:min_width=".$minwidth.",max_width=".$maxwidth.",min_height=".$minheight.",max_height=".$maxheight,
     "defaultHtmlFile" => [
-        "required"=>"required"
-        ,"accept"=>"image/*",
-        "data-extension"=>"jpg,jpeg,png,avif,webp",
-        "size"=>4094*1024,
-        "data-minwidth"=>480,
-        "data-minheight"=>320,
-        "data-maxwidth"=>1280,
-        "data-maxheight"=>720,
+        "required"=>"required",
+        "accept"=>$extensionInputValidation,
+        "size"=>$maxsize,
+        "data-minwidth"=>$minwidth,
+        "data-minheight"=>$minheight,
+        "data-maxwidth"=>$maxwidth,
+        "data-maxheight"=>$maxheight,
     ]
 ];

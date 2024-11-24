@@ -132,4 +132,25 @@ class FileController extends Controller
         }
     }
 
+    public function md5Exist(Request $request) {
+
+        if ($request->ajax()) {
+
+            $model = Image::distinct()
+                ->select("id")
+                ->where("hash","LIKE","%".HelperGeneral::clean($request->input("hash"))."%")
+                ->offset(0)->limit(1)
+                ->get()->toArray();
+
+            if(count($model) == 0) {
+                return response()->json(["response"=>"true"]);
+            } else {
+                return response()->json(["response"=>"false"]);
+            }
+
+        } else {
+            abort(404);
+        }
+    }
+
 }

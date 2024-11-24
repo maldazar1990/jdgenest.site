@@ -61,7 +61,7 @@ function isDeltaEmptyOrWhitespace(delta) {
     return true;
 }
 
-function validateInputFile(element,minWidth=0,minHeight=0,maxwidth=0,maxheight=0,extension="") {
+function validateInputFile(element,minWidth=0,minHeight=0,maxwidth=0,maxheight=0,extension="",hash="") {
 
     if(element.files.length > 0) {
         let file = element.files[0];
@@ -105,6 +105,7 @@ function validateInputFile(element,minWidth=0,minHeight=0,maxwidth=0,maxheight=0
             }
 
         }
+
     }
 }
 
@@ -359,11 +360,12 @@ $(function () {
                         let maxwidth = decodeURI(input.dataset.maxwidth);
                         let maxheight = decodeURI(input.dataset.maxheight);
                         let extension = ""
+                        let hash = input.dataset.havehash;
+
                         if (input.hasAttribute("data-extension")) {
                             extension = input.dataset.extension;
                         }
-                        console.log(extension);
-                        validateInputFile(input, minwidth, minheight, maxwidth, maxheight, extension);
+                        validateInputFile(input, minwidth, minheight, maxwidth, maxheight, extension,hash);
 
                     }
                 });
@@ -433,12 +435,20 @@ $(function () {
             e.preventDefault();
             let valid = true;
             if (editor) {
-
-                if(isDeltaEmptyOrWhitespace(editor.getContents())) {
+                let content = isDeltaEmptyOrWhitespace(editor.getContents());
+                if(content) {
                     editor.focus();
                     editor.insertText(0, 'MANQUE UN TEXTE!!!!!!!!', 'bold', true);
                     return false;
                 }
+
+                if(editor.getLength() < 100) {
+                    editor.focus();
+                    editor.insertText(0, 'MANQUE UN TEXTE!!!!!!!!', 'bold', true);
+                    return false;
+                }
+
+
             }
             if(valid===true){
                 form.submit();

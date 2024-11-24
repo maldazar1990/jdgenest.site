@@ -41,7 +41,7 @@ class TagTableView extends TableView
     public function row($model): array
     {
         return [
-            UI::editable($model, "title"),
+            $model->title,
             $model->created_at->format("d/m/Y"),
         ];
     }
@@ -53,18 +53,4 @@ class TagTableView extends TableView
         ];
     }
 
-    public function update(Tags $model, $data){
-
-        $validator = Validator::make($data, [
-            'term' => 'required|max:10',
-        ]);
-
-        if ($validator->fails()) {
-            $this->error("Erreur de validation");
-        } else {
-
-            $model->update($data);
-            $this->success("Mise à jour avec succès");
-        }
-    }
 }

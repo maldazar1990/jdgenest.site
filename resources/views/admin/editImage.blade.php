@@ -15,14 +15,16 @@
                             @else
                                 <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
                             @endif
-                            @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>config("custom.defaultHtmlFile")])
+                            @php
+                                $attributes = config("custom.defaultHtmlFile");
+                            @endphp
+                            @include("toolbox.input",["inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file","inputClass"=>"","model"=>$model,"attributes"=>$attributes])
                             @include("toolbox.input",["inputName"=>"name","inputFieldName"=>"nom","inputType"=>"text","inputClass"=>"","model"=>$model,
                                 "attributes"=>[
                                     "required"=>"required",
                                     "minlength"=>5,
                                     "maxlength"=>config("custom.maxlength"),
                                     "data-model"=>"files",
-
                                 ]
                             ])
                             <button type="submit" class="btn btn-primary">Enregistrer</button>

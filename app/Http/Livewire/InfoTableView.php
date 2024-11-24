@@ -38,23 +38,12 @@ class InfoTableView extends TableView
     public function row($model): array
     {
         return [
-            UI::editable($model, "title"),
+            $model->title,
             $model->created_at->format("d/m/Y"),
 
         ];
     }
 
-    public function update(Infos $model, $data){
-
-        if (empty($data['title'])) {
-            $this->error("Le titre ne peut pas être vide");
-        } else {
-            $model->update($data);
-            $this->success("Mise à jour avec succès");
-        }
-
-
-    }
 
     public function actionsByRow(){
         return [

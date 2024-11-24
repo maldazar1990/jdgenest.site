@@ -18,17 +18,16 @@
         $inputClass = "";
     }
 
-
-    $inputAttributes = "";
-
-
-    $id = $inputName;
-    if ( isset($inputId) )
+    if(isset($inputId)){
         $id = $inputId;
+    } else {
+        $id = $inputName;
+    }
 
+   $inputAttributes = "";
     if (isset($attributes)){
         foreach( $attributes as $key => $content){
-            $inputAttributes .= $key.'="'.$content.'" ';
+            $inputAttributes .= $key."=".$content." ";
         }
     }
 
@@ -100,5 +99,6 @@
     unset($inputId);
     unset($isMultiple);
     unset($addName);
+    unset($id);
 @endphp
 

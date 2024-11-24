@@ -36,8 +36,8 @@ class ConfigView extends TableView
         public function row($model): array
         {
             return [
-                UI::editable($model,"option_name"),
-                UI::editable($model,"option_value"),
+                $model->option_name,
+                $model->option_value,
                 $model->created_at->format("d/m/Y"),
             ];
         }
@@ -47,20 +47,5 @@ class ConfigView extends TableView
                 new \App\Actions\UpdateConfigAction,
                 new \App\Actions\DeleteConfigAction,
             ];
-        }
-        public function update(options_table $model, $data){
-
-            $validator = Validator::make($data, [
-                'option_name' => "required|max:255 ",
-                'option_value' => "required|max:255",
-            ]);
-
-            if ($validator->fails()) {
-                $this->error("Erreur de validation");
-            } else {
-
-                $model->update($data);
-                $this->success("Mise à jour avec succès");
-            }
         }
 }

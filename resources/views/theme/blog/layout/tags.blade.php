@@ -18,7 +18,7 @@
     @endphp
     @foreach($tags as $tag)
         @if( $tag->id == $tagId)
-            <span data-class="{{\Illuminate\Support\Str::slug($tag->title)}}" data-listclass="{{\Illuminate\Support\Str::slug($tag->title)}}" class="badge bg-secondary me-1 order  pointer-event">{{$tag->title}}</span>
+            <span data-class="{{\Illuminate\Support\Str::slug($tag->title)}}" data-listclass="{{\Illuminate\Support\Str::slug($tag->title)}}" class="badge bg-secondary me-1 order"  style="cursor: pointer;">{{$tag->title}}</span>
         @else
             @php
                 $href = 'href='.route("archiveByTag",$tag);
@@ -26,10 +26,10 @@
                     $href = '';
                 }
             @endphp
-            <a data-class="{{\Illuminate\Support\Str::slug($tag->title)}}" data-listclass="{{\Illuminate\Support\Str::slug($tag->title)}}" class="badge badge-pill bg-primary disable-link  me-1 order  pointer-event" {{$href}}>{{$tag->title}}</a>
+            <a data-class="{{\Illuminate\Support\Str::slug($tag->title)}}" data-listclass="{{\Illuminate\Support\Str::slug($tag->title)}}" class="badge badge-pill bg-primary disable-link  me-1 order"  style="cursor: pointer;" {{$href}}>{{$tag->title}}</a>
         @endif
     @endforeach
     @if(Request::is('about'))
-        <span class="clean-tag badge badge-pill bg-danger disable-link  me-1 d-none pointer-event">Nettoyer</span>
+        <span class="clean-tag badge badge-pill bg-danger disable-link  me-1 d-none" style="cursor: pointer;">Nettoyer</span>
     @endif
 </div>

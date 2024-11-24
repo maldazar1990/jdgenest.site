@@ -43,20 +43,19 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade active show p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
                                     @php
-                                        $alreadyRequired = false;
+                                        $attributes = config("custom.defaultHtmlFile");
+
+                                        $alreadyRequired = true;
+
+                                        if( isset($model) ){
+                                            unset($attributes["required"]);
+                                            $alreadyRequired = false;
+                                        }
+
                                         $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file",
                                         "inputClass"=>"",
                                         "model"=>$model,
-                                        "attributes"=>config("custom.defaultHtmlFile")];
-                                        if( !isset($model) ){
-                                            $inputImageParam["attributes"]["required"] = "required";
-                                            $alreadyRequired = true;
-                                        } else {
-                                            if(!empty($model->image)){
-                                                $inputImageParam["attributes"]["required"] = "required";
-                                                $alreadyRequired = true;
-                                            }
-                                        }
+                                        "attributes"=>$attributes];
                                     @endphp
                                     @include("toolbox.input",$inputImageParam)
                                 </div>
@@ -65,15 +64,13 @@
                                     @php
                                         $inputImageParam = [ "haveLabel"=>false,"inputName"=>"imageUrl","inputFieldName"=>"Images","inputType"=>"url","inputClass"=>"","model"=>$model,"attributes"=>[]];
                                         if($alreadyRequired == false) {
-                                            if( !isset($model) ){
-                                            $inputImageParam["attributes"]["required"] = "required";
-
-                                            } else {
+                                            if( !isset($model) ) {
                                                 if(!empty($model->imageUrl)){
+
                                                     $inputImageParam["attributes"]["required"] = "required";
                                                 }
                                             }
-                                        }
+
                                     @endphp
                                     @include("toolbox.input",$inputImageParam)
 
