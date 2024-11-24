@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    use TitleIsUnique;
     public function index()
     {
         return view('admin.index', [
@@ -275,26 +276,8 @@ class PostController extends Controller
     }
 
     public function isUnique(Request $request) {
+        return $this->isUnique($request,post::class);
 
-        if ($request->ajax()) {
-
-            $value = $request->input("title");
-
-            $posts = post::distinct()
-                ->select("post.id as id")
-                ->where("title","LIKE","%".$value."%")
-                ->offset(0)->limit(1)
-                ->get()->toArray();
-
-            if(count($posts) == 0) {
-                return response()->json(["response"=>"true"]);
-            } else {
-                return response()->json(["response"=>"false"]);
-            }
-
-        } else {
-            abort(404);
-        }
     }
     
 }

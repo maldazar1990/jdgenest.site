@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 class InfosController extends Controller
 {   
     private $tags;
+    use TitleIsUnique;
 
     public function __construct()
     {
@@ -35,23 +36,7 @@ class InfosController extends Controller
 
     public function isUnique(Request $request) {
 
-        if ($request->ajax()) {
-
-            $model = Tags::distinct()
-                ->select("id")
-                ->where("title","LIKE","%".$request->input("title")."%")
-                ->offset(0)->limit(1)
-                ->get()->toArray();
-
-            if(count($model) == 0) {
-                return response()->json(["response"=>"true"]);
-            } else {
-                return response()->json(["response"=>"false"]);
-            }
-
-        } else {
-            abort(404);
-        }
+        return $this->isUnique($request, Infos::class);
     }
 
     public function create(Request $request)

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class TagsController extends Controller
 {
+    use TitleIsUnique;
     /**
      * Display a listing of the resource.
      *
@@ -183,23 +184,7 @@ class TagsController extends Controller
 
     public function isUnique(Request $request) {
 
-        if ($request->ajax()) {
-
-            $model = Tags::distinct()
-                ->select("id")
-                ->where("title","LIKE","%".$request->input("title")."%")
-                ->offset(0)->limit(1)
-                ->get()->toArray();
-
-            if(count($model) == 0) {
-                return response()->json(["response"=>"true"]);
-            } else {
-                return response()->json(["response"=>"false"]);
-            }
-
-        } else {
-            abort(404);
-        }
+       return $this->isUniqueModel($request, Tags::class);
     }
 }
 

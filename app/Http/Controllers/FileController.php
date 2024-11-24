@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\HelperGeneral;
-use App\Http\Forms\FileForm;
 use App\Http\Helpers\ImageConverter;
 use App\Image;
 use App\Jobs\ConvertImage;
@@ -14,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 class FileController extends Controller
 {
+    use TitleIsUnique;
     public function index()
     {
         return view('admin.index', [
@@ -113,23 +113,7 @@ class FileController extends Controller
 
     public function isUnique(Request $request) {
 
-        if ($request->ajax()) {
-
-            $model = Image::distinct()
-                ->select("id")
-                ->where("title","LIKE","%".HelperGeneral::clean($request->input("title"))."%")
-                ->offset(0)->limit(1)
-                ->get()->toArray();
-
-            if(count($model) == 0) {
-                return response()->json(["response"=>"true"]);
-            } else {
-                return response()->json(["response"=>"false"]);
-            }
-
-        } else {
-            abort(404);
-        }
+        return $this->isUnique($request,Image::class);
     }
 
     public function md5Exist(Request $request) {
