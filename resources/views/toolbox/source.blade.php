@@ -14,7 +14,15 @@
             @if(isset($array["small"]))
                 <source media="(max-width: 576px)" srcSet="{{asset($array["small"])}}" type="image/{{$ext}}"/>
             @endif
-            <source srcSet="{{asset($array["large"])}}" type="image/{{$ext}}"/>
+            @if(isset($array["large"]))
+                <source srcSet="{{asset($array["large"])}}" type="image/{{$ext}}"/>
+            @elseif(isset($array["medium"]))
+                <source srcSet="{{asset($array["medium"])}}" type="image/{{$ext}}"/>
+            @elseif(isset($array["small"]))
+                <source srcSet="{{asset($array["small"])}}" type="image/{{$ext}}"/>
+            @else
+                <source srcSet="{{asset(config("custom.default"))}}" type="image/webp"/>
+            @endif
         @endif
     @endif
 @endif
