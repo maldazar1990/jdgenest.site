@@ -23,7 +23,7 @@
                             <div class="mb-3">
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <button class="nav-link active" id="nav-image-picker" data-toggle="tab" data-target="#nav-picker" type="button" role="tab" aria-controls="nav-picker" aria-selected="false">Image en ligne</button>
+                                        <button class="nav-link active" id="nav-image-picker" data-toggle="tab" data-target="#nav-picker" type="button" role="tab" aria-controls="nav-picker" aria-selected="false">Image dans bdd</button>
 
                                         <button class="nav-link " id="nav-image-upload" data-toggle="tab" data-target="#nav-upload" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Uploader l'image</button>
 

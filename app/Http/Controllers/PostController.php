@@ -234,6 +234,7 @@ class PostController extends Controller
     protected function saveImage (Request $request, post $post):Image|null
     {
         $Imageobj = new Image();
+
         if ($request->file("image")) {
             $Imageobj = \App\Http\Helpers\Image::saveNewImage($request, $post);
 
@@ -245,8 +246,8 @@ class PostController extends Controller
             $post->image = $request->imageUrl;
             $post->image_id = null;
             return null;
-        } else if($request->image_id) {
-            $Imageobj = Image::find($request->image_id);
+        } else if($request->imageid) {
+            $Imageobj = Image::find($request->imageid);
             $post->image = $Imageobj->file;
             $post->image_id = $Imageobj->id;
         } else {
