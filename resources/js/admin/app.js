@@ -324,6 +324,7 @@ $(function () {
 
     let imageUrl = $("#imageUrl");
     let imageUpload = $('#imageUpload');
+    let isUpdate = $("#isupdate").val();
     if (imageUpload) {
         imageUpload.on('change', function (e) {
             let output = $('#previewImage');
@@ -331,9 +332,14 @@ $(function () {
             if(e.target.files.length > 0) {
                 let file = e.target.files[0];
                 output.attr("src", URL.createObjectURL(file));
+                if( isUpdate != 0 )
+                    output.attr("data-preview",true);
+
                 output.parent().find("source").remove();
             } else {
                 previewImage.attr('src',window.appurl+'/images/default.webp');
+                if( isUpdate != 0 )
+                    output.attr("data-preview",false);
             }
         });
     }
@@ -344,6 +350,10 @@ $(function () {
                 let srcImage = imageUrl.val();
                 output.classList.remove("d-none");
                 previewImage.attr('src',srcImage);
+
+                if( isUpdate != 0 )
+                    output.setAttribute("data-preview",true);
+
                 output.parent().find("source").remove();
 
             }
@@ -351,10 +361,83 @@ $(function () {
     }
 
     $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
-        if($(event.target).attr("data-target") !== "#imageUpload") {
-            $($(event.target).attr("data-target")).find("input").prop("required", true);
+
+        let input = $($(event.target).attr("data-target")).find("input");
+        let isUpdate = $("#isupdate").val();
+        let previewImage = document.querySelector("#previewImage");
+        switch ($(event.target).attr("data-target")) {
+            case "#nav-upload":
+                if(isUpdate == "0") {
+                    input.prop("required", true);
+                }
+                break;
+            case "#nav-url":
+                    if(isUpdate == '0') {
+                        input.prop("required", true);
+                    }
+                break;
+            case "#nav-picker":
+                $("#collapseimagepicker").collapse("show");
+                if(isUpdate == '0') {
+                    input.prop("required", true);
+                }
+            default:
+                break
         }
-        $($(event.relatedTarget).attr("data-target")).find("input").prop("required",false);
+        switch ($(event.relatedTarget).attr("data-target")) {
+            case "#nav-upload": {
+                let lastInput = $($(event.relatedTarget).attr("data-target")).find("input");
+                lastInput.prop("required", false);
+                lastInput.removeClass("is-invalid");
+                lastInput.val("");
+                lastInput[0].setCustomValidity("");
+                lastInput[0].reportValidity();
+                let isUpdate = $("#isupdate").val();
+                if(isUpdate!=0) {
+                    previewImage.setAttribute('src',isUpdate);
+                } else {
+                    previewImage.setAttribute('src', window.appurl + '/images/default.webp');
+                }
+            }
+            break;
+            case "#nav-url": {
+                let lastInput = $($(event.relatedTarget).attr("data-target")).find("input");
+                lastInput.prop("required", false);
+                lastInput.removeClass("is-invalid");
+                lastInput.val("");
+                lastInput[0].setCustomValidity("");
+
+                lastInput[0].reportValidity();
+                let isUpdate = $("#isupdate").val();
+                if(isUpdate!=0) {
+                    previewImage.setAttribute('src',isUpdate);
+                } else {
+                    previewImage.setAttribute('src', window.appurl + '/images/default.webp');
+                }
+
+
+
+            }
+
+            break;
+            case "#nav-picker": {
+                let lastInput = $($(event.relatedTarget).attr("data-target")).find("select");
+                lastInput.prop("required", false);
+                lastInput.removeClass("is-invalid");
+                lastInput.val("");
+                lastInput[0].reportValidity();
+                let isUpdate = $("#isupdate").val();
+                if(isUpdate!=0) {
+                    previewImage.setAttribute('src',isUpdate);
+                } else {
+                    previewImage.setAttribute('src', window.appurl + '/images/default.webp');
+
+                }
+            }
+            break;
+            default:
+                break
+        }
     });
 
 
@@ -446,7 +529,9 @@ $(function () {
         });
 
         form.addEventListener("submit",function(e){
+
             e.preventDefault();
+
             let valid = true;
             if (editor) {
                 let content = isDeltaEmptyOrWhitespace(editor.getContents());
@@ -470,17 +555,20 @@ $(function () {
             if(imagepicker.length > 0) {
                 if($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
 
-                    if(imagepicker.val().length == 0) {
-                        $("#nav-image-picker").tab("show");
-                        $("#collapseimagepicker").collapse("show");
-                        imagepicker.addClass("is-invalid");
-                        jsElem.setCustomValidity("Vous devez choisir une image");
-                        jsElem.reportValidity();
-                        valid = false;
-                    } else {
-                        imagepicker.removeClass("is-invalid");
-                        jsElem.setCustomValidity("");
-                        jsElem.reportValidity();
+                    let isUpdate = $("#isupdate").val();
+                    if(isUpdate == '0') {
+                        if (imagepicker.val().length == 0) {
+                            $("#nav-image-picker").tab("show");
+                            $("#collapseimagepicker").collapse("show");
+                            imagepicker.addClass("is-invalid");
+                            jsElem.setCustomValidity("Vous devez choisir une image");
+                            jsElem.reportValidity();
+                            valid = false;
+                        } else {
+                            imagepicker.removeClass("is-invalid");
+                            jsElem.setCustomValidity("");
+                            jsElem.reportValidity();
+                        }
                     }
                 }
             }
@@ -500,11 +588,20 @@ $(function () {
         imagePicker.on("change",function(e){
             let src = $(this).find("option:selected").data("img-src");
             if(src) {
-                $("#previewImage").attr("src",src);
-                $("#previewImage").parent().find("source").remove();
+                let previewImage = $("#previewImage");
+                previewImage.attr("src",src);
+                let isUpdate = $("#isupdate").val();
+                if( isUpdate != 0 )
+                    previewImage.attr("data-preview",true);
+                previewImage.parent().find("source").remove();
                 $("#collapseimagepicker").collapse("hide");
 
             }
+        });
+
+        imagePicker.on("focus",function(e) {
+            $("#nav-image-picker").tab("show");
+            $("#collapseimagepicker").collapse("show");
         });
     }
 

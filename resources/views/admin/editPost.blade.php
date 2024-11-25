@@ -20,6 +20,15 @@
                                 <img src="{{asset(config("custom.default"))}}" id="previewImage" alt='image actuel' class='img-fluid mb-4 w-50'>
 
                             @endif
+                            @php
+                                $asset = null;
+                                if(isset($model)) {
+                                    $image = \App\Image::find($model->image_id);
+                                    $asset = asset($image->file);
+                                }
+                            @endphp
+
+                            <input type="hidden" name="isupdate" id="isupdate" value="{{ (isset($model))?$asset:0  }}">
                             <div class="mb-3">
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -46,7 +55,7 @@
                                                     <option value=""></option>
                                                     @foreach(\App\Image::all() as $file)
                                                         @if(isset($model))
-                                                            @if($model->image_id == $file->id)
+                                                            @if(old("imageid")??$model->image_id??null == $file->id)
                                                                 @php
                                                                     $selected = "selected";
                                                                 @endphp

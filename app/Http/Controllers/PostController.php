@@ -77,8 +77,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $rules = $this->rules();
+        $rules = $this->rules(isset($request->imageid));
         $rules["title"] = $rules["title"] . "|unique:post,title";
 
         $validator = Validator::make($request->all(), $rules);
