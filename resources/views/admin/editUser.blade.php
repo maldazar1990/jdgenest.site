@@ -12,7 +12,7 @@
                         <h5>image actuel</h5><br>
                         @include("toolbox.image", ['modelWithImage' => $model,"class" => "img-fluid mb-4","size"=>"medium"])
                     @else
-                        <img src="images/default.webp" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
+                        <img src="{{asset(config("custom.default"))}}" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
                     @endif
                     @include("toolbox.input",["inputName"=>"name","inputFieldName"=>"Nom","inputType"=>"text","inputClass"=>"","model"=>$model,

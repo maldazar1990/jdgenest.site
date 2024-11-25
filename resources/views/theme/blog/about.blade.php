@@ -69,7 +69,7 @@
                                         }else if (Str::contains($info->image, 'http')) {
                                             $image =  $info->image;
                                         } else {
-                                            $image =  asset('images/default.jpg');
+                                            $image =  asset(config("custom.default"));
                                         }
 
                                         $tagClass = "";

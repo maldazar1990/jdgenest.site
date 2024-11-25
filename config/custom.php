@@ -14,6 +14,7 @@ foreach($extensionsArray as $key => $extension){
 $extensionInputValidation = implode(",",$extensionsArray);
 
 return [
+    "default" => "images/default.webp",
     "maxsize" => $maxsize,
     "maxwidth" => $maxwidth,
     "maxheight" => $maxheight,

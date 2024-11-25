@@ -83,6 +83,6 @@
     @else
         <img
             class="{{$class}}" decoding="async" loading="lazy"
-            src="{{asset('images/default.jpg')}}" alt="bug" id="previewImage"  width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
+            src="{{asset(config('custom.default'))}}" alt="bug" id="previewImage"  width="{{$width}}" height="{{$height}}" style="{{$css}}"/>
     @endif
 </picture>

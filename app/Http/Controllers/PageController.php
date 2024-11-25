@@ -178,7 +178,7 @@ class PageController extends Controller
                 $image = current($images);
                 $image = asset("/".$image);
             } else {
-                $image = asset("images/default.webp");
+                $image = asset(config("custom.default"));
             }
         } else {
             if(Str::isUrl($post->image_url)){
