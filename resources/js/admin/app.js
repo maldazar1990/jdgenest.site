@@ -600,7 +600,9 @@ $(function () {
         });
 
         imagePicker.on("focus",function(e) {
-            $("#nav-image-picker").tab("show");
+            $("#collapseimagepicker").collapse("show");
+        });
+        imagePicker.on("invalid",function(e) {
             $("#collapseimagepicker").collapse("show");
         });
     }
