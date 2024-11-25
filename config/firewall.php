@@ -4,7 +4,7 @@ return [
 
     'enabled' => true,
 
-    'whitelist' => [env('FIREWALL_WHITELIST', '127.0.0.1'), env('FIREWALL_WHITELIST', '::1'), env('FIREWALL_WHITELIST', 'localhost'), env('FIREWALL_WHITELIST', '192.168.2.*'),],
+    'whitelist' => ["69.157.130.228",env('FIREWALL_WHITELIST', '127.0.0.1'), env('FIREWALL_WHITELIST', '::1'), env('FIREWALL_WHITELIST', 'localhost'), env('FIREWALL_WHITELIST', '192.168.2.*'),],
 
     'models' => [
         'user' => '\App\Users',

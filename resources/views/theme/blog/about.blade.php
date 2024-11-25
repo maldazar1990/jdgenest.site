@@ -28,7 +28,7 @@
                                             <h5>{{$info->title}}</h5>
                                         </a>
                                         <div class="d-flex justify-content-start align-content-start">
-                                            @include("toolbox.image", ['modelWithImage' => $info,"class" => "mb-2 img-info", "css"=>"width: 200px;height: 100%;object-fit: contain;"])
+                                            @include("toolbox.image", ['modelWithImage' => $info,"class" => "mb-2 img-info img-fluid w-25"])
                                         </div>
                                         <small>
                                             @if($info->dateend < \Illuminate\Support\Facades\Date::today() or $info->dateend == null)
