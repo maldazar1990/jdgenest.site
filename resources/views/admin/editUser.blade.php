@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    {{-- @if(env("APP_ENV")!="Production") --}}
+    @if(env("APP_ENV")!="Production")
 
 
         @if (auth()->user()->two_factor_secret )
@@ -130,7 +130,7 @@
                 </div>
             </div>
         @endif
-    {{--@endif--}}
+    @endif
 @endsection
 
 
