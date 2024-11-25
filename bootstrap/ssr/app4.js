@@ -480,6 +480,7 @@ $(function() {
     });
     form.addEventListener("submit", function(e) {
       e.preventDefault();
+      let valid = true;
       if (editor) {
         let content = isDeltaEmptyOrWhitespace(editor.getContents());
         if (content) {
@@ -495,24 +496,24 @@ $(function() {
       }
       let jsElem = document.querySelector("#imagePicker");
       let imagepicker = $("#imagePicker");
-      console.log(imagepicker);
       if (imagepicker.length > 0) {
         if ($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
-          console.log(1);
-          console.log(imagepicker.val());
           if (imagepicker.val().length == 0) {
-            console.log(imagepicker.val());
             $("#nav-image-picker").tab("show");
             $("#collapseimagepicker").collapse("show");
             imagepicker.addClass("is-invalid");
             jsElem.setCustomValidity("Vous devez choisir une image");
             jsElem.reportValidity();
+            valid = false;
           } else {
             imagepicker.removeClass("is-invalid");
             jsElem.setCustomValidity("");
             jsElem.reportValidity();
           }
         }
+      }
+      if (valid === true) {
+        form.submit();
       }
     });
   }
