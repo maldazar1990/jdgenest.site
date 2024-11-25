@@ -506,6 +506,7 @@ $(function() {
       let src = $(this).find("option:selected").data("img-src");
       if (src) {
         $("#previewImage").attr("src", src);
+        $("#previewImage").parent().find("source").remove();
         $("#collapseimagepicker").collapse("hide");
       }
     });
