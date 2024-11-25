@@ -205,9 +205,11 @@ $(function() {
             searchterm = searchTerm;
           },
           onSelect: function(item, insertItem) {
+            console.log(searchterm);
+            editor.deleteText(editor.getSelection().index - searchterm.length - 1, searchterm.length + 1);
             var delta = {
               ops: [
-                { delete: searchterm.length + 1 },
+                { retain: editor.getSelection().index },
                 { insert: item.value, attributes: { link: item.link } }
               ]
             };
