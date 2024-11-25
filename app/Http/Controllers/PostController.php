@@ -231,12 +231,13 @@ class PostController extends Controller
 
     }
 
-    protected function saveImage (Request $request, post $post):Image|null {
+    protected function saveImage (Request $request, post $post):Image|null
+    {
         $Imageobj = new Image();
-        if ( $request->file("image")  ) {
-           $Imageobj = \App\Http\Helpers\Image::saveNewImage($request, $post);
- 
-        } elseif($request->imageUrl) {
+        if ($request->file("image")) {
+            $Imageobj = \App\Http\Helpers\Image::saveNewImage($request, $post);
+
+        } elseif ($request->imageUrl) {
             if ($post->image) {
                 $img = new HelpersImage($post->image);
                 $img->deleteImage();
@@ -244,6 +245,10 @@ class PostController extends Controller
             $post->image = $request->imageUrl;
             $post->image_id = null;
             return null;
+        } else if($request->image_id) {
+            $Imageobj = Image::find($request->image_id);
+            $post->image = $Imageobj->file;
+            $post->image_id = $Imageobj->id;
         } else {
             return null;
         }

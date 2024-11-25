@@ -6,7 +6,8 @@ import {Mention, MentionBlot} from "quill-mention";
 import QuillResizeImage from 'quill-resize-image';
 import "../../../node_modules/quill-mention/src/quill.mention.css";
 import "../../../node_modules/highlight.js/styles/vs2015.css";
-
+import "./image-picker.min.js";
+import "./image-picker.css";
 class linkmentionBlot extends MentionBlot {
     static render(data) {
         var element = document.createElement('span');
@@ -113,19 +114,22 @@ function validateTitleInput(element) {
     let model = element.dataset.model;
     if (model !== null) {
         let url = "";
-        let httpValue = "https:";
+        let appUrl = window.appurl;
+        if(appUrl.indexOf("https:") === 0) {
+            appUrl = "https:"+appUrl;
+        }
         switch(model) {
             case "posts":
-                url = new URL(httpValue+window.appurl+`/admin/posts/title`);
+                url = new URL(appUrl+`/admin/posts/title`);
                 break;
             case "infos":
-                url = new URL(httpValue+window.appurl+`/admin/infos/title`);
+                url = new URL(appUrl+`/admin/infos/title`);
                 break;
             case "tags":
-                url = new URL(httpValue+window.appurl+`/admin/tags/title`);
+                url = new URL(happUrl+`/admin/tags/title`);
                 break;
             case "files":
-                url = new URL(httpValue+window.appurl+`/admin/files/title`);
+                url = new URL(appUrl+`/admin/files/title`);
                 break;
             default:
                 break;
@@ -464,6 +468,20 @@ $(function () {
                 form.submit();
             }
 
+        });
+    }
+
+    let imagePicker = $(".image-picker");
+    console.log(1);
+    if(imagePicker.length > 0) {
+        console.log(imagePicker);
+        imagePicker.imagepicker();
+        imagePicker.on("change",function(e){
+            let src = $(this).find("option:selected").data("img-src");
+            if(src) {
+                $("#previewImage").attr("src",src);
+                $("#collapseimagepicker").collapse("hide");
+            }
         });
     }
 

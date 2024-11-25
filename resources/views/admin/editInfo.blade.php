@@ -13,7 +13,10 @@
 
                     @if ( isset($info) )
                         <h5>image actuel</h5><br>
-                        @include("toolbox.image", ['modelWithImage' => $info,"class" => "img-fluid mb-4","size"=>"medium"])
+                        <div class="w-50">
+
+                            @include("toolbox.image", ['modelWithImage' => $info,"class" => "img-fluid mb-4","size"=>"medium"])
+                        </div>div
                     @else
                         <img src="{{asset(config("custom.default"))}}" id="previewImage" alt='image actuel' width='200px' class='img-fluid mb-3 d-none'>
 
