@@ -115,7 +115,7 @@ function validateTitleInput(element) {
     if (model !== null) {
         let url = "";
         let appUrl = window.appurl;
-        if(appUrl.indexOf("https:") === 0) {
+        if(appUrl.indexOf("https:") === -1) {
             appUrl = "https:"+appUrl;
         }
         switch(model) {
@@ -126,7 +126,7 @@ function validateTitleInput(element) {
                 url = new URL(appUrl+`/admin/infos/title`);
                 break;
             case "tags":
-                url = new URL(happUrl+`/admin/tags/title`);
+                url = new URL(appUrl+`/admin/tags/title`);
                 break;
             case "files":
                 url = new URL(appUrl+`/admin/files/title`);
@@ -146,8 +146,6 @@ function validateTitleInput(element) {
                 })
                     .then(response => response.json())
                     .then(data => {
-
-                        console.log(data);
                         if (data.response === "false") {
                             valid = false;
                             element.classList.add("is-invalid");
@@ -353,7 +351,9 @@ $(function () {
     }
 
     $('button[data-toggle="tab"]').on('shown.bs.tab', function (event) {
-        $($(event.target).attr("data-target")).find("input").prop("required",true);
+        if($(event.target).attr("data-target") !== "#imageUpload") {
+            $($(event.target).attr("data-target")).find("input").prop("required", true);
+        }
         $($(event.relatedTarget).attr("data-target")).find("input").prop("required",false);
     });
 
@@ -464,18 +464,42 @@ $(function () {
 
 
             }
+
+            let jsElem = document.querySelector("#imagePicker");
+            let imagepicker = $("#imagePicker");
+            console.log(imagepicker);
+            if(imagepicker.length > 0) {
+                if($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
+                    console.log(1);
+                    console.log(imagepicker.val());
+                    if(imagepicker.val().length == 0) {
+                        console.log(imagepicker.val());
+                        $("#nav-image-picker").tab("show");
+                        $("#collapseimagepicker").collapse("show");
+                        imagepicker.addClass("is-invalid");
+                        jsElem.setCustomValidity("Vous devez choisir une image");
+                        jsElem.reportValidity();
+                        valid = false;
+                    } else {
+                        imagepicker.removeClass("is-invalid");
+                        jsElem.setCustomValidity("");
+                        jsElem.reportValidity();
+                    }
+                }
+            }
+
             if(valid===true){
-                form.submit();
+               // form.submit();
             }
 
         });
     }
 
     let imagePicker = $(".image-picker");
-    console.log(1);
     if(imagePicker.length > 0) {
-        console.log(imagePicker);
-        imagePicker.imagepicker();
+        imagePicker.imagepicker({
+            hide_select: false,
+        });
         imagePicker.on("change",function(e){
             let src = $(this).find("option:selected").data("img-src");
             if(src) {

@@ -17,7 +17,7 @@
                                     @include("toolbox.image", ['modelWithImage' => $model,"class" => "img-fluid mb-4","size"=>"small"])
                                 </div>
                             @else
-                                <img src="{{asset(config("custom.default"))}}" id="previewImage" alt='image actuel' class='img-fluid mb-3 d-none w-50'>
+                                <img src="{{asset(config("custom.default"))}}" id="previewImage" alt='image actuel' class='img-fluid mb-4 w-50'>
 
                             @endif
                             <div class="mb-3">
@@ -39,25 +39,20 @@
                                         <div class="collapse" id="collapseimagepicker">
                                             <div class="card card-body">
                                                 @php
-                                                    $files = \App\Image::all();
                                                     $selected = "";
-                                                    $requered = "";
-                                                    $alreadyRequired = false;
-                                                    if( isset($model) ){
-                                                        $alreadyRequired = true;
-                                                        if (!empty($model->image_id)){
-                                                            $requered = "required";
-                                                        }
-                                                    }
-
                                                 @endphp
 
-                                                <select class="form-select image-picker show-labels show-html w-100" name="imageid" id="imagePicker" {{$requered}} aria-label="Default select example">
-                                                    @foreach($files as $file)
+                                                <select class="form-select image-picker show-labels show-html w-100" name="imageid" id="imagePicker" aria-label="Default select example">
+                                                    <option value=""></option>
+                                                    @foreach(\App\Image::all() as $file)
                                                         @if(isset($model))
                                                             @if($model->image_id == $file->id)
                                                                 @php
                                                                     $selected = "selected";
+                                                                @endphp
+                                                            @else
+                                                                @php
+                                                                    $selected = "";
                                                                 @endphp
                                                             @endif
                                                         @endif
@@ -69,14 +64,8 @@
                                     </div>
                                     <div class="tab-pane fade  p-1" id="nav-upload" role="tabpanel" aria-labelledby="nav-image-upload">
                                         @php
-                                            $attributes = config("custom.defaultHtmlFile");
-
-
-                                            if( $alreadyRequired or isset($model) ){
-                                                unset($attributes["required"]);
-                                                $alreadyRequired = false;
-                                            }
-
+                                            $attributes =config("custom.defaultHtmlFile");
+                                            unset($attributes["required"]);
                                             $inputImageParam = [ "haveLabel"=>false, "inputName"=>"image", "inputId"=>"imageUpload", "inputFieldName"=>"Image","inputType"=>"file",
                                             "inputClass"=>"",
                                             "model"=>$model,
@@ -88,15 +77,6 @@
                                     <div class="tab-pane fade p-1 " id="nav-url" role="tabpanel" aria-labelledby="nav-image-url">
                                         @php
                                             $inputImageParam = [ "haveLabel"=>false,"inputName"=>"imageUrl","inputFieldName"=>"Images","inputType"=>"url","inputClass"=>"","model"=>$model,"attributes"=>[]];
-                                            if($alreadyRequired == false) {
-                                                if( !isset($model) ) {
-                                                    if(!empty($model->imageUrl)){
-
-                                                        $inputImageParam["attributes"]["required"] = "required";
-                                                    }
-                                                }
-                                            }
-
                                         @endphp
                                         @include("toolbox.input",$inputImageParam)
 
