@@ -51,7 +51,7 @@ function isDeltaEmptyOrWhitespace(delta) {
   }
   return true;
 }
-function validateInputFile(element, minWidth = 0, minHeight = 0, maxwidth = 0, maxheight = 0, extension = "") {
+function validateInputFile(element, minWidth = 0, minHeight = 0, maxwidth = 0, maxheight = 0, extension = "", hash = "") {
   if (element.files.length > 0) {
     let file = element.files[0];
     let fileName = file.name;
@@ -180,6 +180,7 @@ $(function() {
     Quill.register("modules/resize", QuillResizeImage);
     Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
     Quill.register(linkmentionBlot);
+    let searchterm = "";
     editor = new Quill("#quill-editor", {
       theme: "snow",
       modules: {
@@ -201,9 +202,16 @@ $(function() {
           source: async function(searchTerm, renderList) {
             let values = await suggestArticle(searchTerm);
             renderList(values, searchTerm);
+            searchterm = searchTerm;
           },
           onSelect: function(item, insertItem) {
-            insertItem(item, false, "link-mention");
+            var delta = {
+              ops: [
+                { delete: searchterm.length + 1 },
+                { insert: item.value, attributes: { link: item.link } }
+              ]
+            };
+            editor.updateContents(delta);
           }
         }
       }
@@ -303,11 +311,11 @@ $(function() {
             let maxwidth = decodeURI(input.dataset.maxwidth);
             let maxheight = decodeURI(input.dataset.maxheight);
             let extension = "";
+            let hash = input.dataset.havehash;
             if (input.hasAttribute("data-extension")) {
               extension = input.dataset.extension;
             }
-            console.log(extension);
-            validateInputFile(input, minwidth, minheight, maxwidth, maxheight, extension);
+            validateInputFile(input, minwidth, minheight, maxwidth, maxheight, extension, hash);
           }
         });
       }
@@ -369,7 +377,13 @@ $(function() {
     form.addEventListener("submit", function(e) {
       e.preventDefault();
       if (editor) {
-        if (isDeltaEmptyOrWhitespace(editor.getContents())) {
+        let content = isDeltaEmptyOrWhitespace(editor.getContents());
+        if (content) {
+          editor.focus();
+          editor.insertText(0, "MANQUE UN TEXTE!!!!!!!!", "bold", true);
+          return false;
+        }
+        if (editor.getLength() < 100) {
           editor.focus();
           editor.insertText(0, "MANQUE UN TEXTE!!!!!!!!", "bold", true);
           return false;

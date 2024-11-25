@@ -32,8 +32,7 @@ $("#nav-image-url").click(function (e) {
     $("#hiddenTypeImage").val("url");
 });
 
-async function
-suggestArticle(searchTerm) {
+async function suggestArticle(searchTerm) {
     if (searchTerm.length > 1) {
         const response = await fetch(window.appurl + "/admin/posts/ajax/" + searchTerm,
             {
@@ -48,8 +47,7 @@ suggestArticle(searchTerm) {
     } else{
         return [];
     }
-  }
-
+}
 function isDeltaEmptyOrWhitespace(delta) {
     if (delta.ops.length === 0) {
         return true;
@@ -212,6 +210,7 @@ $(function () {
         Quill.register("modules/resize", QuillResizeImage);
         Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention });
         Quill.register(linkmentionBlot);
+        let searchterm = "";
         editor = new Quill('#quill-editor', {
             theme: 'snow',
             modules: { 
@@ -233,9 +232,18 @@ $(function () {
                     source: async function (searchTerm, renderList) {
                         let values = await suggestArticle(searchTerm);
                         renderList(values, searchTerm);
+                        searchterm = searchTerm;
                     },
                     onSelect: function (item, insertItem) {
-                        insertItem(item,false,"link-mention");
+
+                        var delta = {
+                            ops: [
+                                {delete: searchterm.length+1},
+                                {insert: item.value, attributes: {link: item.link}},
+
+                            ]
+                        };
+                        editor.updateContents(delta);
                     }
                     ,
                 },

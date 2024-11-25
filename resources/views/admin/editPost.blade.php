@@ -28,7 +28,6 @@
                                     "data-model"=>"posts",
                             ]])
                             @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Publication","model"=>$model])
-                            <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12">
 
@@ -85,6 +84,9 @@
                                     "required"=>"required",
                                     "min"=>\Carbon\Carbon::now()->format("Y-m-d"),
                             ]])
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
                         </div>
                     </div>
                 </form>

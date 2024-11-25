@@ -5,10 +5,6 @@
 
         <article class="about-section py-sm-2 py-md-3 py-lg-5">
             <div class="container pe-0 ps-0">
-                {{-- <h2 class="title mb-3 text-center">En résumé</h2>
-                <div class="container mt-5 mb-5 ps-0 pe-0 text-left">
-                    {!!$userInfo->presentation!!}
-                </div>--}}
                 <h4>Compétences</h4>
                 @include("theme.blog.layout.tags")
                 <div class="container mt-5 mb-5 ps-0 pe-0 justify-content-start align-items-start align-content-start">
