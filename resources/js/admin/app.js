@@ -32,7 +32,8 @@ $("#nav-image-url").click(function (e) {
     $("#hiddenTypeImage").val("url");
 });
 
-async function suggestArticle(searchTerm) {
+async function
+suggestArticle(searchTerm) {
     if (searchTerm.length > 1) {
         const response = await fetch(window.appurl + "/admin/posts/ajax/" + searchTerm,
             {

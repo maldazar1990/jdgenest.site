@@ -38,8 +38,8 @@ class UsersController extends Controller
 
 
 
-    public function rules ($id=false) {
-        return [
+    public function rules ($id=false,$image=false) {
+        $rules = [
             'name' => [
                 'required',
                 'string',
@@ -54,9 +54,15 @@ class UsersController extends Controller
 
             ],
             'jobTitle' => "max:255",
-            "image" => "required|".config("custom.rulesImage"),
+            "image" => config("custom.rulesImage"),
 
         ];
+
+        if ($image == false ){
+            $rules["image"] = $rules["image"]."|required";
+        }
+
+        return$rules;
     }
 
 
@@ -86,8 +92,7 @@ class UsersController extends Controller
         if (!$user) {
             return redirect()->route('admin_user');
         }
-
-        $validator = Validator::make($request->all(), $this->rules($id));
+        $validator = Validator::make($request->all(), $this->rules($id,!empty($user->image_id)));
 
         if ($validator->fails()) {
             return redirect()->route('admin_user')
@@ -118,9 +123,6 @@ class UsersController extends Controller
             FacadesCache::forget('userInfo');
         }
 
-        if ( $user->id == auth()->user()->id ) {
-            return redirect()->route('admin_user');
-        }
         return redirect()->route('admin_user')->with('message', 'emregistré avec succès');
     }
 }

@@ -43,11 +43,12 @@
     $inputAttributes = "";
     if (isset($attributes)){
         foreach( $attributes as $key => $content){
-            if ($inputType == "file" and $key == "required" and isset($model->{$inputName})){
+            if (in_array($inputType,['file','password']) and $key == "required" and isset($model->{$inputName})){
                 continue;
             } else {
                 $inputAttributes .= $key."=".$content." ";
             }
+
 
 
         }
@@ -56,19 +57,23 @@
     if(old($inputName)){
         $value = old($inputName);
     } else {
-        if ( isset($model)){
-            if ( isset($model->{$inputName}) ){
-                if ( $inputType == "date" )
-                    $value = \Carbon\Carbon::parse($model->{$inputName})->format('Y-m-d');
-                else
-                    $value = $model->{$inputName};
+        if($inputType != "password"){
+            if ( isset($model)){
+                if ( isset($model->{$inputName}) ){
+                    if ( $inputType == "date" )
+                        $value = \Carbon\Carbon::parse($model->{$inputName})->format('Y-m-d');
+                    else
+                        $value = $model->{$inputName};
+                } else {
+                    $value = "";
+                }
             } else {
-                $value = "";
+                if ( !isset($value) ) {
+                    $value = "";
+                }
             }
         } else {
-            if ( !isset($value) ) {
-                $value = "";
-            }
+            $value="";
         }
 
         if ($value == "") {

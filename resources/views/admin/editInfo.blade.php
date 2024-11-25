@@ -60,8 +60,7 @@
                     </fieldset>
                     @php
                         $attributes = config("custom.defaultHtmlFile");
-
-                        if( isset($model) ){
+                        if( isset($info->image_id) ){
                             unset($attributes["required"]);
                         }
                     @endphp

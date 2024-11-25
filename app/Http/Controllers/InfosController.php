@@ -55,7 +55,7 @@ class InfosController extends Controller
     }
 
 
-    public function rules( $haveDateEnd = false )
+    public function rules( $haveDateEnd = false,$image = false)
     {
 
         if ( $haveDateEnd )
@@ -70,10 +70,14 @@ class InfosController extends Controller
             "datestart" => "date",
             "duree" => "min:0 | max:40",
 
-            "image" => "required|".config("custom.rulesImage"),
+            "image" => config("custom.rulesImage"),
             "type" => "required|in:exp,job,school",
 
         ];
+
+        if ($image == false ){
+            $rules["image"] = $rules["image"]."|required";
+        }
 
         return $rules;
     }
@@ -161,9 +165,9 @@ class InfosController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $validator = Validator::make($request->all(), $this->rules($request->exists("dateend")));
         $infos = Infos::where('id', $id)->first();
+        $validator = Validator::make($request->all(), $this->rules($request->exists("dateend"),!empty($infos->image_id)));
+
 
         if  ( !$infos ) {
             return redirect()->route('admin_infos');
@@ -197,8 +201,7 @@ class InfosController extends Controller
                 $infos->tags()->attach(Tags::find($tagsId));
             }
         }
-        $request->session()->flash('message', 'Enregistrement effectué avec succès');
-        return redirect()->route('admin_infos');
+        return back()->flash('message', 'Enregistrement effectué avec succès');
 
     }
 

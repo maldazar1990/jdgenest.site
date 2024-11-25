@@ -29,11 +29,12 @@
                             "maxlength"=>config("custom.maxlength"),
                         ]
                     ])
-                    @include("toolbox.input",["inputName"=>"password","inputFieldName"=>"Mot de passe","inputType"=>"password","inputClass"=>"","model"=>$model,
+                    @include("toolbox.input",["inputName"=>"password","inputFieldName"=>"Mot de passe","inputType"=>"password","inputClass"=>"",
                         "attributes"=>[
                             "required"=>"required",
                             "minlength"=>6,
                             "maxlength"=>config("custom.maxlength"),
+                            "autocomplete"=>"off",
                         ]
                     ])
                     @include("toolbox.input",["inputName"=>"jobTitle","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,
