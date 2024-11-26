@@ -51,7 +51,9 @@
                                                     $selected = "";
                                                 @endphp
 
-                                                <select class="form-select image-picker show-labels show-html w-100" name="imageid" id="imagePicker" aria-label="Default select example">
+                                                <select class="form-select image-picker show-labels show-html w-100" name="imageid" id="imagePicker" aria-label="Default select example"
+                                                @if(!isset($model))required @endif
+                                                >
                                                     <option value=""></option>
                                                     @foreach(\App\Image::all() as $file)
                                                         @if(isset($model))

@@ -379,6 +379,9 @@ $(function () {
             case "#nav-picker":
                 $("#collapseimagepicker").collapse("show");
                 if(isUpdate == '0') {
+                    let input = $($(event.target).attr("data-target")).find("select");
+                    console.log(isUpdate);
+                    console.log(input);
                     input.prop("required", true);
                 }
             default:
@@ -528,6 +531,36 @@ $(function () {
             }
         });
 
+        let imagepicker = $("#imagePicker");
+        if(imagepicker.length > 0) {
+
+            imagepicker.imagepicker({
+                hide_select: false,
+            });
+            imagepicker.on("change",function(e){
+                imagepicker[0].setCustomValidity("");
+                imagepicker[0].reportValidity();
+                let src = $(this).find("option:selected").data("img-src");
+                if(src) {
+                    let previewImage = $("#previewImage");
+                    previewImage.attr("src",src);
+                    let isUpdate = $("#isupdate").val();
+                    if( isUpdate != 0 )
+                        previewImage.attr("data-preview",true);
+                    previewImage.parent().find("source").remove();
+                    $("#collapseimagepicker").collapse("hide");
+
+                }
+            });
+
+            imagepicker.on("focus",function(e) {
+                $("#collapseimagepicker").collapse("show");
+            });
+            imagepicker.on("invalid",function(e) {
+                $("#collapseimagepicker").collapse("show");
+            });
+        }
+
         form.addEventListener("submit",function(e){
 
             e.preventDefault();
@@ -550,61 +583,36 @@ $(function () {
 
             }
 
-            let jsElem = document.querySelector("#imagePicker");
-            let imagepicker = $("#imagePicker");
-            if(imagepicker.length > 0) {
-                if($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
-
-                    let isUpdate = $("#isupdate").val();
-                    if(isUpdate == '0') {
+            /*if(imagepicker.length > 0) {
+                let isUpdate = $("#isupdate").val();
+                if(isUpdate == '0') {
+                    if($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
                         if (imagepicker.val().length == 0) {
                             $("#nav-image-picker").tab("show");
                             $("#collapseimagepicker").collapse("show");
                             imagepicker.addClass("is-invalid");
-                            jsElem.setCustomValidity("Vous devez choisir une image");
-                            jsElem.reportValidity();
-                            valid = false;
+                            imagepicker[0].setCustomValidity("Vous devez choisir une image");
+                            imagepicker[0].reportValidity();
+                            valid=false;
+
                         } else {
                             imagepicker.removeClass("is-invalid");
-                            jsElem.setCustomValidity("");
-                            jsElem.reportValidity();
+                            imagepicker[0].setCustomValidity("");
+                            imagepicker[0].reportValidity();
                         }
+
                     }
                 }
-            }
+            }*/
+
 
             if(valid===true){
-               form.submit();
+                form.submit();
             }
 
         });
     }
 
-    let imagePicker = $(".image-picker");
-    if(imagePicker.length > 0) {
-        imagePicker.imagepicker({
-            hide_select: false,
-        });
-        imagePicker.on("change",function(e){
-            let src = $(this).find("option:selected").data("img-src");
-            if(src) {
-                let previewImage = $("#previewImage");
-                previewImage.attr("src",src);
-                let isUpdate = $("#isupdate").val();
-                if( isUpdate != 0 )
-                    previewImage.attr("data-preview",true);
-                previewImage.parent().find("source").remove();
-                $("#collapseimagepicker").collapse("hide");
 
-            }
-        });
-
-        imagePicker.on("focus",function(e) {
-            $("#collapseimagepicker").collapse("show");
-        });
-        imagePicker.on("invalid",function(e) {
-            $("#collapseimagepicker").collapse("show");
-        });
-    }
 
 });

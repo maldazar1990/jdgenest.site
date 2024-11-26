@@ -423,7 +423,10 @@ $(function() {
       case "#nav-picker":
         $("#collapseimagepicker").collapse("show");
         if (isUpdate2 == "0") {
-          input.prop("required", true);
+          let input2 = $($(event.target).attr("data-target")).find("select");
+          console.log(isUpdate2);
+          console.log(input2);
+          input2.prop("required", true);
         }
     }
     switch ($(event.relatedTarget).attr("data-target")) {
@@ -550,9 +553,34 @@ $(function() {
         }
       }
     });
+    let imagepicker = $("#imagePicker");
+    if (imagepicker.length > 0) {
+      imagepicker.imagepicker({
+        hide_select: false
+      });
+      imagepicker.on("change", function(e) {
+        imagepicker[0].setCustomValidity("");
+        imagepicker[0].reportValidity();
+        let src = $(this).find("option:selected").data("img-src");
+        if (src) {
+          let previewImage2 = $("#previewImage");
+          previewImage2.attr("src", src);
+          let isUpdate2 = $("#isupdate").val();
+          if (isUpdate2 != 0)
+            previewImage2.attr("data-preview", true);
+          previewImage2.parent().find("source").remove();
+          $("#collapseimagepicker").collapse("hide");
+        }
+      });
+      imagepicker.on("focus", function(e) {
+        $("#collapseimagepicker").collapse("show");
+      });
+      imagepicker.on("invalid", function(e) {
+        $("#collapseimagepicker").collapse("show");
+      });
+    }
     form.addEventListener("submit", function(e) {
       e.preventDefault();
-      let valid = true;
       if (editor) {
         let content = isDeltaEmptyOrWhitespace(editor.getContents());
         if (content) {
@@ -566,54 +594,9 @@ $(function() {
           return false;
         }
       }
-      let jsElem = document.querySelector("#imagePicker");
-      let imagepicker = $("#imagePicker");
-      if (imagepicker.length > 0) {
-        if ($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
-          let isUpdate2 = $("#isupdate").val();
-          if (isUpdate2 == "0") {
-            if (imagepicker.val().length == 0) {
-              $("#nav-image-picker").tab("show");
-              $("#collapseimagepicker").collapse("show");
-              imagepicker.addClass("is-invalid");
-              jsElem.setCustomValidity("Vous devez choisir une image");
-              jsElem.reportValidity();
-              valid = false;
-            } else {
-              imagepicker.removeClass("is-invalid");
-              jsElem.setCustomValidity("");
-              jsElem.reportValidity();
-            }
-          }
-        }
-      }
-      if (valid === true) {
+      {
         form.submit();
       }
-    });
-  }
-  let imagePicker = $(".image-picker");
-  if (imagePicker.length > 0) {
-    imagePicker.imagepicker({
-      hide_select: false
-    });
-    imagePicker.on("change", function(e) {
-      let src = $(this).find("option:selected").data("img-src");
-      if (src) {
-        let previewImage2 = $("#previewImage");
-        previewImage2.attr("src", src);
-        let isUpdate2 = $("#isupdate").val();
-        if (isUpdate2 != 0)
-          previewImage2.attr("data-preview", true);
-        previewImage2.parent().find("source").remove();
-        $("#collapseimagepicker").collapse("hide");
-      }
-    });
-    imagePicker.on("focus", function(e) {
-      $("#collapseimagepicker").collapse("show");
-    });
-    imagePicker.on("invalid", function(e) {
-      $("#collapseimagepicker").collapse("show");
     });
   }
 });
