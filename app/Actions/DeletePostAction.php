@@ -31,14 +31,13 @@ class DeletePostAction extends Action
      */
     public function handle($model, View $view)
     {
-        $model->status = 2;
+        $model->delete();
         if ( Cache::has('post_id_'.$model->id) )
             Cache::forget('post_id_'.$model->id);
         if ( Cache::has('post_slug_'.$model->slug) )
             Cache::forget('post_slug_'.$model->slug);
 
         Cache::forget('allPosts');
-        $model->save();
         $this->success("Supprimé avec succès");
     }
 }

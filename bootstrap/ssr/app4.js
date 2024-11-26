@@ -175,7 +175,6 @@ function validateInputFile(element, minWidth = 0, minHeight = 0, maxwidth = 0, m
     image.src = URL.createObjectURL(file);
     image.onload = function() {
       if (image.width < minWidth || image.height < minHeight) {
-        console.log("ko");
         element.classList.add("is-invalid");
         element.setCustomValidity("La taille de l'image est trop petite");
         element.reportValidity();
@@ -424,8 +423,6 @@ $(function() {
         $("#collapseimagepicker").collapse("show");
         if (isUpdate2 == "0") {
           let input2 = $($(event.target).attr("data-target")).find("select");
-          console.log(isUpdate2);
-          console.log(input2);
           input2.prop("required", true);
         }
     }

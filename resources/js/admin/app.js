@@ -90,7 +90,6 @@ function validateInputFile(element,minWidth=0,minHeight=0,maxwidth=0,maxheight=0
         image.onload = function () {
 
             if (image.width < minWidth || image.height < minHeight) {
-                console.log("ko");
                 element.classList.add("is-invalid");
                 element.setCustomValidity("La taille de l'image est trop petite");
                 element.reportValidity();
@@ -380,8 +379,6 @@ $(function () {
                 $("#collapseimagepicker").collapse("show");
                 if(isUpdate == '0') {
                     let input = $($(event.target).attr("data-target")).find("select");
-                    console.log(isUpdate);
-                    console.log(input);
                     input.prop("required", true);
                 }
             default:
@@ -582,37 +579,10 @@ $(function () {
 
 
             }
-
-            /*if(imagepicker.length > 0) {
-                let isUpdate = $("#isupdate").val();
-                if(isUpdate == '0') {
-                    if($("#imageUpload").prop("files").length == 0 && $("#imageUrl").val() == "") {
-                        if (imagepicker.val().length == 0) {
-                            $("#nav-image-picker").tab("show");
-                            $("#collapseimagepicker").collapse("show");
-                            imagepicker.addClass("is-invalid");
-                            imagepicker[0].setCustomValidity("Vous devez choisir une image");
-                            imagepicker[0].reportValidity();
-                            valid=false;
-
-                        } else {
-                            imagepicker.removeClass("is-invalid");
-                            imagepicker[0].setCustomValidity("");
-                            imagepicker[0].reportValidity();
-                        }
-
-                    }
-                }
-            }*/
-
-
             if(valid===true){
                 form.submit();
             }
 
         });
     }
-
-
-
 });
