@@ -185,6 +185,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
 
+
         $post = post::where( 'id', $id )->first();
 
         if (!$post) {

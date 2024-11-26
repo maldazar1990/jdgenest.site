@@ -51,22 +51,27 @@
                                                     $selected = "";
                                                 @endphp
 
+
                                                 <select class="form-select image-picker show-labels show-html w-100" name="imageid" id="imagePicker" aria-label="Default select example"
-                                                @if(!isset($model))required @endif
+                                                    @if(!isset($model))
+                                                        required
+                                                    @endif
                                                 >
                                                     <option value=""></option>
                                                     @foreach(\App\Image::all() as $file)
-                                                        @if(isset($model))
-                                                            @if(old("imageid")??$model->image_id??null == $file->id)
-                                                                @php
-                                                                    $selected = "selected";
-                                                                @endphp
-                                                            @else
-                                                                @php
-                                                                    $selected = "";
-                                                                @endphp
-                                                            @endif
-                                                        @endif
+                                                        <?php
+                                                            $selected = "";
+                                                            if(old("imageid") == $file->id){
+                                                                $selected = "selected";
+                                                            } else {
+                                                                if(isset($model)) {
+                                                                    if($model->image_id == $file->id) {
+                                                                        $selected = "selected";
+                                                                    }
+                                                                }
+                                                            }
+
+                                                        ?>
                                                         <option data-img-src="{{asset($file->file)}}" value="{{$file->id}}" {{$selected}}>{{$file->name}}</option>
                                                     @endforeach
                                                 </select>
