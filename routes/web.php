@@ -31,6 +31,21 @@ Route::feeds();
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+route::get('robots.txt',function (){
+    return response("User-agent: *
+    Disallow: /images
+    Disallow: /admin
+    Disallow: /build
+    Disallow: /font
+    Disallow: /vendor
+    Disallow: /admin/*
+    Disallow: /login
+    Sitemap: https://jdgenest.site/sitemap.xml",200,[
+        'Content-Type' => 'text/plain'
+    ]);
+});
+
 Route::get("sitemap.xml" , function () {
     $SitemapGenerator = Sitemap::create(config()->get('app.url'));
     foreach( \App\post::where('status',0)->get() as $post ) {
