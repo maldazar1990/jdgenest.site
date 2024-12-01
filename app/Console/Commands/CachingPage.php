@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\options_table;
+use App\post;
+use App\Users;
 use http\Url;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
@@ -37,7 +40,7 @@ class CachingPage extends Command
             \Log::info("Status: ".$response->status());
 
             Cache::rememberForever("post_id_".$slug,function() use ($slug){
-                return Post::where("id",$slug)->first();
+                return post::where("id",$slug)->first();
             });
 
             Cache::rememberForever("post_comments_".$post->id,function() use ($post){
@@ -73,7 +76,7 @@ class CachingPage extends Command
         });
 
         Cache::rememberForever('allPosts',function(){
-            return Post::where("post.status",0)
+            return post::where("post.status",0)
                 ->where("created_at","<=",now())
                 ->orderBy('post.created_at', 'desc')
                 ->orderBy('post.id', 'desc')
