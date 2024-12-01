@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /images
+Disallow: /images/*
+Disallow: /admin
+Disallow: /build
+Disallow: /build/*
+Disallow: /font
+Disallow: /vendor
+Disallow: /admin/*
+Disallow: /login
+allow: /contact
+allow: /about
+allow: /post/
+allow: /post
+allow: /post/*
+Sitemap: https://jdgenest.site/sitemap.xml
