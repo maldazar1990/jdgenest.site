@@ -74,6 +74,10 @@ class  ImageConverter
             $file = $this->filenameWithPath . ".webp";
             if (!file_exists($file))
                 imagewebp($img, $file, $quality);
+            else {
+                \File::delete($file);
+                imagewebp($img, $file, $quality);
+            }
             $this->resizeImagesForThumb($img, $this->filenameWithPath, $quality, "webp");
         }
     }
@@ -108,9 +112,9 @@ class  ImageConverter
     {
         if ( $this->exist ) {
             $img = $this->getImage();
-            $this->convertToWebp($img);
-            $this->convertToJpeg($img);
-            $this->convertToAvif($img);
+            $this->convertToWebp($img,50);
+            $this->convertToJpeg($img,50);
+            $this->convertToAvif($img,24);
             return true;
         }
         return false;
@@ -139,13 +143,24 @@ class  ImageConverter
         if ( $this->width < self::MEDIUMWIDTH) {
             if ( !file_exists($newfile . "_small.".$format) ) {
                 call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+            } else {
+                \File::delete($newfile . "_small." . $format);
+                call_user_func($function, $img, $newfile . "_small." . $format, $quality);
             }
             return;
         } else {
             if ( !file_exists($newfile . "_medium.".$format))
-                call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality-10);
+                call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+            else {
+                \File::delete($newfile . "_medium.".$format);
+                call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+            }
             if ( !file_exists($newfile . "_small.".$format))
-                call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality-20);
+                call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality);
+            else {
+                \File::delete($newfile . "_small.".$format);
+                call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality);
+            }
             return;
         }
 

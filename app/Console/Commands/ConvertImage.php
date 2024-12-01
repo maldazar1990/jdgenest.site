@@ -30,7 +30,7 @@ class ConvertImage extends Command
     public function handle()
     {
         Log::info("images convert start");
-        foreach(Image::where("migrated",false)->get() as $imageRecord) {
+        foreach(Image::all() as $imageRecord) {
             $image = $imageRecord->file;
             Log::info($image);
 
