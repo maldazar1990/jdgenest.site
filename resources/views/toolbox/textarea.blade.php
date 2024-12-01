@@ -37,8 +37,6 @@ if (!isset($inputFieldName)){
 
     <label for="quill-editor" class="control-label @error($inputName) is-invalid @enderror  ">{{$inputFieldName}}</label>
     <div id="quill-editor" class="mb-3 @error($inputName) is-invalid @enderror" style="height: 700px;"></div>
-    @error($inputName)
-    <div class="invalid-feedback">{{ $errors->first($inputName) }}</div>
-    @enderror
+    <div class="invalid-feedback" id="quill-error">{{ $errors->first($inputName) }}</div>
 </div>
 @include("toolbox.input",["inputName"=>$inputName,"inputId"=>"quill-value", "inputType"=>"hidden","inputClass"=>"","model"=>$model])

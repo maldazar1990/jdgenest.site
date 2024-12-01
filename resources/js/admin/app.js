@@ -563,21 +563,33 @@ $(function () {
             e.preventDefault();
 
             let valid = true;
+            let quillError = $("#quill-error");
+            let qlEditor = $(".ql-editor");
             if (editor) {
                 let content = isDeltaEmptyOrWhitespace(editor.getContents());
                 if(content) {
                     editor.focus();
-                    editor.insertText(0, 'MANQUE UN TEXTE!!!!!!!!', 'bold', true);
+                    quillError.addClass("is-invalid");
+                    quillError.text("Le contenu de l'article est vide");
+                    quillError.show();
+                    qlEditor.css("border","solid red 1px");
                     return false;
                 }
-
-                if(editor.getLength() < 100) {
+                if(editor.getText().split(/\s+/).length < 200) {
                     editor.focus();
-                    editor.insertText(0, 'MANQUE UN TEXTE!!!!!!!!', 'bold', true);
+                    quillError.addClass("is-invalid");
+                    quillError.text("L'article doit contenir au moins 200 mots");
+                    qlEditor.css("border","solid red 1px");
+                    quillError.show();
+
                     return false;
                 }
 
 
+            } else {
+                quillError.hide();
+                qlEditor.css("border");
+                quill
             }
             if(valid===true){
                 form.submit();

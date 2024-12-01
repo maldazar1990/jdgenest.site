@@ -98,7 +98,7 @@ class OptionsController extends Controller
      * @param  \App\options_table  $options_table
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$formBuilder, $id)
+    public function edit(Request $request, $id)
     {
         $options = options_table::find($id);
 
@@ -106,7 +106,7 @@ class OptionsController extends Controller
             return redirect()->route('admin_options');
         }
 
-        return view('admin.edit', [
+        return view('admin.editOption', [
             'title' => 'Modifier une option',
             'model' => $options,
             'route' => route('admin_options_update', $id),

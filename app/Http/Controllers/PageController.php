@@ -58,7 +58,7 @@ class PageController extends Controller
                 description: "J'aime ma job mais si je peux vous répondre à des questions ou vous aider, je le ferai avec plaisir.",
                 image: asset("images/".$this->userInfo->image."jpeg"),
                 author: $this->userInfo->name,
-                type: "article",
+                type: "website",
             ),
         ]);
 
@@ -145,7 +145,7 @@ class PageController extends Controller
                 description: "Voici mes derniers articles",
                 image: asset("images/".$this->userInfo->image),
                 author: $this->userInfo->name,
-                type: "article",
+                type: "website",
             ),
         ]);
     }
@@ -196,7 +196,7 @@ class PageController extends Controller
             "comments" => $comments,
             'SEOData' => new SEOData(
                 title: $post->title,
-                description: Str::limit(strip_tags($post->post), 50),
+                description: Str::limit(Str($post->post)->squish(), 50),
                 image: $image,
                 author: $post->user->name,
                 type: "article",
@@ -228,7 +228,7 @@ class PageController extends Controller
                 description: $this->userInfo->presentation,
                 image: asset("images/".$this->userInfo->image),
                 author: $this->userInfo->name,
-                type: "article",
+                type: "website",
                 
             ),
         ]);

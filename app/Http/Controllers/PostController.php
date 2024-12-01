@@ -51,9 +51,9 @@ class PostController extends Controller
     public function rules ( $isUpdate = false ) {
         $rules = array(
 
-            'title' => "required|max:255",
+            'title' => "required|max:70",
 
-            "post" => "required",
+            "post" => "required|wordcount:200",
             "tags" => "required",
             "status"=>"required|in:0,1,2",
             "created_at" => "date|required",

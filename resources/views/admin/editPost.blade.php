@@ -103,7 +103,7 @@
                             @include("toolbox.input",["inputName"=>"title","inputFieldName"=>"Titre","inputType"=>"text","inputClass"=>"","model"=>$model,
                                 "attributes"=>[
                                     "minlength"=>5,
-                                    "maxlength"=>config("custom.maxlength"),
+                                    "maxlength"=>70,
                                     "required"=>"required",
                                     "data-model"=>"posts",
                             ]])
