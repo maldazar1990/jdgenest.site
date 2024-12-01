@@ -601,7 +601,6 @@ $(function() {
       } else {
         quillError.hide();
         qlEditor.css("border");
-        quill;
       }
       {
         form.submit();
