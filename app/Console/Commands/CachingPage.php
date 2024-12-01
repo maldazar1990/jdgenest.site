@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use http\Url;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class CachingPage extends Command
@@ -28,11 +29,22 @@ class CachingPage extends Command
     public function handle()
     {
         foreach( \App\post::where('status',0)->get() as $post ) {
-            $response = Http::get(route("post", $post->slug));
-            echo "Caching post: ".$post->slug."\n";
+            $slug = $post->slug;
+            $response = Http::get(route("post", $slug));
+            echo "Caching post: ".$slug."\n";
             echo "Status: ".$response->status()."\n";
-            \Log::info("Caching post: ".$post->slug);
+            \Log::info("Caching post: ".$slug);
             \Log::info("Status: ".$response->status());
+
+            Cache::rememberForever("post_id_".$slug,function() use ($slug){
+                return Post::where("id",$slug)->first();
+            });
+
+            Cache::rememberForever("post_comments_".$post->id,function() use ($post){
+                return $post->comments()->get();
+            });
+
+
 
         }
         $response = Http::get(route("default",));
@@ -47,6 +59,27 @@ class CachingPage extends Command
         echo "Caching post: contact \n";
         echo "Status: ".$response->status()."\n";
         \Log::info("Status: ".$response->status());
+
+
+        if (Cache::has("optionsArray")) {
+             Cache::get("optionsArray");
+        } else {
+            $options = options_table::all()->pluck('option_value', 'option_name')->toArray();
+            Cache::put("optionsArray",$options);
+        }
+
+        Cache::rememberForever('userInfo',function(){
+            return Users::find(1)->first();
+        });
+
+        Cache::rememberForever('allPosts',function(){
+            return Post::where("post.status",0)
+                ->where("created_at","<=",now())
+                ->orderBy('post.created_at', 'desc')
+                ->orderBy('post.id', 'desc')
+
+                ->paginate(config("app.maxblog"));
+        });
 
     }
 }

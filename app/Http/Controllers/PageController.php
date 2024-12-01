@@ -106,11 +106,8 @@ class PageController extends Controller
 
                 ->paginate(config("app.maxblog"));
         } else {
-            $pageTag = 1;
-            if ( $request->has('page') ) {
-                $pageTag = $request->page;
-            }
-            $posts =  Cache::rememberForever('allPosts'.$pageTag,function(){
+
+            $posts =  Cache::rememberForever('allPosts',function(){
                 return Post::where("post.status",0)
                     ->where("created_at","<=",now())
                     ->orderBy('post.created_at', 'desc')
