@@ -75,7 +75,8 @@ class CachingPage extends Command
             return Users::find(1)->first();
         });
 
-        Cache::rememberForever('allPosts',function(){
+
+        Cache::rememberForever('post_page_1',function(){
             return post::where("post.status",0)
                 ->where("created_at","<=",now())
                 ->orderBy('post.created_at', 'desc')

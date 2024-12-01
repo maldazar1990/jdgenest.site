@@ -42,7 +42,12 @@ class DeletePostsAction extends Action
             if ( Cache::has('post_slug_'.$id) )
                 Cache::forget('post_slug_'.$id);
         }
-        Cache::forget('allPosts');
+
+        $page = post::where('status', 0)->count() / config('app.maxblog');
+        for ($i = 0; $i <= $page; $i++) {
+            if ( Cache::has('post_page_'.$i) )
+                Cache::forget('post_page_'.$i);
+        }
         $this->success("Supprimés avec succès");
     }
 }

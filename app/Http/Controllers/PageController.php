@@ -107,7 +107,13 @@ class PageController extends Controller
                 ->paginate(config("app.maxblog"));
         } else {
 
-            $posts =  Cache::rememberForever('allPosts',function(){
+            $page = $request->page;
+
+            if($page == null){
+                $page = 1;
+            }
+
+            $posts =  Cache::rememberForever('post_page_'.$page,function(){
                 return Post::where("post.status",0)
                     ->where("created_at","<=",now())
                     ->orderBy('post.created_at', 'desc')
