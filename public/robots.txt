@@ -7,7 +7,6 @@ Disallow: /build/*
 Disallow: /font
 Disallow: /vendor
 Disallow: /admin/*
-Disallow: /login
 allow: /contact
 allow: /about
 allow: /post/
