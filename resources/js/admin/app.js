@@ -589,7 +589,6 @@ $(function () {
             } else {
                 quillError.hide();
                 qlEditor.css("border");
-                quill
             }
             if(valid===true){
                 form.submit();

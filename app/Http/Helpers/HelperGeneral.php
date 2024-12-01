@@ -4,14 +4,14 @@ namespace App\Http\Helpers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Stevebauman\Hypertext\Transformer;
 
 define('PATHIMAGE',$path = \public_path("images/"));
 
 class HelperGeneral {
 
     static function getFirstWordFromText(string $text, int $length = 30): string{
-        $smartpost = strip_tags($text);
-        $smartpost = str_replace('&nbsp;', ' ', $smartpost);
+        $smartpost = (new Transformer())->toText($text);
         $smartpost =  Str::words($smartpost, $length);
         return $smartpost;
     }

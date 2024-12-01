@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Mail;
+use Stevebauman\Hypertext\Transformer;
 
 class PageController extends Controller
 {
@@ -189,6 +190,13 @@ class PageController extends Controller
         $comments = Cache::rememberForever("post_comments_".$post->id,function() use ($post){
             return $post->comments()->get();
         });
+
+        $transformer = new Transformer();
+
+
+        $description = $transformer->toText($post->post);
+
+
         return view('theme.blog.post',[
             'options' => $this->options,
             'userInfo' => $this->userInfo,
@@ -196,7 +204,7 @@ class PageController extends Controller
             "comments" => $comments,
             'SEOData' => new SEOData(
                 title: $post->title,
-                description: Str::limit(Str($post->post)->squish(), 50),
+                description: Str::limit($description , 50),
                 image: $image,
                 author: $post->user->name,
                 type: "article",

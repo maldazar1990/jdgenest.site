@@ -31,6 +31,7 @@
         "spatie/laravel-sitemap": "^6.2",
         "spatie/temporary-directory": "^2.2",
         "squizlabs/php_codesniffer": "^3.5",
+        "stevebauman/hypertext": "^1.1",
         "symfony/http-client": "^6.1",
         "symfony/postmark-mailer": "^6.1",
         "verschuur/laravel-robotstxt": "^5.1"
