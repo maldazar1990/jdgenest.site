@@ -73,10 +73,18 @@ class  ImageConverter
         if ($this->exist) {
             $file = $this->filenameWithPath . ".webp";
             if (!file_exists($file))
-                imagewebp($img, $file, $quality);
+                try {
+                    imagewebp($img, $file, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             else {
                 \File::delete($file);
-                imagewebp($img, $file, $quality);
+                try {
+                    imagewebp($img, $file, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             }
             $this->resizeImagesForThumb($img, $this->filenameWithPath, $quality, "webp");
         }
@@ -87,7 +95,19 @@ class  ImageConverter
         if ($this->exist){
             $file = $this->filenameWithPath . ".avif";
             if (!file_exists($file))
-                imageavif($img, $file, $quality);
+                try {
+                    imageavif($img, $file, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
+            else {
+                \File::delete($file);
+                try {
+                    imageavif($img, $file, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
+            }
             $this->resizeImagesForThumb($img, $this->filenameWithPath, $quality, "avif");
         }
         return;
@@ -102,6 +122,16 @@ class  ImageConverter
                 imagealphablending($img, true);
                 imagesavealpha($img, true);
                 imagejpeg($img, $file, $quality);
+            } else {
+                \File::delete($file);
+                try {
+                    imagepalettetotruecolor($img);
+                    imagealphablending($img, true);
+                    imagesavealpha($img, true);
+                    imagejpeg($img, $file, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             }
             $this->resizeImagesForThumb($img, $this->filenameWithPath, $quality,"jpeg");
         }
