@@ -21,6 +21,22 @@
     @endif
     @vite(['resources/sass/app.scss'])
     @vite(['resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js" integrity="sha512-LW9+kKj/cBGHqnI4ok24dUWNR/e8sUD8RLzak1mNw5Ja2JYCmTXJTF5VpgFSw+VoBfpMvPScCo2DnKTIUjrzYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript"> (function() {
+        var css = document.createElement('link');
+        css.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css';
+        css.rel = 'stylesheet';
+        css.type = 'text/css';
+        css.crossorigin="anonymous";
+        css.referrerpolicy="no-referrer";
+        css.async = true;
+        document.getElementsByTagName('head')[0].appendChild(css); })();
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js';
+            script.async = true;
+            document.getElementsByTagName('head')[0].appendChild(script);
+        })();
+    </script>
 </head>
