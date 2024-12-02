@@ -21,6 +21,32 @@
     @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Literata:700,900&display=swap"
+            media="print"
+            onload="this.media='all'"
+    />
+    <noscript>
+        <link
+                href="https://fonts.googleapis.com/css?family=Literata:700,900&display=swap"
+                rel="stylesheet"
+                type="text/css"
+        />
+    </noscript>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400&display=swap"
+            media="print"
+            onload="this.media='all'"
+    />
+    <noscript>
+        <link
+                href="https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400&display=swap"
+                rel="stylesheet"
+                type="text/css"
+        />
+    </noscript>
     @vite(['resources/sass/app.scss'])
     @vite(['resources/js/app.js'])
 </head>

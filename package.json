@@ -20,7 +20,6 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.7.1",
         "bootstrap-5": "npm:bootstrap@^5.3.3",
-        "cryptojs": "^2.5.3",
         "font-awesome": "^4.7.0",
         "highlight.js": "^11.10.0",
         "mini-css-extract-plugin": "^2.9.1",
