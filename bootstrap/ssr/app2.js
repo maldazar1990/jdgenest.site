@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/js/all.min.js";
 var top = "top";
 var bottom = "bottom";
 var right = "right";

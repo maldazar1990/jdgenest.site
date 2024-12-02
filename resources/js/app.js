@@ -1,4 +1,5 @@
 import '../../node_modules/bootstrap-5/';
+import '@fortawesome/fontawesome-free/js/all.min.js';
 
 function cleanByTag (e) {
     let classOrder = this.dataset.class;

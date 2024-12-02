@@ -75,6 +75,8 @@
                 src="{{asset($image)}}"
                 alt="image non présent"
                 id="previewImage"
+                decoding="async"
+                loading="lazy"
                 style="{{$css}}"
                 width="{{$width}}"
                 height="{{$height}}"

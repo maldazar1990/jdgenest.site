@@ -9,7 +9,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-De9MlvvV.js",
+    "file": "assets/app-BZZIiJee.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
@@ -20,7 +20,7 @@
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-CB5Ahi-G.css",
+    "file": "assets/app-Rd4OX6Nh.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }

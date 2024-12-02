@@ -19,24 +19,8 @@
     @if(isset($SEOData))
         {!! seo($SEOData) !!}
     @endif
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     @vite(['resources/sass/app.scss'])
     @vite(['resources/js/app.js'])
-    <script type="text/javascript"> (function() {
-        var css = document.createElement('link');
-        css.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css';
-        css.rel = 'stylesheet';
-        css.type = 'text/css';
-        css.crossorigin="anonymous";
-        css.referrerpolicy="no-referrer";
-        css.async = true;
-        document.getElementsByTagName('head')[0].appendChild(css); })();
-    </script>
-    <script type="text/javascript">
-        (function() {
-            var script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js';
-            script.async = true;
-            document.getElementsByTagName('head')[0].appendChild(script);
-        })();
-    </script>
 </head>
