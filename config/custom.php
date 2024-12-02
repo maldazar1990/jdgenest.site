@@ -1,10 +1,10 @@
 <?php
-$sizeinKo = 4094;
+$sizeinKo = 2048;
 $maxsize = $sizeinKo*1024;
-$maxwidth = 1280;
-$maxheight = 720;
-$minwidth = 480;
-$minheight = 320;
+$maxwidth = 1920;
+$maxheight = 1080;
+$minwidth = 720;
+$minheight = 480;
 $extensions = "jpg,jpeg,png,avif,webp";
 
 $extensionsArray = explode(",",$extensions);

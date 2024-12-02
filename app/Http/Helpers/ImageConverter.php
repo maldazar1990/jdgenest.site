@@ -172,24 +172,49 @@ class  ImageConverter
 
         if ( $this->width < self::MEDIUMWIDTH) {
             if ( !file_exists($newfile . "_small.".$format) ) {
-                call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                try {
+                    call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             } else {
                 \File::delete($newfile . "_small." . $format);
-                call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                try {
+                    call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             }
             return;
         } else {
             if ( !file_exists($newfile . "_medium.".$format))
-                call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+
+                try {
+                    call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             else {
                 \File::delete($newfile . "_medium.".$format);
-                call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+                try {
+                    call_user_func($function,$this->resizeImage($this->width/2,$this->height/2,$img), $newfile . "_medium.".$format,$quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             }
             if ( !file_exists($newfile . "_small.".$format))
-                call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality);
+                try {
+                    call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             else {
                 \File::delete($newfile . "_small.".$format);
-                call_user_func($function,$this->resizeImage($this->width/3,$this->height/3,$img), $newfile . "_small.".$format,$quality);
+                try {
+                    call_user_func($function, $img, $newfile . "_small." . $format, $quality);
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                }
             }
             return;
         }
