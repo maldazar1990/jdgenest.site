@@ -53,7 +53,7 @@ class PostController extends Controller
 
             'title' => "required|max:70",
 
-            "post" => "required|wordcount:200",
+            "post" => "required|min:1000",
             "tags" => "required",
             "status"=>"required|in:0,1,2",
             "created_at" => "date|required",
