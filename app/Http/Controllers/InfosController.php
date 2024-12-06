@@ -201,7 +201,8 @@ class InfosController extends Controller
                 $infos->tags()->attach(Tags::find($tagsId));
             }
         }
-        return back()->flash('message', 'Enregistrement effectué avec succès');
+       $request->session()->flash('message', 'Enregistrement effectué avec succès');
+        return redirect()->route('admin_infos');
 
     }
 
