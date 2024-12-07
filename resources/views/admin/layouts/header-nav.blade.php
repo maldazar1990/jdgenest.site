@@ -2,8 +2,7 @@
     @php
     $images = auth()->user()->getImages();
     if($images != null){
-        $image = end($images);
-        $image = current($image);
+        $image =auth()->user()->getBasicImage();
     } else {
         $image = "images/default.webp";
 

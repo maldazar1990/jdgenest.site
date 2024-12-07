@@ -175,12 +175,9 @@ class PageController extends Controller
 
         $image = "";
         if ($post->image_id != null) {
-            $post->getImages();
             $images = $post->getImages();
             if($images != null){
-                $images = end($images);
-                $image = current($images);
-                $image = asset("/".$image);
+                $image = asset("/".$post->GetBasicImage());
             } else {
                 $image = asset(config("custom.default"));
             }
@@ -199,6 +196,12 @@ class PageController extends Controller
 
         $description = $transformer->toText($post->post);
 
+
+        if (Str::isUrl($image)) {
+            $image = $image;
+        } else {
+            $image = asset("images/".$image);
+        }
 
         return view('theme.blog.post',[
             'options' => $this->options,
@@ -310,7 +313,7 @@ class PageController extends Controller
         $comment->post_id = $id;
         $comment->ip = $request->ip();
         $comment->save();
-
+        Cache::delete("post_comments_".$id);
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''));
 
         return back()->with('message', 'Ton commentaire a été envoyé avec succès');
