@@ -68,12 +68,17 @@
                             @endforeach
                             </ul>
                         @endif
+                        @if(isset($message))
+                            <div class="alert alert-success">
+                                {{$message}}
+                            </div>
+                        @endif
                         <style>
                             .emailfield{
                                 display:none;
                             }
                         </style>
-                        <h4><label for="patate" style="control-label">Ton commentaire:</label></h4>
+                        <h4><label for="patate" style="control-label" id="comment">Ton commentaire:</label></h4>
 
 
 

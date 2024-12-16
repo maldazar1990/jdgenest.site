@@ -317,6 +317,6 @@ class PageController extends Controller
         Cache::delete("post_comments_".$id);
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''));
 
-        return Redirect::route('post',post::find($id)->slug)->with('message', 'Ton commentaire a été envoyé avec succès');
+        return Redirect::to(route('post',post::find($id)->slug)."#comment");
     }
 }
