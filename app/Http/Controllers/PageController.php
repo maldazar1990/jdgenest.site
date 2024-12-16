@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
@@ -304,7 +305,7 @@ class PageController extends Controller
             'patate.max' => 'Le champ doit être inférieur à 1024 caractères',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return Redirect::route('post',post::find($id)->slug)->withErrors($validator)->withInput();
         }
 
         $comment = new Comment();
@@ -316,6 +317,6 @@ class PageController extends Controller
         Cache::delete("post_comments_".$id);
         dispatch(new SendEmailBasicJob(env("MAIL_PERSO_EMAIL"),"Fuck un commentaire","mail.notif",''));
 
-        return back()->with('message', 'Ton commentaire a été envoyé avec succès');
+        return Redirect::route('post',post::find($id)->slug)->with('message', 'Ton commentaire a été envoyé avec succès');
     }
 }
