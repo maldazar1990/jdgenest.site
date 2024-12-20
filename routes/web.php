@@ -89,6 +89,13 @@ Route::group(['middleware' => 'firewall.all'], function () {
     Route::get("recupForm",function(){
         return view("auth.recup-code");
     })->name("recupForm");
+
+    Route::group(['prefix'=>'api'],function(){
+        Route::post('comment', 'ApiController@PostComment')->name('api_comment');
+        Route::get('comment/{id}', 'ApiController@GetComment')->name('api_comment_get')->where("id", "[0-9]+");
+        Route::post('contact', 'ApiController@PostContact')->name('api_contact');
+    });
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user",'firewall.all']], function () {

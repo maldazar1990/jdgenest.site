@@ -319,4 +319,6 @@ class PageController extends Controller
 
         return Redirect::to(route('post',post::find($id)->slug)."#comment");
     }
+
+
 }
