@@ -95,7 +95,7 @@
 
                     </form>
                 </div>
-                <comment-element id="{{$post->id}}" commentList="{{$comments->toArray()}}">
+                <comment-element id="{{$post->id}}" commentList="{{$comments->toJson()}}">
                     <p slot="comment">test</p>
                 </comment-element>
                 <div id="fb-root"></div>

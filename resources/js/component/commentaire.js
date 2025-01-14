@@ -16,18 +16,16 @@ export class Commentaire extends LitElement {
 
 
   render() {
-    console.log(this.commentlist);
-    console.log(this.id);
     return html`
         <slot name="comment">
 
           
         </slot>
         ${
-
+            
             this.commentlist.map(
-                (comment) =>
-                    html`<comment-text .content=${comment}>`
+                (post) =>
+                    html`<comment-text .content=${post}>`
             )
         }
         <h2>Commentaire</h2>
@@ -51,7 +49,7 @@ export class Commentaire extends LitElement {
       this.comment.value = '';
         submit.disabled = true;
 
-        axios.post('https://'+window.location.host+'/api/comment', {
+        axios.post(APIURI+'comment', {
           patate: value,
           id:this.id,
         }, {
@@ -66,7 +64,7 @@ export class Commentaire extends LitElement {
             console.log(error);
             }
         );
-        axios.get('https://'+window.location.host+'/api/comment/'+this.id).then(function(response){
+        axios.get(APIURI+'comment/'+this.id).then(function(response){
             this.commentlist = [...this.commentlist,
                 response.comments.map(
                     (comment) => this.commentLis.exists()

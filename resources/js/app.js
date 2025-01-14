@@ -2,7 +2,7 @@ import '../../node_modules/bootstrap-5/';
 import '@fortawesome/fontawesome-free/js/all.min.js';
 import "./component/commentaire.js";
 
-
+const APIURI = 'https://'+window.location.host+'/api/';
 
 function cleanByTag (e) {
     let classOrder = this.dataset.class;

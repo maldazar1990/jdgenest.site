@@ -14,6 +14,7 @@ export class CommentText extends LitElement {
 
 
     render() {
+        console.log(this.content.value);
     return html`
         
             <p slot="comment">${this.content.value}</p>
