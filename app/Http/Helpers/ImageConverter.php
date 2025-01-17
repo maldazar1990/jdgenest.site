@@ -140,11 +140,13 @@ class  ImageConverter
 
     function convertAll(): bool
     {
+        $convertRatio = 50;
         if ( $this->exist ) {
             $img = $this->getImage();
-            $this->convertToWebp($img,50);
-            $this->convertToJpeg($img,50);
-            $this->convertToAvif($img,24);
+
+            $this->convertToWebp($img,$convertRatio);
+            $this->convertToJpeg($img,$convertRatio);
+            $this->convertToAvif($img,$convertRatio);
             return true;
         }
         return false;

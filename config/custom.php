@@ -16,6 +16,7 @@ $extensionInputValidation = implode(",",$extensionsArray);
 return [
     "default" => "images/default.webp",
     "maxsize" => $maxsize,
+    "max_convert_size" => 10240,
     "maxwidth" => $maxwidth,
     "maxheight" => $maxheight,
     "minwidth" => $minwidth,

@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Http\Helpers\ImageConverter;
 use App\Image;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
@@ -50,7 +52,17 @@ class ConvertImage extends Command
             $extension = "";
             if (!isset($filename[1])) {
 
+                $size = filesize($imageWithPath);
+                if($size < Config::get('custom.max_convert_size')) {
+                    Log::info("image size is less than 10kb");
+                    $imageRecord->migrated = true;
+                    $imageRecord->save();
+                    continue;
+                }
+
                 $format = mime_content_type( $imageWithPath);
+
+
                 switch ($format) {
                     case "image/jpeg":
                         $imageRecord->file = $filename[0] . ".jpg";
