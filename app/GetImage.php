@@ -81,29 +81,26 @@ trait GetImage
     {
         if( isset($this->image_id) ) {
             $id = $this->image_id;
-            return Cache::rememberForever('basic_image_' . $this->image_id, function () use ($id) {
-                $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
-                    return Image::where('id', $id)->first();
-                });
-                if ($imageDb) {
+            $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
+                return Image::where('id', $id)->first();
+            });
+            if ($imageDb) {
 
-                    $files = File::glob(public_path("images/" . $imageDb->name) . "*.*");
-                    if (empty($files)) {
-                        return  config("custom.default");
-                    }
-
-                    $image = config("custom.default");
-                    foreach ($files as $file) {
-                        $justName = explode('/', $file);
-                        $image = "images/" . end($justName);
-                        break;
-                    }
-
-                    return $image;
-                } else {
+                $files = File::glob(public_path("images/" . $imageDb->name) . "*.*");
+                if (empty($files)) {
                     return  config("custom.default");
                 }
-            });
+
+                $image = config("custom.default");
+                foreach ($files as $file) {
+                    $justName = explode('/', $file);
+                    $image = "images/" . end($justName);
+                    break;
+                }
+                return $image;
+            } else {
+                return  config("custom.default");
+            }
         }
         return  config("custom.default");
     }
