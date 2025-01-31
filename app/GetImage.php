@@ -12,11 +12,11 @@ trait GetImage
     {
         if( isset($this->image_id) ) {
             $id = $this->image_id;
-            if ($this->created_at > now()->subDay()) {
-                $imageDb = Image::where('id', $id)->first();
-                if($imageDb == null){
-                    return null;
-                }
+            $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
+                return Image::where('id', $id)->first();
+            });
+            if ($imageDb) {
+
                 $files = File::glob(public_path("images/" . $imageDb->name) . "*");
                 if (empty($files)) {
                     return null;
@@ -39,40 +39,9 @@ trait GetImage
                 }
 
                 return $images;
+            } else {
+                return null;
             }
-            
-            return Cache::rememberForever('images_' . $this->image_id , function () use ($id) {
-                $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
-                    return Image::where('id', $id)->first();
-                });
-                if ($imageDb) {
-
-                    $files = File::glob(public_path("images/" . $imageDb->name) . "*");
-                    if (empty($files)) {
-                        return null;
-                    }
-
-                    $images = [];
-                    foreach ($files as $file) {
-                        $justName = explode('/', $file);
-                        $extension = File::extension($file);
-                        if ($extension) {
-                            if (Str::contains(end($justName), 'medium')) {
-                                $size = "medium";
-                            } else if (Str::contains(end($justName), 'small')) {
-                                $size = "small";
-                            } else {
-                                $size = "large";
-                            }
-                            $images[$extension][$size] = "images/" . end($justName);
-                        }
-                    }
-
-                    return $images;
-                } else {
-                    return null;
-                }
-            });
         }
         return null;
     }
