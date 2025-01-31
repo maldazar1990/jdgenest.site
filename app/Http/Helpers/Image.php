@@ -103,6 +103,7 @@ class  Image {
 
         if ( \App\Image::where("name",$nameWithoutExtension)->orWhere("file","like","%".$nameWithoutExtension."%")->exists() ) {
             $nameWithoutExtension = Str::slug($nameWithoutExtension."-".time(),"_");
+            $name = $nameWithoutExtension.".".$file->getClientOriginalExtension();
         }
         
         $file->move(\storage_path("images/"), $name);
