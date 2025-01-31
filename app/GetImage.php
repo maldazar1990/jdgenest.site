@@ -12,7 +12,32 @@ trait GetImage
     {
         if( isset($this->image_id) ) {
             $id = $this->image_id;
-            return Cache::rememberForever('images_' . $this->image_id, function () use ($id) {
+            if ($this->created_at < now()->subDay()) {
+                $files = File::glob(public_path("images/" . $this->name) . "*");
+                if (empty($files)) {
+                    return null;
+                }
+
+                $images = [];
+                foreach ($files as $file) {
+                    $justName = explode('/', $file);
+                    $extension = File::extension($file);
+                    if ($extension) {
+                        if (Str::contains(end($justName), 'medium')) {
+                            $size = "medium";
+                        } else if (Str::contains(end($justName), 'small')) {
+                            $size = "small";
+                        } else {
+                            $size = "large";
+                        }
+                        $images[$extension][$size] = "images/" . end($justName);
+                    }
+                }
+
+                return $images;
+            }
+            
+            return Cache::remember('images_' . $this->image_id, 60*60*24 , function () use ($id) {
                 $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
                     return Image::where('id', $id)->first();
                 });
