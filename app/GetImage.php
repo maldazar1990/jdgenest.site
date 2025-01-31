@@ -87,7 +87,7 @@ trait GetImage
                 });
                 if ($imageDb) {
 
-                    $files = File::glob(public_path("images/" . $imageDb->name) . "*.webp");
+                    $files = File::glob(public_path("images/" . $imageDb->name) . "*.*");
                     if (empty($files)) {
                         return  config("custom.default");
                     }
