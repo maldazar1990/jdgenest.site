@@ -12,8 +12,12 @@ trait GetImage
     {
         if( isset($this->image_id) ) {
             $id = $this->image_id;
-            if ($this->created_at < now()->subDay()) {
-                $files = File::glob(public_path("images/" . $this->name) . "*");
+            if ($this->created_at > now()->subDay()) {
+                $imageDb = Image::where('id', $id)->first();
+                if($imageDb == null){
+                    return null;
+                }
+                $files = File::glob(public_path("images/" . $imageDb->name) . "*");
                 if (empty($files)) {
                     return null;
                 }
