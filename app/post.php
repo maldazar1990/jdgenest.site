@@ -74,7 +74,10 @@ class post extends Model  implements Feedable
 
     public static function getFeedItems()
     {
-        return post::limit(10)->orderBy('updated_at', 'desc')->get();
+        return post::limit(10)
+        ->where("post.status",0)
+        ->orderBy('updated_at', 'desc')
+        ->get();
     }
 
     protected static function booted()

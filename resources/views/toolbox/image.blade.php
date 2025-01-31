@@ -49,7 +49,7 @@
             @php
 
                 $files = $modelWithImage->getImages();
-
+                dump($files);
             @endphp
             @if($imageConverted != 2 and $files )
 

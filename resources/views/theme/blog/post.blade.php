@@ -100,8 +100,7 @@
                     <p slot="comment">test</p>
                 </comment-element>*/?>
                 <div id="fb-root"></div>
-                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_CA/sdk.js#xfbml=1&version=v15.0&appId=423139100007993&autoLogAppEvents=1" nonce="Whz0B25a"></script>
-                <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjdgenest.site%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a></div>
+            
                 <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: fr_CA</script>
                 <script type="IN/Share" data-url="{{url()->current()}}"></script>
             </div>

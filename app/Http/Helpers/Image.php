@@ -106,7 +106,17 @@ class  Image {
         }
         
         $file->move(\storage_path("images/"), $name);
+        $i = 0;
+        while ( !File::exists(\storage_path("images/").$name) ){
+            if ( $i > 10 ){
+                Log::error("Image not found in storage");
+                return null;
+            }
+            sleep(10);
+            $i++;
+        }
 
+        
         $imageDb = \App\Image::where("hash",md5_file(\storage_path("images/"). $name))->first();
         if ( $imageDb ){
             File::delete(\storage_path("images/"). $name);
