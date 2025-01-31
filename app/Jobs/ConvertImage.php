@@ -6,12 +6,14 @@ use App\HelperGeneral;
 use App\Http\Helpers\ImageConverter;
 use App\Image;
 use App\post;
+use Doctrine\Common\Cache\Cache;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache as FacadesCache;
 use Illuminate\Support\Facades\Log;
 
 class ConvertImage implements ShouldQueue
@@ -45,8 +47,8 @@ class ConvertImage implements ShouldQueue
                     return ;
                 } else {
                     Log::info("image convert convertion end");
-
-
+                    FacadesCache::forget('images_' . $this->model->image_id);
+                    Log::info("image convert convertion cache forget");
                     $image = $filename[0] . ".webp";
                     Log::info($image);
                     $this->model->migrated = true;
