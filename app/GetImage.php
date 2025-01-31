@@ -37,7 +37,7 @@ trait GetImage
                 return $images;
             }
             
-            return Cache::remember('images_' . $this->image_id, 60*60*24 , function () use ($id) {
+            return Cache::rememberForever('images_' . $this->image_id , function () use ($id) {
                 $imageDb = Cache::rememberForever("modelImage_" . $this->image_id, function () use ($id) {
                     return Image::where('id', $id)->first();
                 });
