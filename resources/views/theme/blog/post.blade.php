@@ -99,8 +99,7 @@
                 <comment-element id="{{$post->id}}" commentList="{{$comments->toJson()}}">
                     <p slot="comment">test</p>
                 </comment-element>*/?>
-                <div id="fb-root"></div>
-            
+           
                 <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: fr_CA</script>
                 <script type="IN/Share" data-url="{{url()->current()}}"></script>
             </div>
