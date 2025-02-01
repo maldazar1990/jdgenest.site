@@ -176,6 +176,7 @@ class PageController extends Controller
         }
 
         $image = "";
+        $isUrl = false;
         if ($post->image_id != null) {
             $images = $post->getImages();
             if($images != null){
@@ -191,6 +192,7 @@ class PageController extends Controller
             }
         } else {
             if(Str::isUrl($post->image_url)){
+                $isUrl = true;
                 $image = $post->image_url;
             }
         }
@@ -203,7 +205,7 @@ class PageController extends Controller
         $description = $transformer->toText($post->post);
 
         $ogimage = false;
-        if (Str::isUrl($image)) {
+        if ($isUrl) {
             $image = $image;
         } else {
             $localImage = public_path($post->GetBasicImage());
