@@ -68,7 +68,7 @@ class TestFuzzBlock
 
             return $ip['origin'];
         });
-        if ( (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) or $ip == $publicIp ) {
+        if ( (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) and $ip != $publicIp ) {
             if ( $request->isMethod("GET") and !$request->ajax() ) {
                 if (Cache::has("url")) {
                     $urls = Cache::get("url");
