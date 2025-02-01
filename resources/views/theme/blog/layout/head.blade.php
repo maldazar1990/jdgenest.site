@@ -18,6 +18,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(isset($SEOData))
         {!! seo($SEOData) !!}
+        @if(isset($ogData))
+            @if($ogData)
+                @foreach ($ogData as $key => $og)
+                    <meta property="{{$key}}" content="{{$og}}" />
+                    
+                @endforeach
+            @endif
+        @endif
+
     @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

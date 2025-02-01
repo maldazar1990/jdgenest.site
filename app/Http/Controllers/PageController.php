@@ -145,6 +145,7 @@ class PageController extends Controller
             "tags" => $tags,
             "title" => "Bienvenue sur mon blog",
             'message'=> "Voici mes derniers articles",
+           
             'SEOData' => new SEOData(
                 title: "Bienvenue sur mon blog",
                 description: "Voici mes derniers articles",
@@ -178,7 +179,13 @@ class PageController extends Controller
         if ($post->image_id != null) {
             $images = $post->getImages();
             if($images != null){
-                $image = asset("/".$post->GetBasicImage());
+                $image = $post->GetBasicImage();
+                if($image == null){
+                    $image = asset(config("custom.default"));
+                } else {
+                    $image = asset("/".$post->GetBasicImage());
+                }
+
             } else {
                 $image = asset(config("custom.default"));
             }
@@ -193,15 +200,24 @@ class PageController extends Controller
         });
 
         $transformer = new Transformer();
-
-
         $description = $transformer->toText($post->post);
 
-
+        $ogimage = false;
         if (Str::isUrl($image)) {
             $image = $image;
         } else {
-            $image = asset("images/".$image);
+            $localImage = public_path($post->GetBasicImage());
+            if(\file_exists($localImage)) {
+                $imageSize = getimagesize($localImage);
+                $ogimage = [
+                    'og:image:type' => mime_content_type($localImage),
+                    'og:image:width' => $imageSize[0],
+                    'og:image:height' => $imageSize[1],
+                    'og:image:alt' =>  asset(config("custom.default"))
+
+                ];
+            }
+            
         }
 
         return view('theme.blog.post',[
@@ -209,6 +225,7 @@ class PageController extends Controller
             'userInfo' => $this->userInfo,
             'post' => $post,
             "comments" => $comments,
+            "ogData" => $ogimage,
             'SEOData' => new SEOData(
                 title: $post->title,
                 description: Str::limit($description , 50),
