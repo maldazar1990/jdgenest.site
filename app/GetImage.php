@@ -55,9 +55,24 @@ trait GetImage
             });
             if ($imageDb) {
 
-                $files = File::glob(public_path("images/" . $imageDb->name) . "*.*");
+                
                 if (empty($files)) {
-                    return  config("custom.default");
+                    $files = File::glob(public_path("images/" . $imageDb->name) . "*.jpeg");
+                    if(empty($files)){
+                        $files = File::glob(public_path("images/" . $imageDb->name) . "*.jpg");
+                        if(empty($files)){
+                            $files = File::glob(public_path("images/" . $imageDb->name) . "*.webp");
+                            if(empty($files)){
+                                $files = File::glob(public_path("images/" . $imageDb->name) . "*.png");
+                                if(empty($files)){
+                                    $files = File::glob(public_path("images/" . $imageDb->name) . "*.avif");
+                                    if(empty($files)){
+                                        return config("custom.default");
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 $image = config("custom.default");
