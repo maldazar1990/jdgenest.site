@@ -1,7 +1,6 @@
 @extends('theme.blog.layout.app')
 
 @section("content")
-
     <div class="d-none d-sm-block">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -33,6 +32,8 @@
                 <div class="textcontent">
                     {!! trim($post->post) !!}
                 </div>
+		<script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: fr_CA</script>
+                <script type="IN/Share" data-url="{{url()->current()}}"></script>
                 <div class="mt-5 mb-5">
                     <h3>Section commentaires</h3>
                     <div class="row  d-flex justify-content-center">
@@ -100,8 +101,6 @@
                     <p slot="comment">test</p>
                 </comment-element>*/?>
            
-                <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: fr_CA</script>
-                <script type="IN/Share" data-url="{{url()->current()}}"></script>
             </div>
         </div>
     </article>
