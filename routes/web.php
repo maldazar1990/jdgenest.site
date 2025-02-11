@@ -3,6 +3,7 @@
 use App\Http\Controllers\TwoFactorAuthController;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -35,12 +36,11 @@ Route::feeds();
 
 Route::get("sitemap.xml" , function () {
     $SitemapGenerator = Sitemap::create(config()->get('app.url'));
-    foreach( \App\post::where('status',0)->get() as $post ) {
+    foreach( \App\post::where('status',0)->orderBy('updated_at')->get() as $post ) {
         $SitemapGenerator
             ->add( Url::create(route("post", $post->slug))
                 ->setLastModificationDate(Carbon::parse($post->updated_at))
                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
-                ->setPriority(0.7)
             );
 
     }
@@ -48,17 +48,14 @@ Route::get("sitemap.xml" , function () {
     $SitemapGenerator->add( Url::create(route("default",))
         ->setLastModificationDate(Carbon::today())
         ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
-        ->setPriority(1)
     );
     $SitemapGenerator->add( Url::create(route("about"))
         ->setLastModificationDate(Carbon::today())
         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-        ->setPriority(0.8)
     );
     $SitemapGenerator->add( Url::create(route("contact"))
         ->setLastModificationDate(Carbon::today())
         ->setChangeFrequency(Url::CHANGE_FREQUENCY_NEVER)
-        ->setPriority(0.3)
     );
     if ( File::exists(resource_path('sitemap.xml')) )
         File::delete(resource_path('sitemap.xml'));

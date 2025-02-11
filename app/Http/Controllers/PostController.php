@@ -6,6 +6,7 @@ use App\Http\Forms\PostForm;
 use App\Http\Helpers\HelperGeneral;
 use App\Image;
 use App\Jobs\ConvertImage;
+use App\Jobs\SiteMapGoogle;
 use App\post;
 use App\Tags;
 use Illuminate\Support\Facades\Cache;
@@ -115,6 +116,7 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
+        dispatch(new SiteMapGoogle());
         Cache::flush();
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Enregistré avec succès');
     }

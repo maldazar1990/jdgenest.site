@@ -148,7 +148,7 @@ class PageController extends Controller
            
             'SEOData' => new SEOData(
                 title: "Bienvenue sur mon blog",
-                description: "Voici mes derniers articles",
+                description: "Découvrez le blog de Jean-Daniel Genest, développeur et expert en cybersécurité. Articles sur la technologie, la sécurité informatique et des récits personnels captivants",
                 image: asset("images/".$this->userInfo->image),
                 author: $this->userInfo->name,
                 type: "website",
@@ -230,7 +230,7 @@ class PageController extends Controller
             "ogData" => $ogimage,
             'SEOData' => new SEOData(
                 title: $post->title,
-                description: Str::limit($description , 50),
+                description: Str::limit($description , 160),
                 image: $image,
                 author: $post->user->name,
                 type: "article",
@@ -259,7 +259,7 @@ class PageController extends Controller
             "exps" => $exps,
             'SEOData' => new SEOData(
                 title:  "En résumé",
-                description: $this->userInfo->presentation,
+                description: "Le blog de Jean-Daniel Genest, développeur et expert en cybersécurité. Articles sur la technologie, la sécurité et des récits personnels captivants. Rejoignez-nous pour des discussions enrichissantes.",
                 image: asset("images/".$this->userInfo->image),
                 author: $this->userInfo->name,
                 type: "website",
