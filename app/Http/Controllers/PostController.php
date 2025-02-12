@@ -116,7 +116,6 @@ class PostController extends Controller
                 $post->tags()->attach($tag);
             }
         }
-        dispatch(new SiteMapGoogle());
         Cache::flush();
         return redirect()->route('admin_posts_edit', $post->id)->with('message','Enregistré avec succès');
     }

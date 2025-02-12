@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Google\Client;
 use Google\Service\Webmasters;
+use Google_Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -28,13 +29,13 @@ class SendSiteMap extends Command
      */
     public function handle()
     {
-        $client = new Client();
+       /* $client = new Google_Client();
         $client->setApplicationName('jdgenest.site');
         $client->setScopes(['https://www.googleapis.com/auth/webmasters']);
         $client->setAuthConfig(storage_path('app/google/credential.json'));
         $client->setAccessType('offline');
         $service = new Webmasters($client);
-
+        $client->setsetAccessToken
         $baseUrl = url('/');
         $sitemapUrl = $baseUrl . '/sitemap.xml';
 
@@ -43,7 +44,7 @@ class SendSiteMap extends Command
             $this->info('Sitemap submitted successfully.');
         } catch (\Exception $e) {
             $this->error('Error submitting sitemap: ' . $e->getMessage());
-        }
+        }*/
 
     }
 }

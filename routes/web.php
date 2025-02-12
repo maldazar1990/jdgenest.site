@@ -36,7 +36,7 @@ Route::feeds();
 
 Route::get("sitemap.xml" , function () {
     $SitemapGenerator = Sitemap::create(config()->get('app.url'));
-    foreach( \App\post::where('status',0)->orderBy('updated_at')->get() as $post ) {
+    foreach( \App\post::where('status',0)->orderBy('updated_at','desc')->get() as $post ) {
         $SitemapGenerator
             ->add( Url::create(route("post", $post->slug))
                 ->setLastModificationDate(Carbon::parse($post->updated_at))
