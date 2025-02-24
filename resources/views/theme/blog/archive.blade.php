@@ -5,7 +5,7 @@
     @include("theme.blog.layout.search")
     <div class="container">
         @forelse($posts as $post)
-            @include("theme.blog.layout.post")
+            @include("theme.blog.layout.post",['post'=>$post])
         @empty
             <div class="alert alert-warning">
                 <h3 class="text-center">Aucun article trouvé</h3>

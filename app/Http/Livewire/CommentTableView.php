@@ -5,6 +5,7 @@ use App\Actions\BanContactAction;
 use LaravelViews\Facades\Header;
 use App\Comment;
 use App\post;
+use LaravelViews\Data\QueryStringData;
 use LaravelViews\Views\TableView;
 
 class CommentTableView extends TableView
@@ -17,12 +18,24 @@ class CommentTableView extends TableView
     public $sortOrder = 'desc';
     public $sortBy = 'created_at';
     public $searchBy = ["post"];
+    public $idPost = null;
 
     /**
      * Sets the headers of the table as you want to be displayed
      *
      * @return array<string> Array of headers
      */
+
+    public function repository()
+    {
+        
+        $query = Comment::query();
+        if($this->idPost){
+            $query->where("post_id",$this->idPost);
+        }
+        return $query;
+    }
+    
     public function headers(): array
     {
         return [
@@ -30,6 +43,13 @@ class CommentTableView extends TableView
             "article",
             Header::title("date")->sortBy("created_at"),
         ];
+    }
+
+    public function mount($idPost = null)
+    {
+        if($idPost){
+            $this->idPost = $idPost;
+        }
     }
 
     /**

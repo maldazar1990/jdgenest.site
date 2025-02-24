@@ -3,5 +3,8 @@
             {{$post->created_at->format("Y-m-d")}}&nbsp;/&nbsp;
             {{\Illuminate\Support\Str::wordCount($post->post)}} mots&nbsp;/&nbsp;
             {{\App\Http\Helpers\HelperGeneral::wordToMinute($post->post)}} min de lecture
+            @if($post->comments->count() > 0)
+                &nbsp;/&nbsp;{{$post->comments->count()}} commentaires
+            @endif
     </span></div>
 @endif

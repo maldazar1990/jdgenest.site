@@ -44,7 +44,7 @@
                 @endif
             </div>
             @elseif(!isset($testtable))
-            @livewire($liveWireTable)
+            @livewire($liveWireTable, ['idPost' => isset($idPost)?:null])
             @else
             @livewire("PostTable");
             @endif

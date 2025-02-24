@@ -161,6 +161,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ["role:admin,user",'firewall.
 
         Route::group(["prefix" => "comment", "middleware" => "role:admin"], function () {
             Route::get('/', 'CommentController@index')->name('admin_comment');
+            Route::get('/{post_id}', 'CommentController@commentByPost')->name('admin_comment_by_post')->where("post_id", "[0-9A-Za-z\-]+");
         });
 
         Route::group(["prefix" => "ipban", "middleware" => "role:admin"], function () {

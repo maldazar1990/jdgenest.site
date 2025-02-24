@@ -19,4 +19,14 @@ class CommentController extends Controller
             "liveWireTable" => "comment-table-view",
         ]);
     }
+
+    public function commentByPost($idPost)
+    {
+        return view('admin.index', [
+
+            "title" => "Commentaire",
+            "liveWireTable" => "comment-table-view",
+            "idPost" => $idPost
+        ]);
+    }
 }

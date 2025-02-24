@@ -5,7 +5,7 @@
             @include("toolbox.error")
             <div class="card-block">
                 @if ( isset($model) )
-                <h3 class="card-title"><a href="{{route("post",$model->slug)}}">{{$title}}</a></h3>
+                <h3 class="card-title"><i class="fa-solid fa-book"></i><a href="{{route("post",$model->slug)}}">{{$model->title}}</a></h3>
                 @endif
                 <form id="adminForm" method="POST" action="{{ $route }}" enctype="multipart/form-data">
                     @csrf
@@ -110,7 +110,11 @@
                             @include("toolbox.textarea",["inputName"=>"post","inputFieldName"=>"Publication","model"=>$model])
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12">
-
+                            @if ( isset($model) )
+                                <div class="mb-3">
+                                    <a href="{{route("admin_comment_by_post",$model->id)}}">Voir Commentaire({{$model->comments->count()}})</a>
+                                </div>
+                            @endif
 
                             @include("toolbox.SelectInput",["inputName"=>"status","inputFieldName"=>"Status","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"] ,"inputAllValues"=>config("app.status")])
                             @include("toolbox.SelectInput",["inputName"=>"tags","inputFieldName"=>"Tags","inputClass"=>"select2","model"=>$model,"attributes"=>["required"=>"required","multiple"=>"multiple"] ,"inputAllValues"=>$tags->pluck("title","id")])
