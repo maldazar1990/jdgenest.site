@@ -111,9 +111,12 @@
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12">
                             @if ( isset($model) )
+                                @if($model->comments->count() > 0)
+                            
                                 <div class="mb-3">
                                     <a href="{{route("admin_comment_by_post",$model->id)}}">Voir Commentaire({{$model->comments->count()}})</a>
                                 </div>
+                                @endif
                             @endif
 
                             @include("toolbox.SelectInput",["inputName"=>"status","inputFieldName"=>"Status","inputClass"=>"","model"=>$model,"attributes"=>["required"=>"required"] ,"inputAllValues"=>config("app.status")])

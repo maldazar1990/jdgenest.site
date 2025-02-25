@@ -228,21 +228,20 @@ class PageController extends Controller
             'post' => $post,
             "comments" => $comments,
             "ogData" => $ogimage,
-            "otherPosts" => Cache::remember("other_post_id_".$slug,60*60,function() use ($post){
-                return \App\Post::select("post.*")
-                ->join("post_tags","post_tags.post_id","=","post.id")
-                ->join("tags","tags.id","=","post_tags.tags_id")
-                ->whereIn('tags.id',function($q) use ($post) {
-                    $q->select("tags.id")
-                    ->from("tags")
-                    ->join("post_tags","post_tags.tags_id","=","tags.id")
-                    ->where("post_tags.post_id","=",$post->id);
-                })
-                ->where("post.id","!=",$post->id)
-                ->inRandomOrder()
-                ->limit(2)
-                ->get();
-            }),
+            "otherPosts" => \App\Post::select("post.*")
+            ->join("post_tags","post_tags.post_id","=","post.id")
+            ->join("tags","tags.id","=","post_tags.tags_id")
+            ->whereIn('tags.id',function($q) use ($post) {
+                $q->select("tags.id")
+                ->from("tags")
+                ->join("post_tags","post_tags.tags_id","=","tags.id")
+                ->where("post_tags.post_id","=",$post->id);
+            })
+            ->where("post.status",0)
+            ->where("post.id","!=",$post->id)
+            ->inRandomOrder()
+            ->limit(2)
+            ->get(),
             
             'SEOData' => new SEOData(
                 title: $post->title,
