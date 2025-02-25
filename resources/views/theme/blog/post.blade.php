@@ -96,10 +96,7 @@
 
                     </form>
                 </div>
-                @php
-                    
-                    
-                @endphp
+                @if($otherPosts->count() > 0)
                 <h3 class="mt-3 mb-3">Autres articles dans les mêmes sujets</h3>
                 <div class="row">
                     
@@ -107,6 +104,7 @@
                      @include("theme.blog.layout.post",['post'=>$otherPost])
                 @endforeach
                 </div>
+                @endif
                 <?php
                       /*
                 <comment-element id="{{$post->id}}" commentList="{{$comments->toJson()}}">
