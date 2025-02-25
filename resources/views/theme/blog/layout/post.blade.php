@@ -4,6 +4,7 @@
             @include("toolbox.image", ['modelWithImage' => $post,"class" => "img-fluid"])
         </div>
         <div class="card-body pb-4">
+            
             <h3 class="card-title mb-4"><a class="text-link" href="{{route("post",$post->slug)}}">{{$post->title}}</a></h3>
             <div class="mb-4">
                 @include("theme.blog.layout.tags")

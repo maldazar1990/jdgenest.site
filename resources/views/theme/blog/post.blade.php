@@ -97,14 +97,16 @@
                     </form>
                 </div>
                 @php
-                    $otherPosts = \App\Post::where("tag_id","=",$post->tag_id)->where("id","!=",$post->id)->inRandomOrder()->limit(2)->get();
-
-
-
+                    
+                    
                 @endphp
+                <h3 class="mt-3 mb-3">Autres articles dans les mêmes sujets</h3>
+                <div class="row">
+                    
                 @foreach($otherPosts as $otherPost)
                      @include("theme.blog.layout.post",['post'=>$otherPost])
                 @endforeach
+                </div>
                 <?php
                       /*
                 <comment-element id="{{$post->id}}" commentList="{{$comments->toJson()}}">
