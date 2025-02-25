@@ -22,6 +22,7 @@ class CommentController extends Controller
 
     public function commentByPost($idPost)
     {
+        dump($idPost);
         return view('admin.index', [
 
             "title" => "Commentaire",

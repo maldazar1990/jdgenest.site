@@ -28,7 +28,6 @@ class CommentTableView extends TableView
 
     public function repository()
     {
-        
         $query = Comment::query();
         if($this->idPost){
             $query->where("post_id",$this->idPost);
@@ -46,7 +45,7 @@ class CommentTableView extends TableView
     }
 
     public function mount($idPost = null)
-    {
+    {   
         if($idPost){
             $this->idPost = $idPost;
         }
