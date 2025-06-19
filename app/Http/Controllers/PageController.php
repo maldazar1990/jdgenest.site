@@ -239,6 +239,7 @@ class PageController extends Controller
             })
             ->where("post.status",0)
             ->where("post.id","!=",$post->id)
+            ->where("post.created_at","<=",now())
             ->inRandomOrder()
             ->limit(2)
             ->get(),

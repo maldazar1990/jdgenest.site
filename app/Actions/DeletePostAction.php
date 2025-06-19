@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\post;
 use Illuminate\Support\Facades\Cache;
 use LaravelViews\Actions\Action;
 use LaravelViews\Views\View;
@@ -31,6 +32,11 @@ class DeletePostAction extends Action
      */
     public function handle($model, View $view)
     {
+        
+        if ($model instanceof post) {
+           $model->tags()->detach();
+           $model->comments()->delete();
+        }
         $model->delete();
         if ( Cache::has('post_id_'.$model->id) )
             Cache::forget('post_id_'.$model->id);

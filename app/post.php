@@ -76,6 +76,8 @@ class post extends Model  implements Feedable
     {
         return post::limit(10)
         ->where("post.status",0)
+        ->where("post.type",config("app.typePost.post"))
+        ->where('post.created_at', '<=', now())
         ->orderBy('updated_at', 'desc')
         ->get();
     }

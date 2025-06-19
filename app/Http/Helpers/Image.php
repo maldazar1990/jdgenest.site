@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Helpers;
 
-use App\Http\Helpers\Image as HelpersImage;
 use App\Infos;
 use App\Jobs\ConvertImage;
 use App\post;
@@ -93,7 +92,7 @@ class  Image {
 
             $imageFile = $model->imageClass??$model->image;
 
-            $img = new HelpersImage($imageFile);
+            $img = new Image($imageFile);
             $img->deleteImage();
         }
 
