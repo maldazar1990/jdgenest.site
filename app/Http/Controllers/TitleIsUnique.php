@@ -12,7 +12,7 @@ trait TitleIsUnique
     {
 
         $objs = $model::distinct()
-            ->select("post.id as id")
+            ->select("id as id")
             ->where("title", "LIKE", "%" . HelperGeneral::sanitize($request->get("title")) . "%")
             ->offset(0)->limit(1)
             ->get()->toArray();
